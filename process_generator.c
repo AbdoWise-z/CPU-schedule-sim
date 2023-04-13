@@ -18,14 +18,15 @@ int main(int argc, char * argv[])
     FILE* cfg = fopen("processes.txt" , "r");
     int i , j = 0;
     char buff[1024];
-    char num_buffer[128];
-
+    ProcessInfo info;
+    
     while (fgets(buff , 1024 , cfg) != NULL){
         i = 0;
         while (isspace(buff[i])) {i++;}
         if (buff[i] == '#') continue;
-        //read data
-         
+
+        sscanf(buff , "%d %d %d %d" , &info.id , &info.arrival , &info.runtime , &info.priority);
+        //printf("p: %d , %d , %d , %d\n" , info.id , info.arrival , info.runtime , info.priority);
     }
 
     initClk();

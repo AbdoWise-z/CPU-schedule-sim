@@ -4,14 +4,14 @@
 
 #define MAX_SIZE 100
 
-typedef struct ProcessInfo{
+typedef struct {
     int id , arrival , runtime , priority;
 } ProcessInfo;
 
 #define PQ_t ProcessInfo
 #define CQ_t ProcessInfo
 
-typedef struct PriorityQueue {
+typedef struct {
     int priority[MAX_SIZE];
     PQ_t data[MAX_SIZE];
 
