@@ -9,6 +9,7 @@ typedef struct ProcessInfo{
 } ProcessInfo;
 
 #define PQ_t ProcessInfo
+#define CQ_t ProcessInfo
 
 typedef struct PriorityQueue {
     int priority[MAX_SIZE];
@@ -87,26 +88,56 @@ PQ_t extractMax(PriorityQueue *pq) {
     return m_data;
 }
 
-int main() {
-    PriorityQueue *pq = createPriorityQueue();
-    ProcessInfo info = {1,2,3,4};
-    insert(pq, 3 , info);
-    info.id = 2;
-    insert(pq, 18 , info);
-    info.id = 3;
-    insert(pq, 45 , info);
-    info.id = 4;
-    insert(pq, 11 , info);
+typedef struct {
+    CQ_t *arr;
+    int front;
+    int rear;
+    int size;
+} CircularQueue;
 
-    // insert(pq, 2 ,);
-    // insert(pq, 15);
-    // insert(pq, 5);
-    // insert(pq, 4);
-    // insert(pq, 45);
+CircularQueue* createCircularQueue(){
+    CircularQueue* c = (CircularQueue*) malloc(sizeof(CircularQueue));
+    c->arr = (CQ_t*) malloc(sizeof(CQ_t) * MAX_SIZE);
+    c->front = -1;
+    c->rear = -1;
+    c->size = 0;
+    return c;
+}
 
-    printf("Max value: %d\n", extractMax(pq).id);
-    printf("Max value: %d\n", extractMax(pq).id);
-    printf("Max value: %d\n", extractMax(pq).id);
+int isCQFull(CircularQueue *queue) {
+    return ((queue->front == 0 && queue->rear == MAX_SIZE - 1) || 
+            (queue->rear == (queue->front - 1) % (MAX_SIZE - 1)));
+}
 
-    return 0;
+int isCQEmpty(CircularQueue *queue) {
+    return (queue->front == -1);
+}
+
+void enqueue(CircularQueue *queue, CQ_t data) {
+    if (isCQFull(queue)) {
+        printf("CQueue is Full!\n");
+        return;
+    }
+    if (queue->front == -1) {
+        queue->front = 0;
+    }
+    queue->rear = (queue->rear + 1) % MAX_SIZE;
+    queue->arr[queue->rear] = data;
+    queue->size++;
+}
+
+CQ_t dequeue(CircularQueue *queue) {
+    if (isCQEmpty(queue)) {
+        printf("Queue is Empty!\n");
+        return queue->arr[0];
+    }
+    CQ_t data = queue->arr[queue->front];
+    if (queue->front == queue->rear) {
+        queue->front = -1;
+        queue->rear = -1;
+    } else {
+        queue->front = (queue->front + 1) % MAX_SIZE;
+    }
+    queue->size--;
+    return data;
 }
