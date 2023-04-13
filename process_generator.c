@@ -39,11 +39,20 @@ int main(int argc, char * argv[])
     printf("    2. Shortest Remaining time Next (SRTN).\n");
     printf("    3. Round Robin (RR).\n");
     int sq_t = -1;
+    int quanta_size = 1;
     while (sq_t > 3 || sq_t < 1){
         scanf("%d" , &sq_t);
         if (sq_t <= 3 || sq_t >= 1)
             break;
         printf("invalid input , select a number between { 1 , 3 }");
+    }
+
+    if (sq_t == 3){
+        quanta_size = -1;
+        while (quanta_size <= 0){
+            printf("Enter a valid quanta size: ");
+            scanf("%d" , &quanta_size);
+        }
     }
     // 3. Initiate and create the scheduler and clock processes.
     pid_t clk = fork();
@@ -56,10 +65,13 @@ int main(int argc, char * argv[])
     usleep(50 * 1000);
 
     pid_t scheduler = fork();
-    char sq_tp[10];
-    sprintf(sq_tp , "%d" , sq_t);
+    char sq_tb[100];
+    sprintf(sq_tb , "%d" , sq_t);
+    char quanta_b[100];
+    sprintf(quanta_b , "%d" , quanta_size);
+
     if (scheduler == 0){
-        execl("./out/scheduler.out" , sq_tp , NULL);
+        execl("./out/scheduler.out" , sq_tb , quanta_b , NULL);
         printf("Error in scheduler\n");
         exit(EXIT_FAILURE);
     }
@@ -83,12 +95,14 @@ int main(int argc, char * argv[])
     while (pq->size){
         ProcessInfo process = extractMax(pq);
         while (getClk() != process.arrival){} //wait until it arrives
+        msg.p = process;
+        msg.type = pq->size;
         msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
         printf("Sending process: %d , at time %d\n" , process.id , getClk());
     }
     printf("Generator finished\n");
 
-    //destroyClk(true); this is up to the scheduler now , cuz it will run more than the process_generator
+    destroyClk(false); //this is up to the scheduler now , cuz it will run more than the process_generator
 }
 
 
