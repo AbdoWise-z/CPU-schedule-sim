@@ -9,7 +9,7 @@ typedef struct {
 } ProcessInfo;
 
 typedef struct {
-    int _id;
+    long type;
     ProcessInfo p;
 } SchedulerMessage;
 
