@@ -9,26 +9,33 @@ void clearResources(int);
 int main(int argc, char * argv[])
 {
     signal(SIGINT, clearResources);
-    // TODO Initialization
-    // 1. Read the input files.
-    // 2. Ask the user for the chosen scheduling algorithm and its parameters, if there are any.
-    // 3. Initiate and create the scheduler and clock processes.
-    // 4. Use this function after creating the clock process to initialize clock
 
+    // 1. Read the input files.
     FILE* cfg = fopen("processes.txt" , "r");
     int i , j = 0;
     char buff[1024];
     ProcessInfo info;
-    
+    CircularQueue* cq = createCircularQueue();
+
     while (fgets(buff , 1024 , cfg) != NULL){
         i = 0;
         while (isspace(buff[i])) {i++;}
         if (buff[i] == '#') continue;
 
         sscanf(buff , "%d %d %d %d" , &info.id , &info.arrival , &info.runtime , &info.priority);
+        enqueue(cq , info);
         //printf("p: %d , %d , %d , %d\n" , info.id , info.arrival , info.runtime , info.priority);
     }
 
+    // 2. Ask the user for the chosen scheduling algorithm and its parameters, if there are any.
+    printf("Select a type of scheduling:\n");
+    printf("    1. Non-preemptive Highest Priority First (HPF).\n");
+    printf("    2. Shortest Remaining time Next (SRTN).\n");
+    printf("    3. Round Robin (RR).\n");
+    int sq_t;
+    scanf("%d" , &sq_t);
+
+    // 3. Initiate and create the scheduler and clock processes.
     initClk();
     // To get time use this
     int x = getClk();
