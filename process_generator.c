@@ -5,20 +5,20 @@
 
 void clearResources(int);
 
-int sc_m_q = -1;
 PriorityQueue* pq = NULL;
-
+int sc_m_q = -1;
+FILE* cfg = NULL;
 
 int main(int argc, char * argv[])
 {
     signal(SIGINT, clearResources);
 
     // 1. Read the input files.
-    FILE* cfg = fopen("processes.txt" , "r");
+    cfg = fopen("processes.txt" , "r");
     int i , j = 0;
     char buff[1024];
     ProcessInfo info;
-    PriorityQueue* pq = createPriorityQueue();
+    pq = createPriorityQueue();
 
     while (fgets(buff , 1024 , cfg) != NULL){
         i = 0;
@@ -29,6 +29,9 @@ int main(int argc, char * argv[])
         insert(pq , INT_MAX - info.arrival , info);
         //printf("p: %d , %d , %d , %d\n" , info.id , info.arrival , info.runtime , info.priority);
     }
+
+    fclose(cfg);
+    cfg = NULL;
 
     // 2. Ask the user for the chosen scheduling algorithm and its parameters, if there are any.
     printf("Select a type of scheduling:\n");
@@ -73,21 +76,33 @@ int main(int argc, char * argv[])
     // 5. Create a data structure for processes and provide it with its parameters.
     // 6. Send the information to the scheduler at the appropriate time.
     // 7. Clear clock resources
-    int sc_m_q = msgget(scheduler , 666 | IPC_CREAT);
-    
+    sc_m_q = msgget(scheduler , 666 | IPC_CREAT);
 
-    destroyClk(true);
+    SchedulerMessage msg;
+    printf("Preparing %d processes\n" , pq->size);
+    while (pq->size){
+        ProcessInfo process = extractMax(pq);
+        while (getClk() != process.arrival){} //wait until it arrives
+        msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
+        printf("Sending process: %d , at time %d\n" , process.id , getClk());
+    }
+    printf("Generator finished\n");
+
+    //destroyClk(true); this is up to the scheduler now , cuz it will run more than the process_generator
 }
 
 
 
 void clearResources(int signum)
 {
-    if (sc_m_q >= 0){
-        msgctl(sc_m_q , IPC_RMID , (struct msqid_ds*) 0);
-    }
+    if (sc_m_q > 0)
+        msgctl(sc_m_q , IPC_RMID , (struct msqid_ds*) NULL);
 
-    if (pq){
+    if (pq)
         free(pq);
-    }
+
+    if (cfg)
+        fclose(cfg);
+
+    exit(0);
 }
