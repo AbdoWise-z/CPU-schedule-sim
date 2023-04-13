@@ -8,6 +8,11 @@ typedef struct {
     int id , arrival , runtime , priority;
 } ProcessInfo;
 
+typedef struct {
+    int _id;
+    ProcessInfo p;
+} SchedulerMessage;
+
 #define PQ_t ProcessInfo
 #define CQ_t ProcessInfo
 
