@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "headers.h": "c",
+        "stdio.h": "c",
+        "ipc.h": "c",
+        "ctype.h": "c",
+        "string.h": "c",
+        "type_traits": "c"
+    }
+}
