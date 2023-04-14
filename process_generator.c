@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include <time.h>
 
+//TODO: fix the high clk speed issue between PG and SC , (queues are bad ...)
+
 void clearResources(int);
 
 PriorityQueue* pq = NULL;
@@ -39,11 +41,12 @@ int main(int argc, char * argv[])
     printf("    1. Non-preemptive Highest Priority First (HPF).\n");
     printf("    2. Shortest Remaining time Next (SRTN).\n");
     printf("    3. Round Robin (RR).\n");
+    printf("    4. Preemptive Highest Priority First (HPF).\n");
     int sq_t = -1;
-    int quanta_size = 1;
-    while (sq_t > 3 || sq_t < 1){
+    int quanta_size = 0;
+    while (sq_t > 4 || sq_t < 1){
         scanf("%d" , &sq_t);
-        if (sq_t <= 3 || sq_t >= 1)
+        if (sq_t <= 4 || sq_t >= 1)
             break;
         printf("invalid input , select a number between { 1 , 3 }");
     }
@@ -98,8 +101,8 @@ int main(int argc, char * argv[])
         while (getClk() != process.arrival){} //wait until it arrives
         msg.p = process;
         msg.type = (pq->size > 0) ? 2 : 1;
-        msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
         printf("[PG] Sending process: %d , at time %d\n" , process.id , getClk());
+        msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0);
     }
 
     

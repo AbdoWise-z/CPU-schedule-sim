@@ -1,0 +1,13 @@
+[PG] pid: 6337 , gpid: 6336 
+Select a type of scheduling:
+    1. Non-preemptive Highest Priority First (HPF).
+    2. Shortest Remaining time Next (SRTN).
+    3. Round Robin (RR).
+    4. Preemptive Highest Priority First (HPF).
+[PG] Scadular running at : 6339
+[PG] clk running at      : 6339
+[PG] Preparing 150 processes
+[Scheduler] cfg , t : 4  , q : 1
+[Scheduler] Running HPF
+[CLK] starting
+[CLK] terminating!

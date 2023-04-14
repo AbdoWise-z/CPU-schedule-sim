@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 2000
 
 #define STATE_NOT_READY   0
 #define STATE_READY       1
@@ -17,6 +17,13 @@ typedef struct {
     ProcessInfo p;
 } SchedulerMessage;
 
+typedef struct {
+    int active_pid; //which processes should be running right now ?
+    int remainning; //a value that the process returns to the scheduler
+    int lock1;      //a lock before storing the value
+                    //think of it as if the scheduler is telling the process that it is ready to receive a value
+    int ready;      //a flag to determine if the process is ready to store a value
+} ControlBlock;
 
 typedef struct {
     long type;

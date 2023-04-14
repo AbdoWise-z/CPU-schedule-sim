@@ -6,6 +6,9 @@
  */
 
 #include "headers.h"
+#include <time.h>
+
+#define CLK_MS 20
 
 int shmid;
 
@@ -39,7 +42,8 @@ int main(int argc, char * argv[])
     *shmaddr = clk; /* initialize shared memory */
     while (1)
     {
-        sleep(1);
+        //sleep(1);
+        usleep(CLK_MS * 1000);
         (*shmaddr)++;
     }
 }
