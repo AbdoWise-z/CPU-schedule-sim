@@ -12,6 +12,7 @@ FILE* cfg = NULL;
 int main(int argc, char * argv[])
 {
     signal(SIGINT, clearResources);
+    printf("[PG] pid: %d , gpid: %d \n" , getpid() , getpgrp());
 
     // 1. Read the input files.
     cfg = fopen("processes.txt" , "r");
@@ -58,7 +59,7 @@ int main(int argc, char * argv[])
     pid_t clk = fork();
     if (clk == 0){
         execl("./out/clk.out" , "" , NULL);
-        printf("Error in clk\n");
+        printf("[PG] Error in clk\n");
         exit(EXIT_FAILURE);
     }
 
@@ -72,13 +73,13 @@ int main(int argc, char * argv[])
 
     if (scheduler == 0){
         execl("./out/scheduler.out" , sq_tb , quanta_b , NULL);
-        printf("Error in scheduler\n");
+        printf("[PG] Error in scheduler\n");
         exit(EXIT_FAILURE);
     }
 
     
-    printf("Scadular running at : %d\n" , scheduler);
-    printf("clk running at      : %d\n" , scheduler);
+    printf("[PG] Scadular running at : %d\n" , scheduler);
+    printf("[PG] clk running at      : %d\n" , scheduler);
 
 
     initClk();
@@ -88,30 +89,35 @@ int main(int argc, char * argv[])
     // 5. Create a data structure for processes and provide it with its parameters.
     // 6. Send the information to the scheduler at the appropriate time.
     // 7. Clear clock resources
-    sc_m_q = msgget(scheduler , 666 | IPC_CREAT);
+    sc_m_q = msgget(ftok("PG_SC" , 15) , 0666 | IPC_CREAT);
 
     SchedulerMessage msg;
-    printf("Preparing %d processes\n" , pq->size);
+    printf("[PG] Preparing %d processes\n" , pq->size);
     while (pq->size){
         ProcessInfo process = extractMax(pq);
         while (getClk() != process.arrival){} //wait until it arrives
         msg.p = process;
-        msg.type = pq->size;
+        msg.type = (pq->size > 0) ? 2 : 1;
         msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
-        printf("Sending process: %d , at time %d\n" , process.id , getClk());
+        printf("[PG] Sending process: %d , at time %d\n" , process.id , getClk());
     }
-    printf("Generator finished\n");
 
-    destroyClk(false); //this is up to the scheduler now , cuz it will run more than the process_generator
+    
+    //destroyClk(false); //this is up to the scheduler now , cuz it will run more than the process_generator
+    if (pq){
+        free(pq);
+        pq = NULL;
+    }
+
+    printf("[PG] finished\n");
+    msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 3 , !IPC_NOWAIT); //wait for exit message from Scheduler
+    printf("[PG] Terminating\n");
 }
 
 
 
 void clearResources(int signum)
 {
-    if (sc_m_q > 0)
-        msgctl(sc_m_q , IPC_RMID , (struct msqid_ds*) NULL);
-
     if (pq)
         free(pq);
 

@@ -5,6 +5,9 @@
         "ipc.h": "c",
         "ctype.h": "c",
         "string.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "stdlib.h": "c",
+        "types.h": "c",
+        "msg.h": "c"
     }
 }

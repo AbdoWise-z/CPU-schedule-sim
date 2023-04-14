@@ -4,14 +4,24 @@
 
 #define MAX_SIZE 100
 
+#define STATE_NOT_READY   0
+#define STATE_READY       1
+
 typedef struct {
-    int id , arrival , runtime , priority;
+    int id , arrival , runtime , priority; //input values
+    int pid , state , finish_time , start_time , remainning; //runtime values
 } ProcessInfo;
 
 typedef struct {
     long type;
     ProcessInfo p;
 } SchedulerMessage;
+
+
+typedef struct {
+    long type;
+    int remainning;
+} ProcessesMessage;
 
 #define PQ_t ProcessInfo
 #define CQ_t ProcessInfo
