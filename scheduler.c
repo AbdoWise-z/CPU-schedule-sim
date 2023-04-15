@@ -31,6 +31,11 @@ void clearResources(int);
 
 int main(int argc, char* argv[])
 {
+    
+#ifdef OUT_TO_FILE
+    SYNC_IO;
+#endif
+
     signal(SIGINT, clearResources);
 
     initClk();
@@ -132,7 +137,7 @@ void run_for(ProcessInfo* p , int qouta){
 
     switch_to(p);
 
-    printf("in: run_for %d\n" , qouta);
+    //rintf("in: run_for %d\n" , qouta);
 
     while (qouta){
         qouta--;
@@ -167,7 +172,7 @@ void run_for(ProcessInfo* p , int qouta){
         }
     }
 
-    printf("out: run_for %d\n" , qouta);
+    //printf("out: run_for %d\n" , qouta);
 
 }
 
@@ -228,6 +233,10 @@ void hpf(bool preemptive){
                 current_process.id = -1; //no current , no need to stop the next one
                 
             }
+        } else {
+            CLK_INIT;
+            CLK_WAIT(1);
+            printf("[Scheduler] waiting...\n");
         }
     }
     printf("[Scheduler] Finished HPF\n");
@@ -267,6 +276,10 @@ void srtn(){
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
+        } else {
+            CLK_INIT;
+            CLK_WAIT(1);
+            printf("[Scheduler] waiting...\n");
         }
     }
     printf("[Scheduler] Finished SRTN\n");
@@ -313,7 +326,7 @@ void rr(int q){
         } else {
             CLK_INIT;
             CLK_WAIT(1);
-            printf("[Scheduler] waiting... %d \n" , (int) run);
+            printf("[Scheduler] waiting...\n");
         }
     }
     printf("[Scheduler] Finished RR\n");

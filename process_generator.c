@@ -13,7 +13,14 @@ FILE* cfg = NULL;
 
 int main(int argc, char * argv[])
 {
+    
+#ifdef OUT_TO_FILE
+    freopen("results.txt" , "a+" , stdout);
+    SYNC_IO;
+#endif
+
     signal(SIGINT, clearResources);
+    
     printf("[PG] pid: %d , gpid: %d \n" , getpid() , getpgrp());
 
     // 1. Read the input files.
@@ -42,7 +49,7 @@ int main(int argc, char * argv[])
     printf("    2. Shortest Remaining time Next (SRTN).\n");
     printf("    3. Round Robin (RR).\n");
     printf("    4. Preemptive Highest Priority First (HPF).\n");
-    int sq_t = -1;
+    int sq_t = 3;
     int quanta_size = 0;
     while (sq_t > 4 || sq_t < 1){
         scanf("%d" , &sq_t);
@@ -52,7 +59,7 @@ int main(int argc, char * argv[])
     }
 
     if (sq_t == 3){
-        quanta_size = -1;
+        quanta_size = 5;
         while (quanta_size <= 0){
             printf("Enter a valid quanta size: ");
             scanf("%d" , &quanta_size);
@@ -98,7 +105,9 @@ int main(int argc, char * argv[])
     printf("[PG] Preparing %d processes\n" , pq->size);
     while (pq->size){
         ProcessInfo process = extractMax(pq);
-        while (getClk() != process.arrival){} //wait until it arrives
+        while (getClk() < process.arrival){} //wait until it arrives
+        if (getClk() != process.arrival)
+            printf("[PG] Warnning , Process '%d' was unable to arrive on time (offset: %d)\n" , process.id , getClk() - process.arrival);
         msg.p = process;
         msg.type = (pq->size > 0) ? 2 : 1;
         printf("[PG] Sending process: %d , at time %d\n" , process.id , getClk());

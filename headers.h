@@ -13,6 +13,9 @@
 
 #include "data_structure.h"
 
+#define OUT_TO_FILE
+#define SYNC_IO setbuf(stdout , NULL);
+
 typedef short bool;
 #define true 1
 #define false 0

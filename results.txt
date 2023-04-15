@@ -1,13 +1,2659 @@
-[PG] pid: 6337 , gpid: 6336 
+[PG] pid: 14885 , gpid: 14884 
 Select a type of scheduling:
     1. Non-preemptive Highest Priority First (HPF).
     2. Shortest Remaining time Next (SRTN).
     3. Round Robin (RR).
     4. Preemptive Highest Priority First (HPF).
-[PG] Scadular running at : 6339
-[PG] clk running at      : 6339
-[PG] Preparing 150 processes
-[Scheduler] cfg , t : 4  , q : 1
-[Scheduler] Running HPF
 [CLK] starting
-[CLK] terminating!
+[PG] Scadular running at : 14887
+[PG] clk running at      : 14887
+[PG] Preparing 100 processes
+[PG] Warnning , Process '1' was unable to arrive on time (offset: 22)
+[PG] Sending process: 1 , at time 33
+[PG] Warnning , Process '2' was unable to arrive on time (offset: 18)
+[PG] Sending process: 2 , at time 33
+[PG] Warnning , Process '3' was unable to arrive on time (offset: 8)
+[PG] Sending process: 3 , at time 33
+[PG] Warnning , Process '4' was unable to arrive on time (offset: 7)
+[PG] Sending process: 4 , at time 33
+[Scheduler] cfg , t : 3  , q : 5
+[Scheduler] Running RR
+[Scheduler] Adding a processes to the queue: 1 , RT: 16
+[Scheduler] Adding a processes to the queue: 2 , RT: 6
+[Scheduler] Adding a processes to the queue: 3 , RT: 16
+[Scheduler] Adding a processes to the queue: 4 , RT: 19
+[Scheduler] Running a child process for the first time: 14888 
+[Process] started , runtime: 16 
+[PG] Sending process: 5 , at time 35
+[Process] running | pid: 14888 , remainingtime: 15 
+[Process] running | pid: 14888 , remainingtime: 14 
+[Process] running | pid: 14888 , remainingtime: 13 
+[Process] running | pid: 14888 , remainingtime: 12 
+[Process] running | pid: 14888 , remainingtime: 11 
+[Scheduler] Adding a processes to the queue: 5 , RT: 6
+[Scheduler] Pausing: 14888 
+[Scheduler] Running a child process for the first time: 14889 
+[Process] started , runtime: 19 
+[Process] running | pid: 14889 , remainingtime: 18 
+[Process] running | pid: 14889 , remainingtime: 17 
+[PG] Sending process: 6 , at time 42
+[Process] running | pid: 14889 , remainingtime: 16 
+[Process] running | pid: 14889 , remainingtime: 15 
+[Process] running | pid: 14889 , remainingtime: 14 
+[Scheduler] Adding a processes to the queue: 6 , RT: 25
+[Scheduler] Pausing: 14889 
+[Scheduler] Running a child process for the first time: 14890 
+[Process] started , runtime: 6 
+[Process] running | pid: 14890 , remainingtime: 5 
+[Process] running | pid: 14890 , remainingtime: 4 
+[Process] running | pid: 14890 , remainingtime: 3 
+[Process] running | pid: 14890 , remainingtime: 2 
+[Process] running | pid: 14890 , remainingtime: 1 
+[Scheduler] Pausing: 14890 
+[Scheduler] Running a child process for the first time: 14891 
+[Process] started , runtime: 16 
+[PG] Sending process: 7 , at time 50
+[Process] running | pid: 14891 , remainingtime: 15 
+[Process] running | pid: 14891 , remainingtime: 14 
+[Process] running | pid: 14891 , remainingtime: 13 
+[Process] running | pid: 14891 , remainingtime: 12 
+[Process] running | pid: 14891 , remainingtime: 11 
+[Scheduler] Adding a processes to the queue: 7 , RT: 7
+[Scheduler] Pausing: 14891 
+[Scheduler] Running a child process for the first time: 14892 
+[Process] started , runtime: 6 
+[Process] running | pid: 14892 , remainingtime: 5 
+[PG] Sending process: 8 , at time 55
+[PG] Sending process: 9 , at time 55
+[Process] running | pid: 14892 , remainingtime: 4 
+[Process] running | pid: 14892 , remainingtime: 3 
+[Process] running | pid: 14892 , remainingtime: 2 
+[Process] running | pid: 14892 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 8 , RT: 16
+[Scheduler] Adding a processes to the queue: 9 , RT: 21
+[Scheduler] Pausing: 14892 
+[Scheduler] Resuming: 14888
+[Process] running | pid: 14888 , remainingtime: 10 
+[Process] running | pid: 14888 , remainingtime: 9 
+[Process] running | pid: 14888 , remainingtime: 8 
+[Process] running | pid: 14888 , remainingtime: 7 
+[Process] running | pid: 14888 , remainingtime: 6 
+[PG] Sending process: 10 , at time 64
+[Scheduler] Pausing: 14888 
+[Scheduler] Resuming: 14889
+[Process] running | pid: 14889 , remainingtime: 13 
+[Process] running | pid: 14889 , remainingtime: 12 
+[Process] running | pid: 14889 , remainingtime: 11 
+[Process] running | pid: 14889 , remainingtime: 10 
+[Process] running | pid: 14889 , remainingtime: 9 
+[Scheduler] Adding a processes to the queue: 10 , RT: 9
+[Scheduler] Pausing: 14889 
+[Scheduler] Running a child process for the first time: 14893 
+[Process] started , runtime: 25 
+[PG] Sending process: 11 , at time 70
+[PG] Sending process: 12 , at time 70
+[Process] running | pid: 14893 , remainingtime: 24 
+[Process] running | pid: 14893 , remainingtime: 23 
+[Process] running | pid: 14893 , remainingtime: 22 
+[Process] running | pid: 14893 , remainingtime: 21 
+[Process] running | pid: 14893 , remainingtime: 20 
+[Scheduler] Adding a processes to the queue: 11 , RT: 0
+[Scheduler] Input Error , process 11 has no runtime , ignoring
+[Scheduler] Adding a processes to the queue: 12 , RT: 17
+[Scheduler] Pausing: 14893 
+[Scheduler] Resuming: 14890
+[Process] running | pid: 14890 , remainingtime: 0 
+[Process] finished  , pid: 14890 
+[Scheduler] Running a child process for the first time: 14894 
+[Process] started , runtime: 7 
+[Process] running | pid: 14894 , remainingtime: 6 
+[Process] running | pid: 14894 , remainingtime: 5 
+[Process] running | pid: 14894 , remainingtime: 4 
+[PG] Sending process: 13 , at time 79
+[Process] running | pid: 14894 , remainingtime: 3 
+[Process] running | pid: 14894 , remainingtime: 2 
+[Scheduler] Adding a processes to the queue: 13 , RT: 28
+[Scheduler] Pausing: 14894 
+[Scheduler] Resuming: 14891
+[Process] running | pid: 14891 , remainingtime: 10 
+[Process] running | pid: 14891 , remainingtime: 9 
+[Process] running | pid: 14891 , remainingtime: 8 
+[Process] running | pid: 14891 , remainingtime: 7 
+[Process] running | pid: 14891 , remainingtime: 6 
+[Scheduler] Pausing: 14891 
+[Scheduler] Running a child process for the first time: 14895 
+[Process] started , runtime: 21 
+[PG] Sending process: 14 , at time 86
+[Process] running | pid: 14895 , remainingtime: 20 
+[Process] running | pid: 14895 , remainingtime: 19 
+[Process] running | pid: 14895 , remainingtime: 18 
+[Process] running | pid: 14895 , remainingtime: 17 
+[Process] running | pid: 14895 , remainingtime: 16 
+[Scheduler] Adding a processes to the queue: 14 , RT: 7
+[Scheduler] Pausing: 14895 
+[Scheduler] Running a child process for the first time: 14896 
+[Process] started , runtime: 16 
+[Process] running | pid: 14896 , remainingtime: 15 
+[Process] running | pid: 14896 , remainingtime: 14 
+[Process] running | pid: 14896 , remainingtime: 13 
+[PG] Sending process: 15 , at time 93
+[Process] running | pid: 14896 , remainingtime: 12 
+[Process] running | pid: 14896 , remainingtime: 11 
+[Scheduler] Adding a processes to the queue: 15 , RT: 14
+[Scheduler] Pausing: 14896 
+[Scheduler] Resuming: 14892
+[PG] Sending process: 16 , at time 96
+[PG] Sending process: 17 , at time 96
+[Process] running | pid: 14892 , remainingtime: 0 
+[Process] finished  , pid: 14892 
+[Scheduler] Adding a processes to the queue: 16 , RT: 24
+[Scheduler] Adding a processes to the queue: 17 , RT: 26
+[Scheduler] Resuming: 14888
+[Process] running | pid: 14888 , remainingtime: 5 
+[Process] running | pid: 14888 , remainingtime: 4 
+[PG] Sending process: 18 , at time 98
+[Process] running | pid: 14888 , remainingtime: 3 
+[Process] running | pid: 14888 , remainingtime: 2 
+[Process] running | pid: 14888 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 18 , RT: 5
+[Scheduler] Pausing: 14888 
+[Scheduler] Resuming: 14889
+[Process] running | pid: 14889 , remainingtime: 8 
+[Process] running | pid: 14889 , remainingtime: 7 
+[PG] Sending process: 19 , at time 103
+[Process] running | pid: 14889 , remainingtime: 6 
+[Process] running | pid: 14889 , remainingtime: 5 
+[Process] running | pid: 14889 , remainingtime: 4 
+[Scheduler] Adding a processes to the queue: 19 , RT: 0
+[Scheduler] Input Error , process 19 has no runtime , ignoring
+[Scheduler] Pausing: 14889 
+[Scheduler] Running a child process for the first time: 14897 
+[Process] started , runtime: 9 
+[Process] running | pid: 14897 , remainingtime: 8 
+[Process] running | pid: 14897 , remainingtime: 7 
+[PG] Sending process: 20 , at time 108
+[Process] running | pid: 14897 , remainingtime: 6 
+[Process] running | pid: 14897 , remainingtime: 5 
+[Process] running | pid: 14897 , remainingtime: 4 
+[Scheduler] Adding a processes to the queue: 20 , RT: 28
+[Scheduler] Pausing: 14897 
+[Scheduler] Running a child process for the first time: 14898 
+[Process] started , runtime: 17 
+[Process] running | pid: 14898 , remainingtime: 16 
+[Process] running | pid: 14898 , remainingtime: 15 
+[Process] running | pid: 14898 , remainingtime: 14 
+[Process] running | pid: 14898 , remainingtime: 13 
+[Process] running | pid: 14898 , remainingtime: 12 
+[Scheduler] Pausing: 14898 
+[Scheduler] Resuming: 14893
+[PG] Sending process: 21 , at time 117
+[Process] running | pid: 14893 , remainingtime: 19 
+[Process] running | pid: 14893 , remainingtime: 18 
+[Process] running | pid: 14893 , remainingtime: 17 
+[Process] running | pid: 14893 , remainingtime: 16 
+[PG] Sending process: 22 , at time 120
+[Process] running | pid: 14893 , remainingtime: 15 
+[Scheduler] Adding a processes to the queue: 21 , RT: 26
+[Scheduler] Adding a processes to the queue: 22 , RT: 2
+[Scheduler] Pausing: 14893 
+[Scheduler] Running a child process for the first time: 14899 
+[Process] started , runtime: 28 
+[PG] Sending process: 23 , at time 122
+[Process] running | pid: 14899 , remainingtime: 27 
+[Process] running | pid: 14899 , remainingtime: 26 
+[Process] running | pid: 14899 , remainingtime: 25 
+[Process] running | pid: 14899 , remainingtime: 24 
+[Process] running | pid: 14899 , remainingtime: 23 
+[Scheduler] Adding a processes to the queue: 23 , RT: 11
+[Scheduler] Pausing: 14899 
+[Scheduler] Resuming: 14894
+[Process] running | pid: 14894 , remainingtime: 1 
+[Process] running | pid: 14894 , remainingtime: 0 
+[Process] finished  , pid: 14894 
+[Scheduler] Resuming: 14891
+[Process] running | pid: 14891 , remainingtime: 5 
+[Process] running | pid: 14891 , remainingtime: 4 
+[Process] running | pid: 14891 , remainingtime: 3 
+[Process] running | pid: 14891 , remainingtime: 2 
+[PG] Sending process: 24 , at time 132
+[PG] Sending process: 25 , at time 132
+[PG] Sending process: 26 , at time 133
+[Process] running | pid: 14891 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 24 , RT: 26
+[Scheduler] Adding a processes to the queue: 25 , RT: 10
+[Scheduler] Adding a processes to the queue: 26 , RT: 28
+[Scheduler] Pausing: 14891 
+[Scheduler] Resuming: 14895
+[Process] running | pid: 14895 , remainingtime: 15 
+[Process] running | pid: 14895 , remainingtime: 14 
+[Process] running | pid: 14895 , remainingtime: 13 
+[Process] running | pid: 14895 , remainingtime: 12 
+[Process] running | pid: 14895 , remainingtime: 11 
+[Scheduler] Pausing: 14895 
+[Scheduler] Running a child process for the first time: 14900 
+[Process] started , runtime: 7 
+[PG] Sending process: 27 , at time 139
+[Process] running | pid: 14900 , remainingtime: 6 
+[Process] running | pid: 14900 , remainingtime: 5 
+[Process] running | pid: 14900 , remainingtime: 4 
+[Process] running | pid: 14900 , remainingtime: 3 
+[Process] running | pid: 14900 , remainingtime: 2 
+[Scheduler] Adding a processes to the queue: 27 , RT: 16
+[Scheduler] Pausing: 14900 
+[Scheduler] Resuming: 14896
+[Process] running | pid: 14896 , remainingtime: 10 
+[Process] running | pid: 14896 , remainingtime: 9 
+[Process] running | pid: 14896 , remainingtime: 8 
+[Process] running | pid: 14896 , remainingtime: 7 
+[PG] Sending process: 28 , at time 147
+[Process] running | pid: 14896 , remainingtime: 6 
+[Scheduler] Adding a processes to the queue: 28 , RT: 27
+[Scheduler] Pausing: 14896 
+[Scheduler] Running a child process for the first time: 14901 
+[Process] started , runtime: 14 
+[Process] running | pid: 14901 , remainingtime: 13 
+[Process] running | pid: 14901 , remainingtime: 12 
+[Process] running | pid: 14901 , remainingtime: 11 
+[Process] running | pid: 14901 , remainingtime: 10 
+[Process] running | pid: 14901 , remainingtime: 9 
+[Scheduler] Pausing: 14901 
+[Scheduler] Running a child process for the first time: 14902 
+[Process] started , runtime: 26 
+[PG] Sending process: 29 , at time 154
+[Process] running | pid: 14902 , remainingtime: 25 
+[Process] running | pid: 14902 , remainingtime: 24 
+[PG] Sending process: 30 , at time 156
+[Process] running | pid: 14902 , remainingtime: 23 
+[PG] Sending process: 31 , at time 157
+[Process] running | pid: 14902 , remainingtime: 22 
+[Process] running | pid: 14902 , remainingtime: 21 
+[Scheduler] Adding a processes to the queue: 29 , RT: 1
+[Scheduler] Adding a processes to the queue: 30 , RT: 21
+[Scheduler] Adding a processes to the queue: 31 , RT: 9
+[Scheduler] Pausing: 14902 
+[Scheduler] Running a child process for the first time: 14903 
+[Process] started , runtime: 24 
+[Process] running | pid: 14903 , remainingtime: 23 
+[Process] running | pid: 14903 , remainingtime: 22 
+[Process] running | pid: 14903 , remainingtime: 21 
+[Process] running | pid: 14903 , remainingtime: 20 
+[Process] running | pid: 14903 , remainingtime: 19 
+[Scheduler] Pausing: 14903 
+[Scheduler] Running a child process for the first time: 14904 
+[Process] started , runtime: 5 
+[Process] running | pid: 14904 , remainingtime: 4 
+[Process] running | pid: 14904 , remainingtime: 3 
+[PG] Sending process: 32 , at time 166
+[Process] running | pid: 14904 , remainingtime: 2 
+[PG] Sending process: 33 , at time 167
+[Process] running | pid: 14904 , remainingtime: 1 
+[Process] running | pid: 14904 , remainingtime: 0 
+[Process] finished  , pid: 14904 
+[Scheduler] Adding a processes to the queue: 32 , RT: 11
+[Scheduler] Adding a processes to the queue: 33 , RT: 25
+[Scheduler] Resuming: 14888
+[Process] running | pid: 14888 , remainingtime: 0 
+[Process] finished  , pid: 14888 
+[Scheduler] Resuming: 14889
+[PG] Sending process: 34 , at time 170
+[Process] running | pid: 14889 , remainingtime: 3 
+[Process] running | pid: 14889 , remainingtime: 2 
+[Process] running | pid: 14889 , remainingtime: 1 
+[Process] running | pid: 14889 , remainingtime: 0 
+[Process] finished  , pid: 14889 
+[Scheduler] Adding a processes to the queue: 34 , RT: 0
+[Scheduler] Input Error , process 34 has no runtime , ignoring
+[Scheduler] Running a child process for the first time: 14905 
+[Process] started , runtime: 28 
+[Process] running | pid: 14905 , remainingtime: 27 
+[Process] running | pid: 14905 , remainingtime: 26 
+[Process] running | pid: 14905 , remainingtime: 25 
+[Process] running | pid: 14905 , remainingtime: 24 
+[PG] Sending process: 35 , at time 178
+[Process] running | pid: 14905 , remainingtime: 23 
+[Scheduler] Adding a processes to the queue: 35 , RT: 22
+[Scheduler] Pausing: 14905 
+[Scheduler] Resuming: 14897
+[Process] running | pid: 14897 , remainingtime: 3 
+[PG] Sending process: 36 , at time 180
+[Process] running | pid: 14897 , remainingtime: 2 
+[Process] running | pid: 14897 , remainingtime: 1 
+[Process] running | pid: 14897 , remainingtime: 0 
+[Process] finished  , pid: 14897 
+[Scheduler] Adding a processes to the queue: 36 , RT: 23
+[Scheduler] Resuming: 14898
+[PG] Sending process: 37 , at time 183
+[Process] running | pid: 14898 , remainingtime: 11 
+[Process] running | pid: 14898 , remainingtime: 10 
+[Process] running | pid: 14898 , remainingtime: 9 
+[Process] running | pid: 14898 , remainingtime: 8 
+[Process] running | pid: 14898 , remainingtime: 7 
+[Scheduler] Adding a processes to the queue: 37 , RT: 28
+[Scheduler] Pausing: 14898 
+[Scheduler] Resuming: 14893
+[Process] running | pid: 14893 , remainingtime: 14 
+[PG] Sending process: 38 , at time 189
+[Process] running | pid: 14893 , remainingtime: 13 
+[Process] running | pid: 14893 , remainingtime: 12 
+[Process] running | pid: 14893 , remainingtime: 11 
+[Process] running | pid: 14893 , remainingtime: 10 
+[Scheduler] Adding a processes to the queue: 38 , RT: 5
+[Scheduler] Pausing: 14893 
+[Scheduler] Running a child process for the first time: 14906 
+[Process] started , runtime: 26 
+[Process] running | pid: 14906 , remainingtime: 25 
+[PG] Sending process: 39 , at time 194
+[Process] running | pid: 14906 , remainingtime: 24 
+[Process] running | pid: 14906 , remainingtime: 23 
+[Process] running | pid: 14906 , remainingtime: 22 
+[PG] Sending process: 40 , at time 197
+[Process] running | pid: 14906 , remainingtime: 21 
+[Scheduler] Adding a processes to the queue: 39 , RT: 2
+[Scheduler] Adding a processes to the queue: 40 , RT: 8
+[Scheduler] Pausing: 14906 
+[Scheduler] Running a child process for the first time: 14907 
+[Process] started , runtime: 2 
+[Process] running | pid: 14907 , remainingtime: 1 
+[PG] Sending process: 41 , at time 199
+[Process] running | pid: 14907 , remainingtime: 0 
+[Process] finished  , pid: 14907 
+[Scheduler] Adding a processes to the queue: 41 , RT: 26
+[Scheduler] Running a child process for the first time: 14908 
+[Process] started , runtime: 11 
+[Process] running | pid: 14908 , remainingtime: 10 
+[PG] Sending process: 42 , at time 200
+[Process] running | pid: 14908 , remainingtime: 9 
+[Process] running | pid: 14908 , remainingtime: 8 
+[Process] running | pid: 14908 , remainingtime: 7 
+[Process] running | pid: 14908 , remainingtime: 6 
+[Scheduler] Adding a processes to the queue: 42 , RT: 18
+[Scheduler] Pausing: 14908 
+[Scheduler] Resuming: 14899
+[Process] running | pid: 14899 , remainingtime: 22 
+[Process] running | pid: 14899 , remainingtime: 21 
+[Process] running | pid: 14899 , remainingtime: 20 
+[Process] running | pid: 14899 , remainingtime: 19 
+[PG] Sending process: 43 , at time 209
+[PG] Sending process: 44 , at time 209
+[Process] running | pid: 14899 , remainingtime: 18 
+[Scheduler] Adding a processes to the queue: 43 , RT: 0
+[Scheduler] Input Error , process 43 has no runtime , ignoring
+[Scheduler] Adding a processes to the queue: 44 , RT: 24
+[Scheduler] Pausing: 14899 
+[Scheduler] Resuming: 14891
+[PG] Sending process: 45 , at time 210
+[Process] running | pid: 14891 , remainingtime: 0 
+[Process] finished  , pid: 14891 
+[Scheduler] Adding a processes to the queue: 45 , RT: 6
+[Scheduler] Running a child process for the first time: 14909 
+[Process] started , runtime: 26 
+[Process] running | pid: 14909 , remainingtime: 25 
+[Process] running | pid: 14909 , remainingtime: 24 
+[Process] running | pid: 14909 , remainingtime: 23 
+[Process] running | pid: 14909 , remainingtime: 22 
+[Process] running | pid: 14909 , remainingtime: 21 
+[Scheduler] Pausing: 14909 
+[Scheduler] Running a child process for the first time: 14910 
+[PG] Sending process: 46 , at time 216
+[Process] started , runtime: 10 
+[Process] running | pid: 14910 , remainingtime: 9 
+[Process] running | pid: 14910 , remainingtime: 8 
+[Process] running | pid: 14910 , remainingtime: 7 
+[Process] running | pid: 14910 , remainingtime: 6 
+[Process] running | pid: 14910 , remainingtime: 5 
+[Scheduler] Adding a processes to the queue: 46 , RT: 4
+[Scheduler] Pausing: 14910 
+[Scheduler] Running a child process for the first time: 14911 
+[Process] started , runtime: 28 
+[Process] running | pid: 14911 , remainingtime: 27 
+[Process] running | pid: 14911 , remainingtime: 26 
+[Process] running | pid: 14911 , remainingtime: 25 
+[PG] Sending process: 47 , at time 224
+[Process] running | pid: 14911 , remainingtime: 24 
+[Process] running | pid: 14911 , remainingtime: 23 
+[Scheduler] Adding a processes to the queue: 47 , RT: 14
+[Scheduler] Pausing: 14911 
+[Scheduler] Resuming: 14895
+[Process] running | pid: 14895 , remainingtime: 10 
+[Process] running | pid: 14895 , remainingtime: 9 
+[Process] running | pid: 14895 , remainingtime: 8 
+[Process] running | pid: 14895 , remainingtime: 7 
+[PG] Sending process: 48 , at time 230
+[PG] Sending process: 49 , at time 230
+[Process] running | pid: 14895 , remainingtime: 6 
+[Scheduler] Adding a processes to the queue: 48 , RT: 0
+[Scheduler] Input Error , process 48 has no runtime , ignoring
+[Scheduler] Adding a processes to the queue: 49 , RT: 13
+[Scheduler] Pausing: 14895 
+[Scheduler] Resuming: 14900
+[Process] running | pid: 14900 , remainingtime: 1 
+[Process] running | pid: 14900 , remainingtime: 0 
+[Process] finished  , pid: 14900 
+[Scheduler] Running a child process for the first time: 14912 
+[Process] started , runtime: 16 
+[Process] running | pid: 14912 , remainingtime: 15 
+[Process] running | pid: 14912 , remainingtime: 14 
+[Process] running | pid: 14912 , remainingtime: 13 
+[PG] Sending process: 50 , at time 236
+[Process] running | pid: 14912 , remainingtime: 12 
+[Process] running | pid: 14912 , remainingtime: 11 
+[Scheduler] Adding a processes to the queue: 50 , RT: 22
+[Scheduler] Pausing: 14912 
+[Scheduler] Running a child process for the first time: 14913 
+[Process] started , runtime: 27 
+[Process] running | pid: 14913 , remainingtime: 26 
+[Process] running | pid: 14913 , remainingtime: 25 
+[Process] running | pid: 14913 , remainingtime: 24 
+[Process] running | pid: 14913 , remainingtime: 23 
+[Process] running | pid: 14913 , remainingtime: 22 
+[Scheduler] Pausing: 14913 
+[Scheduler] Resuming: 14896
+[Process] running | pid: 14896 , remainingtime: 5 
+[Process] running | pid: 14896 , remainingtime: 4 
+[Process] running | pid: 14896 , remainingtime: 3 
+[PG] Sending process: 51 , at time 246
+[Process] running | pid: 14896 , remainingtime: 2 
+[Process] running | pid: 14896 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 51 , RT: 25
+[Scheduler] Pausing: 14896 
+[Scheduler] Resuming: 14901
+[Process] running | pid: 14901 , remainingtime: 8 
+[Process] running | pid: 14901 , remainingtime: 7 
+[Process] running | pid: 14901 , remainingtime: 6 
+[Process] running | pid: 14901 , remainingtime: 5 
+[PG] Sending process: 52 , at time 252
+[PG] Sending process: 53 , at time 252
+[Process] running | pid: 14901 , remainingtime: 4 
+[Scheduler] Adding a processes to the queue: 52 , RT: 4
+[Scheduler] Adding a processes to the queue: 53 , RT: 5
+[Scheduler] Pausing: 14901 
+[Scheduler] Running a child process for the first time: 14914 
+[Process] started , runtime: 9 
+[Process] running | pid: 14914 , remainingtime: 8 
+[PG] Sending process: 54 , at time 255
+[Process] running | pid: 14914 , remainingtime: 7 
+[Process] running | pid: 14914 , remainingtime: 6 
+[PG] Sending process: 55 , at time 257
+[Process] running | pid: 14914 , remainingtime: 5 
+[Process] running | pid: 14914 , remainingtime: 4 
+[Scheduler] Adding a processes to the queue: 54 , RT: 25
+[Scheduler] Adding a processes to the queue: 55 , RT: 28
+[Scheduler] Pausing: 14914 
+[Scheduler] Resuming: 14902
+[Process] running | pid: 14902 , remainingtime: 20 
+[Process] running | pid: 14902 , remainingtime: 19 
+[Process] running | pid: 14902 , remainingtime: 18 
+[Process] running | pid: 14902 , remainingtime: 17 
+[Process] running | pid: 14902 , remainingtime: 16 
+[Scheduler] Pausing: 14902 
+[Scheduler] Running a child process for the first time: 14915 
+[Process] started , runtime: 21 
+[Process] running | pid: 14915 , remainingtime: 20 
+[Process] running | pid: 14915 , remainingtime: 19 
+[PG] Sending process: 56 , at time 265
+[PG] Sending process: 57 , at time 265
+[Process] running | pid: 14915 , remainingtime: 18 
+[Process] running | pid: 14915 , remainingtime: 17 
+[Process] running | pid: 14915 , remainingtime: 16 
+[Scheduler] Adding a processes to the queue: 56 , RT: 26
+[Scheduler] Adding a processes to the queue: 57 , RT: 8
+[Scheduler] Pausing: 14915 
+[Scheduler] Running a child process for the first time: 14916 
+[Process] started , runtime: 1 
+[Process] running | pid: 14916 , remainingtime: 0 
+[Process] finished  , pid: 14916 
+[Scheduler] Resuming: 14903
+[Process] running | pid: 14903 , remainingtime: 18 
+[Process] running | pid: 14903 , remainingtime: 17 
+[Process] running | pid: 14903 , remainingtime: 16 
+[PG] Sending process: 58 , at time 272
+[Process] running | pid: 14903 , remainingtime: 15 
+[PG] Sending process: 59 , at time 274
+[Process] running | pid: 14903 , remainingtime: 14 
+[Scheduler] Adding a processes to the queue: 58 , RT: 13
+[Scheduler] Adding a processes to the queue: 59 , RT: 8
+[Scheduler] Pausing: 14903 
+[Scheduler] Running a child process for the first time: 14917 
+[Process] started , runtime: 25 
+[PG] Sending process: 60 , at time 275
+[Process] running | pid: 14917 , remainingtime: 24 
+[Process] running | pid: 14917 , remainingtime: 23 
+[Process] running | pid: 14917 , remainingtime: 22 
+[Process] running | pid: 14917 , remainingtime: 21 
+[Process] running | pid: 14917 , remainingtime: 20 
+[Scheduler] Adding a processes to the queue: 60 , RT: 25
+[Scheduler] Pausing: 14917 
+[Scheduler] Running a child process for the first time: 14918 
+[Process] started , runtime: 11 
+[Process] running | pid: 14918 , remainingtime: 10 
+[Process] running | pid: 14918 , remainingtime: 9 
+[Process] running | pid: 14918 , remainingtime: 8 
+[Process] running | pid: 14918 , remainingtime: 7 
+[PG] Sending process: 61 , at time 284
+[Process] running | pid: 14918 , remainingtime: 6 
+[Scheduler] Adding a processes to the queue: 61 , RT: 25
+[Scheduler] Pausing: 14918 
+[Scheduler] Running a child process for the first time: 14919 
+[Process] started , runtime: 22 
+[Process] running | pid: 14919 , remainingtime: 21 
+[PG] Sending process: 62 , at time 286
+[Process] running | pid: 14919 , remainingtime: 20 
+[Process] running | pid: 14919 , remainingtime: 19 
+[Process] running | pid: 14919 , remainingtime: 18 
+[PG] Sending process: 63 , at time 289
+[Process] running | pid: 14919 , remainingtime: 17 
+[Scheduler] Adding a processes to the queue: 62 , RT: 10
+[Scheduler] Adding a processes to the queue: 63 , RT: 12
+[Scheduler] Pausing: 14919 
+[Scheduler] Resuming: 14905
+[Process] running | pid: 14905 , remainingtime: 22 
+[Process] running | pid: 14905 , remainingtime: 21 
+[Process] running | pid: 14905 , remainingtime: 20 
+[Process] running | pid: 14905 , remainingtime: 19 
+[Process] running | pid: 14905 , remainingtime: 18 
+[Scheduler] Pausing: 14905 
+[Scheduler] Running a child process for the first time: 14920 
+[Process] started , runtime: 23 
+[Process] running | pid: 14920 , remainingtime: 22 
+[PG] Sending process: 64 , at time 296
+[Process] running | pid: 14920 , remainingtime: 21 
+[Process] running | pid: 14920 , remainingtime: 20 
+[Process] running | pid: 14920 , remainingtime: 19 
+[Process] running | pid: 14920 , remainingtime: 18 
+[Scheduler] Adding a processes to the queue: 64 , RT: 6
+[Scheduler] Pausing: 14920 
+[Scheduler] Running a child process for the first time: 14921 
+[Process] started , runtime: 28 
+[Process] running | pid: 14921 , remainingtime: 27 
+[Process] running | pid: 14921 , remainingtime: 26 
+[Process] running | pid: 14921 , remainingtime: 25 
+[Process] running | pid: 14921 , remainingtime: 24 
+[Process] running | pid: 14921 , remainingtime: 23 
+[Scheduler] Pausing: 14921 
+[Scheduler] Resuming: 14898
+[Process] running | pid: 14898 , remainingtime: 6 
+[Process] running | pid: 14898 , remainingtime: 5 
+[PG] Sending process: 65 , at time 306
+[Process] running | pid: 14898 , remainingtime: 4 
+[Process] running | pid: 14898 , remainingtime: 3 
+[Process] running | pid: 14898 , remainingtime: 2 
+[Scheduler] Adding a processes to the queue: 65 , RT: 6
+[Scheduler] Pausing: 14898 
+[Scheduler] Running a child process for the first time: 14922 
+[Process] started , runtime: 5 
+[Process] running | pid: 14922 , remainingtime: 4 
+[Process] running | pid: 14922 , remainingtime: 3 
+[Process] running | pid: 14922 , remainingtime: 2 
+[Process] running | pid: 14922 , remainingtime: 1 
+[PG] Sending process: 66 , at time 313
+[Process] running | pid: 14922 , remainingtime: 0 
+[Process] finished  , pid: 14922 
+[Scheduler] Adding a processes to the queue: 66 , RT: 3
+[Scheduler] Resuming: 14893
+[Process] running | pid: 14893 , remainingtime: 9 
+[Process] running | pid: 14893 , remainingtime: 8 
+[Process] running | pid: 14893 , remainingtime: 7 
+[Process] running | pid: 14893 , remainingtime: 6 
+[Process] running | pid: 14893 , remainingtime: 5 
+[Scheduler] Pausing: 14893 
+[Scheduler] Running a child process for the first time: 14923 
+[Process] started , runtime: 8 
+[Process] running | pid: 14923 , remainingtime: 7 
+[Process] running | pid: 14923 , remainingtime: 6 
+[Process] running | pid: 14923 , remainingtime: 5 
+[PG] Sending process: 67 , at time 322
+[Process] running | pid: 14923 , remainingtime: 4 
+[Process] running | pid: 14923 , remainingtime: 3 
+[Scheduler] Adding a processes to the queue: 67 , RT: 22
+[Scheduler] Pausing: 14923 
+[Scheduler] Resuming: 14906
+[Process] running | pid: 14906 , remainingtime: 20 
+[Process] running | pid: 14906 , remainingtime: 19 
+[Process] running | pid: 14906 , remainingtime: 18 
+[Process] running | pid: 14906 , remainingtime: 17 
+[Process] running | pid: 14906 , remainingtime: 16 
+[Scheduler] Pausing: 14906 
+[Scheduler] Running a child process for the first time: 14924 
+[Process] started , runtime: 2 
+[PG] Sending process: 68 , at time 330
+[Process] running | pid: 14924 , remainingtime: 1 
+[Process] running | pid: 14924 , remainingtime: 0 
+[Process] finished  , pid: 14924 
+[Scheduler] Adding a processes to the queue: 68 , RT: 15
+[Scheduler] Running a child process for the first time: 14925 
+[Process] started , runtime: 26 
+[Process] running | pid: 14925 , remainingtime: 25 
+[Process] running | pid: 14925 , remainingtime: 24 
+[Process] running | pid: 14925 , remainingtime: 23 
+[Process] running | pid: 14925 , remainingtime: 22 
+[Process] running | pid: 14925 , remainingtime: 21 
+[Scheduler] Pausing: 14925 
+[Scheduler] Running a child process for the first time: 14926 
+[Process] started , runtime: 18 
+[Process] running | pid: 14926 , remainingtime: 17 
+[Process] running | pid: 14926 , remainingtime: 16 
+[Process] running | pid: 14926 , remainingtime: 15 
+[PG] Sending process: 69 , at time 339
+[Process] running | pid: 14926 , remainingtime: 14 
+[Process] running | pid: 14926 , remainingtime: 13 
+[Scheduler] Adding a processes to the queue: 69 , RT: 16
+[Scheduler] Pausing: 14926 
+[Scheduler] Resuming: 14908
+[Process] running | pid: 14908 , remainingtime: 5 
+[Process] running | pid: 14908 , remainingtime: 4 
+[PG] Sending process: 70 , at time 344
+[Process] running | pid: 14908 , remainingtime: 3 
+[PG] Sending process: 71 , at time 345
+[Process] running | pid: 14908 , remainingtime: 2 
+[Process] running | pid: 14908 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 70 , RT: 29
+[Scheduler] Adding a processes to the queue: 71 , RT: 23
+[Scheduler] Pausing: 14908 
+[Scheduler] Running a child process for the first time: 14927 
+[Process] started , runtime: 24 
+[Process] running | pid: 14927 , remainingtime: 23 
+[Process] running | pid: 14927 , remainingtime: 22 
+[Process] running | pid: 14927 , remainingtime: 21 
+[Process] running | pid: 14927 , remainingtime: 20 
+[Process] running | pid: 14927 , remainingtime: 19 
+[Scheduler] Pausing: 14927 
+[Scheduler] Resuming: 14899
+[PG] Sending process: 72 , at time 352
+[Process] running | pid: 14899 , remainingtime: 17 
+[Process] running | pid: 14899 , remainingtime: 16 
+[Process] running | pid: 14899 , remainingtime: 15 
+[PG] Sending process: 73 , at time 355
+[Process] running | pid: 14899 , remainingtime: 14 
+[Process] running | pid: 14899 , remainingtime: 13 
+[Scheduler] Adding a processes to the queue: 72 , RT: 17
+[Scheduler] Adding a processes to the queue: 73 , RT: 21
+[Scheduler] Pausing: 14899 
+[Scheduler] Running a child process for the first time: 14928 
+[Process] started , runtime: 6 
+[Process] running | pid: 14928 , remainingtime: 5 
+[Process] running | pid: 14928 , remainingtime: 4 
+[Process] running | pid: 14928 , remainingtime: 3 
+[Process] running | pid: 14928 , remainingtime: 2 
+[Process] running | pid: 14928 , remainingtime: 1 
+[Scheduler] Pausing: 14928 
+[Scheduler] Resuming: 14909
+[PG] Sending process: 74 , at time 362
+[Process] running | pid: 14909 , remainingtime: 20 
+[Process] running | pid: 14909 , remainingtime: 19 
+[Process] running | pid: 14909 , remainingtime: 18 
+[Process] running | pid: 14909 , remainingtime: 17 
+[Process] running | pid: 14909 , remainingtime: 16 
+[Scheduler] Adding a processes to the queue: 74 , RT: 5
+[Scheduler] Pausing: 14909 
+[Scheduler] Resuming: 14910
+[Process] running | pid: 14910 , remainingtime: 4 
+[Process] running | pid: 14910 , remainingtime: 3 
+[Process] running | pid: 14910 , remainingtime: 2 
+[Process] running | pid: 14910 , remainingtime: 1 
+[Process] running | pid: 14910 , remainingtime: 0 
+[Process] finished  , pid: 14910 
+[Scheduler] Running a child process for the first time: 14929 
+[Process] started , runtime: 4 
+[PG] Sending process: 75 , at time 372
+[Process] running | pid: 14929 , remainingtime: 3 
+[Process] running | pid: 14929 , remainingtime: 2 
+[Process] running | pid: 14929 , remainingtime: 1 
+[Process] running | pid: 14929 , remainingtime: 0 
+[Process] finished  , pid: 14929 
+[Scheduler] Adding a processes to the queue: 75 , RT: 16
+[Scheduler] Running a child process for the first time: 14930 
+[Process] started , runtime: 14 
+[Process] running | pid: 14930 , remainingtime: 13 
+[Process] running | pid: 14930 , remainingtime: 12 
+[Process] running | pid: 14930 , remainingtime: 11 
+[Process] running | pid: 14930 , remainingtime: 10 
+[Process] running | pid: 14930 , remainingtime: 9 
+[Scheduler] Pausing: 14930 
+[Scheduler] Resuming: 14911
+[Process] running | pid: 14911 , remainingtime: 22 
+[Process] running | pid: 14911 , remainingtime: 21 
+[PG] Sending process: 76 , at time 382
+[PG] Sending process: 77 , at time 383
+[Process] running | pid: 14911 , remainingtime: 20 
+[Process] running | pid: 14911 , remainingtime: 19 
+[Process] running | pid: 14911 , remainingtime: 18 
+[Scheduler] Adding a processes to the queue: 76 , RT: 22
+[Scheduler] Adding a processes to the queue: 77 , RT: 26
+[Scheduler] Pausing: 14911 
+[Scheduler] Resuming: 14895
+[Process] running | pid: 14895 , remainingtime: 5 
+[Process] running | pid: 14895 , remainingtime: 4 
+[PG] Sending process: 78 , at time 387
+[Process] running | pid: 14895 , remainingtime: 3 
+[Process] running | pid: 14895 , remainingtime: 2 
+[Process] running | pid: 14895 , remainingtime: 1 
+[Scheduler] Adding a processes to the queue: 78 , RT: 14
+[Scheduler] Pausing: 14895 
+[Scheduler] Running a child process for the first time: 14931 
+[Process] started , runtime: 13 
+[Process] running | pid: 14931 , remainingtime: 12 
+[Process] running | pid: 14931 , remainingtime: 11 
+[Process] running | pid: 14931 , remainingtime: 10 
+[Process] running | pid: 14931 , remainingtime: 9 
+[PG] Sending process: 79 , at time 395
+[Process] running | pid: 14931 , remainingtime: 8 
+[Scheduler] Adding a processes to the queue: 79 , RT: 15
+[Scheduler] Pausing: 14931 
+[Scheduler] Running a child process for the first time: 14932 
+[Process] started , runtime: 22 
+[Process] running | pid: 14932 , remainingtime: 21 
+[Process] running | pid: 14932 , remainingtime: 20 
+[Process] running | pid: 14932 , remainingtime: 19 
+[Process] running | pid: 14932 , remainingtime: 18 
+[Process] running | pid: 14932 , remainingtime: 17 
+[Scheduler] Pausing: 14932 
+[Scheduler] Resuming: 14912
+[PG] Sending process: 80 , at time 401
+[Process] running | pid: 14912 , remainingtime: 10 
+[PG] Sending process: 81 , at time 402
+[Process] running | pid: 14912 , remainingtime: 9 
+[Process] running | pid: 14912 , remainingtime: 8 
+[Process] running | pid: 14912 , remainingtime: 7 
+[PG] Sending process: 82 , at time 405
+[Process] running | pid: 14912 , remainingtime: 6 
+[Scheduler] Adding a processes to the queue: 80 , RT: 26
+[Scheduler] Adding a processes to the queue: 81 , RT: 2
+[Scheduler] Adding a processes to the queue: 82 , RT: 6
+[Scheduler] Pausing: 14912 
+[Scheduler] Resuming: 14913
+[Process] running | pid: 14913 , remainingtime: 21 
+[Process] running | pid: 14913 , remainingtime: 20 
+[Process] running | pid: 14913 , remainingtime: 19 
+[Process] running | pid: 14913 , remainingtime: 18 
+[Process] running | pid: 14913 , remainingtime: 17 
+[Scheduler] Pausing: 14913 
+[Scheduler] Resuming: 14896
+[Process] running | pid: 14896 , remainingtime: 0 
+[Process] finished  , pid: 14896 
+[Scheduler] Running a child process for the first time: 14933 
+[Process] started , runtime: 25 
+[Process] running | pid: 14933 , remainingtime: 24 
+[PG] Sending process: 83 , at time 413
+[Process] running | pid: 14933 , remainingtime: 23 
+[Process] running | pid: 14933 , remainingtime: 22 
+[Process] running | pid: 14933 , remainingtime: 21 
+[PG] Sending process: 84 , at time 416
+[PG] Sending process: 85 , at time 416
+[Process] running | pid: 14933 , remainingtime: 20 
+[Scheduler] Adding a processes to the queue: 83 , RT: 26
+[Scheduler] Adding a processes to the queue: 84 , RT: 16
+[Scheduler] Adding a processes to the queue: 85 , RT: 22
+[Scheduler] Pausing: 14933 
+[Scheduler] Resuming: 14901
+[Process] running | pid: 14901 , remainingtime: 3 
+[Process] running | pid: 14901 , remainingtime: 2 
+[Process] running | pid: 14901 , remainingtime: 1 
+[PG] Sending process: 86 , at time 420
+[Process] running | pid: 14901 , remainingtime: 0 
+[Process] finished  , pid: 14901 
+[Scheduler] Adding a processes to the queue: 86 , RT: 5
+[Scheduler] Running a child process for the first time: 14934 
+[Process] started , runtime: 4 
+[Process] running | pid: 14934 , remainingtime: 3 
+[Process] running | pid: 14934 , remainingtime: 2 
+[Process] running | pid: 14934 , remainingtime: 1 
+[Process] running | pid: 14934 , remainingtime: 0 
+[Process] finished  , pid: 14934 
+[Scheduler] Running a child process for the first time: 14935 
+[Process] started , runtime: 5 
+[Process] running | pid: 14935 , remainingtime: 4 
+[Process] running | pid: 14935 , remainingtime: 3 
+[Process] running | pid: 14935 , remainingtime: 2 
+[PG] Sending process: 87 , at time 428
+[Process] running | pid: 14935 , remainingtime: 1 
+[PG] Sending process: 88 , at time 429
+[PG] Sending process: 89 , at time 429
+[Process] running | pid: 14935 , remainingtime: 0 
+[Process] finished  , pid: 14935 
+[Scheduler] Adding a processes to the queue: 87 , RT: 21
+[Scheduler] Adding a processes to the queue: 88 , RT: 18
+[Scheduler] Adding a processes to the queue: 89 , RT: 1
+[Scheduler] Resuming: 14914
+[Process] running | pid: 14914 , remainingtime: 3 
+[Process] running | pid: 14914 , remainingtime: 2 
+[Process] running | pid: 14914 , remainingtime: 1 
+[Process] running | pid: 14914 , remainingtime: 0 
+[Process] finished  , pid: 14914 
+[Scheduler] Running a child process for the first time: 14936 
+[Process] started , runtime: 25 
+[Process] running | pid: 14936 , remainingtime: 24 
+[Process] running | pid: 14936 , remainingtime: 23 
+[Process] running | pid: 14936 , remainingtime: 22 
+[PG] Sending process: 90 , at time 436
+[PG] Sending process: 91 , at time 437
+[Process] running | pid: 14936 , remainingtime: 21 
+[Process] running | pid: 14936 , remainingtime: 20 
+[Scheduler] Adding a processes to the queue: 90 , RT: 8
+[Scheduler] Adding a processes to the queue: 91 , RT: 28
+[Scheduler] Pausing: 14936 
+[Scheduler] Running a child process for the first time: 14937 
+[Process] started , runtime: 28 
+[PG] Sending process: 92 , at time 439
+[Process] running | pid: 14937 , remainingtime: 27 
+[Process] running | pid: 14937 , remainingtime: 26 
+[Process] running | pid: 14937 , remainingtime: 25 
+[Process] running | pid: 14937 , remainingtime: 24 
+[Process] running | pid: 14937 , remainingtime: 23 
+[Scheduler] Adding a processes to the queue: 92 , RT: 17
+[Scheduler] Pausing: 14937 
+[Scheduler] Resuming: 14902
+[Process] running | pid: 14902 , remainingtime: 15 
+[Process] running | pid: 14902 , remainingtime: 14 
+[Process] running | pid: 14902 , remainingtime: 13 
+[Process] running | pid: 14902 , remainingtime: 12 
+[Process] running | pid: 14902 , remainingtime: 11 
+[Scheduler] Pausing: 14902 
+[Scheduler] Running a child process for the first time: 14938 
+[Process] started , runtime: 26 
+[PG] Sending process: 93 , at time 449
+[Process] running | pid: 14938 , remainingtime: 25 
+[Process] running | pid: 14938 , remainingtime: 24 
+[Process] running | pid: 14938 , remainingtime: 23 
+[Process] running | pid: 14938 , remainingtime: 22 
+[Process] running | pid: 14938 , remainingtime: 21 
+[PG] Sending process: 94 , at time 453
+[Scheduler] Adding a processes to the queue: 93 , RT: 7
+[Scheduler] Adding a processes to the queue: 94 , RT: 12
+[Scheduler] Pausing: 14938 
+[Scheduler] Resuming: 14915
+[Process] running | pid: 14915 , remainingtime: 15 
+[Process] running | pid: 14915 , remainingtime: 14 
+[Process] running | pid: 14915 , remainingtime: 13 
+[Process] running | pid: 14915 , remainingtime: 12 
+[Process] running | pid: 14915 , remainingtime: 11 
+[Scheduler] Pausing: 14915 
+[Scheduler] Running a child process for the first time: 14939 
+[Process] started , runtime: 8 
+[Process] running | pid: 14939 , remainingtime: 7 
+[Process] running | pid: 14939 , remainingtime: 6 
+[PG] Sending process: 95 , at time 460
+[Process] running | pid: 14939 , remainingtime: 5 
+[PG] Sending process: 96 , at time 462
+[Process] running | pid: 14939 , remainingtime: 4 
+[Process] running | pid: 14939 , remainingtime: 3 
+[Scheduler] Adding a processes to the queue: 95 , RT: 29
+[Scheduler] Adding a processes to the queue: 96 , RT: 26
+[Scheduler] Pausing: 14939 
+[Scheduler] Resuming: 14903
+[Process] running | pid: 14903 , remainingtime: 13 
+[Process] running | pid: 14903 , remainingtime: 12 
+[Process] running | pid: 14903 , remainingtime: 11 
+[Process] running | pid: 14903 , remainingtime: 10 
+[Process] running | pid: 14903 , remainingtime: 9 
+[Scheduler] Pausing: 14903 
+[PG] Sending process: 97 , at time 468
+[Scheduler] Running a child process for the first time: 14940 
+[Process] started , runtime: 13 
+[Process] running | pid: 14940 , remainingtime: 12 
+[Process] running | pid: 14940 , remainingtime: 11 
+[Process] running | pid: 14940 , remainingtime: 10 
+[Process] running | pid: 14940 , remainingtime: 9 
+[Process] running | pid: 14940 , remainingtime: 8 
+[Scheduler] Adding a processes to the queue: 97 , RT: 8
+[Scheduler] Pausing: 14940 
+[Scheduler] Running a child process for the first time: 14941 
+[Process] started , runtime: 8 
+[PG] Sending process: 98 , at time 474
+[Process] running | pid: 14941 , remainingtime: 7 
+[Process] running | pid: 14941 , remainingtime: 6 
+[Process] running | pid: 14941 , remainingtime: 5 
+[Process] running | pid: 14941 , remainingtime: 4 
+[Process] running | pid: 14941 , remainingtime: 3 
+[Scheduler] Adding a processes to the queue: 98 , RT: 26
+[Scheduler] Pausing: 14941 
+[Scheduler] Running a child process for the first time: 14942 
+[Process] started , runtime: 25 
+[Process] running | pid: 14942 , remainingtime: 24 
+[Process] running | pid: 14942 , remainingtime: 23 
+[Process] running | pid: 14942 , remainingtime: 22 
+[Process] running | pid: 14942 , remainingtime: 21 
+[Process] running | pid: 14942 , remainingtime: 20 
+[Scheduler] Pausing: 14942 
+[Scheduler] Resuming: 14917
+[PG] Sending process: 99 , at time 484
+[Process] running | pid: 14917 , remainingtime: 19 
+[PG] Sending process: 100 , at time 485
+[PG] finished[Process] running | pid: 14917 , remainingtime: 18 
+
+[Process] running | pid: 14917 , remainingtime: 17 
+[Process] running | pid: 14917 , remainingtime: 16 
+[Process] running | pid: 14917 , remainingtime: 15 
+[Scheduler] Adding a processes to the queue: 99 , RT: 19
+[Scheduler] No more processes to receive.
+[Scheduler] Adding a processes to the queue: 100 , RT: 21
+[Scheduler] Pausing: 14917 
+[Scheduler] Resuming: 14918
+[Process] running | pid: 14918 , remainingtime: 5 
+[Process] running | pid: 14918 , remainingtime: 4 
+[Process] running | pid: 14918 , remainingtime: 3 
+[Process] running | pid: 14918 , remainingtime: 2 
+[Process] running | pid: 14918 , remainingtime: 1 
+[Scheduler] Pausing: 14918 
+[Scheduler] Running a child process for the first time: 14943 
+[Process] started , runtime: 25 
+[Process] running | pid: 14943 , remainingtime: 24 
+[Process] running | pid: 14943 , remainingtime: 23 
+[Process] running | pid: 14943 , remainingtime: 22 
+[Process] running | pid: 14943 , remainingtime: 21 
+[Process] running | pid: 14943 , remainingtime: 20 
+[Scheduler] Pausing: 14943 
+[Scheduler] Running a child process for the first time: 14944 
+[Process] started , runtime: 12 
+[Process] running | pid: 14944 , remainingtime: 11 
+[Process] running | pid: 14944 , remainingtime: 10 
+[Process] running | pid: 14944 , remainingtime: 9 
+[Process] running | pid: 14944 , remainingtime: 8 
+[Process] running | pid: 14944 , remainingtime: 7 
+[Scheduler] Pausing: 14944 
+[Scheduler] Resuming: 14919
+[Process] running | pid: 14919 , remainingtime: 16 
+[Process] running | pid: 14919 , remainingtime: 15 
+[Process] running | pid: 14919 , remainingtime: 14 
+[Process] running | pid: 14919 , remainingtime: 13 
+[Process] running | pid: 14919 , remainingtime: 12 
+[Scheduler] Pausing: 14919 
+[Scheduler] Running a child process for the first time: 14945 
+[Process] started , runtime: 10 
+[Process] running | pid: 14945 , remainingtime: 9 
+[Process] running | pid: 14945 , remainingtime: 8 
+[Process] running | pid: 14945 , remainingtime: 7 
+[Process] running | pid: 14945 , remainingtime: 6 
+[Process] running | pid: 14945 , remainingtime: 5 
+[Scheduler] Pausing: 14945 
+[Scheduler] Resuming: 14905
+[Process] running | pid: 14905 , remainingtime: 17 
+[Process] running | pid: 14905 , remainingtime: 16 
+[Process] running | pid: 14905 , remainingtime: 15 
+[Process] running | pid: 14905 , remainingtime: 14 
+[Process] running | pid: 14905 , remainingtime: 13 
+[Scheduler] Pausing: 14905 
+[Scheduler] Resuming: 14920
+[Process] running | pid: 14920 , remainingtime: 17 
+[Process] running | pid: 14920 , remainingtime: 16 
+[Process] running | pid: 14920 , remainingtime: 15 
+[Process] running | pid: 14920 , remainingtime: 14 
+[Process] running | pid: 14920 , remainingtime: 13 
+[Scheduler] Pausing: 14920 
+[Scheduler] Running a child process for the first time: 14946 
+[Process] started , runtime: 6 
+[Process] running | pid: 14946 , remainingtime: 5 
+[Process] running | pid: 14946 , remainingtime: 4 
+[Process] running | pid: 14946 , remainingtime: 3 
+[Process] running | pid: 14946 , remainingtime: 2 
+[Process] running | pid: 14946 , remainingtime: 1 
+[Scheduler] Pausing: 14946 
+[Scheduler] Resuming: 14921
+[Process] running | pid: 14921 , remainingtime: 22 
+[Process] running | pid: 14921 , remainingtime: 21 
+[Process] running | pid: 14921 , remainingtime: 20 
+[Process] running | pid: 14921 , remainingtime: 19 
+[Process] running | pid: 14921 , remainingtime: 18 
+[Scheduler] Pausing: 14921 
+[Scheduler] Resuming: 14898
+[Process] running | pid: 14898 , remainingtime: 1 
+[Process] running | pid: 14898 , remainingtime: 0 
+[Process] finished  , pid: 14898 
+[Scheduler] Running a child process for the first time: 14947 
+[Process] started , runtime: 6 
+[Process] running | pid: 14947 , remainingtime: 5 
+[Process] running | pid: 14947 , remainingtime: 4 
+[Process] running | pid: 14947 , remainingtime: 3 
+[Process] running | pid: 14947 , remainingtime: 2 
+[Process] running | pid: 14947 , remainingtime: 1 
+[Scheduler] Pausing: 14947 
+[Scheduler] Running a child process for the first time: 14948 
+[Process] started , runtime: 3 
+[Process] running | pid: 14948 , remainingtime: 2 
+[Process] running | pid: 14948 , remainingtime: 1 
+[Process] running | pid: 14948 , remainingtime: 0 
+[Process] finished  , pid: 14948 
+[Scheduler] Resuming: 14893
+[Process] running | pid: 14893 , remainingtime: 4 
+[Process] running | pid: 14893 , remainingtime: 3 
+[Process] running | pid: 14893 , remainingtime: 2 
+[Process] running | pid: 14893 , remainingtime: 1 
+[Process] running | pid: 14893 , remainingtime: 0 
+[Process] finished  , pid: 14893 
+[Scheduler] Resuming: 14923
+[Process] running | pid: 14923 , remainingtime: 2 
+[Process] running | pid: 14923 , remainingtime: 1 
+[Process] running | pid: 14923 , remainingtime: 0 
+[Process] finished  , pid: 14923 
+[Scheduler] Running a child process for the first time: 14949 
+[Process] started , runtime: 22 
+[Process] running | pid: 14949 , remainingtime: 21 
+[Process] running | pid: 14949 , remainingtime: 20 
+[Process] running | pid: 14949 , remainingtime: 19 
+[Process] running | pid: 14949 , remainingtime: 18 
+[Process] running | pid: 14949 , remainingtime: 17 
+[Scheduler] Pausing: 14949 
+[Scheduler] Resuming: 14906
+[Process] running | pid: 14906 , remainingtime: 15 
+[Process] running | pid: 14906 , remainingtime: 14 
+[Process] running | pid: 14906 , remainingtime: 13 
+[Process] running | pid: 14906 , remainingtime: 12 
+[Process] running | pid: 14906 , remainingtime: 11 
+[Scheduler] Pausing: 14906 
+[Scheduler] Running a child process for the first time: 14950 
+[Process] started , runtime: 15 
+[Process] running | pid: 14950 , remainingtime: 14 
+[Process] running | pid: 14950 , remainingtime: 13 
+[Process] running | pid: 14950 , remainingtime: 12 
+[Process] running | pid: 14950 , remainingtime: 11 
+[Process] running | pid: 14950 , remainingtime: 10 
+[Scheduler] Pausing: 14950 
+[Scheduler] Resuming: 14925
+[Process] running | pid: 14925 , remainingtime: 20 
+[Process] running | pid: 14925 , remainingtime: 19 
+[Process] running | pid: 14925 , remainingtime: 18 
+[Process] running | pid: 14925 , remainingtime: 17 
+[Process] running | pid: 14925 , remainingtime: 16 
+[Scheduler] Pausing: 14925 
+[Scheduler] Running a child process for the first time: 14951 
+[Process] started , runtime: 16 
+[Process] running | pid: 14951 , remainingtime: 15 
+[Process] running | pid: 14951 , remainingtime: 14 
+[Process] running | pid: 14951 , remainingtime: 13 
+[Process] running | pid: 14951 , remainingtime: 12 
+[Process] running | pid: 14951 , remainingtime: 11 
+[Scheduler] Pausing: 14951 
+[Scheduler] Resuming: 14926
+[Process] running | pid: 14926 , remainingtime: 12 
+[Process] running | pid: 14926 , remainingtime: 11 
+[Process] running | pid: 14926 , remainingtime: 10 
+[Process] running | pid: 14926 , remainingtime: 9 
+[Process] running | pid: 14926 , remainingtime: 8 
+[Scheduler] Pausing: 14926 
+[Scheduler] Resuming: 14908
+[Process] running | pid: 14908 , remainingtime: 0 
+[Process] finished  , pid: 14908 
+[Scheduler] Running a child process for the first time: 14952 
+[Process] started , runtime: 29 
+[Process] running | pid: 14952 , remainingtime: 28 
+[Process] running | pid: 14952 , remainingtime: 27 
+[Process] running | pid: 14952 , remainingtime: 26 
+[Process] running | pid: 14952 , remainingtime: 25 
+[Process] running | pid: 14952 , remainingtime: 24 
+[Scheduler] Pausing: 14952 
+[Scheduler] Running a child process for the first time: 14953 
+[Process] started , runtime: 23 
+[Process] running | pid: 14953 , remainingtime: 22 
+[Process] running | pid: 14953 , remainingtime: 21 
+[Process] running | pid: 14953 , remainingtime: 20 
+[Process] running | pid: 14953 , remainingtime: 19 
+[Process] running | pid: 14953 , remainingtime: 18 
+[Scheduler] Pausing: 14953 
+[Scheduler] Resuming: 14927
+[Process] running | pid: 14927 , remainingtime: 18 
+[Process] running | pid: 14927 , remainingtime: 17 
+[Process] running | pid: 14927 , remainingtime: 16 
+[Process] running | pid: 14927 , remainingtime: 15 
+[Process] running | pid: 14927 , remainingtime: 14 
+[Scheduler] Pausing: 14927 
+[Scheduler] Running a child process for the first time: 14954 
+[Process] started , runtime: 21 
+[Process] running | pid: 14954 , remainingtime: 20 
+[Process] running | pid: 14954 , remainingtime: 19 
+[Process] running | pid: 14954 , remainingtime: 18 
+[Process] running | pid: 14954 , remainingtime: 17 
+[Process] running | pid: 14954 , remainingtime: 16 
+[Scheduler] Pausing: 14954 
+[Scheduler] Resuming: 14899
+[Process] running | pid: 14899 , remainingtime: 12 
+[Process] running | pid: 14899 , remainingtime: 11 
+[Process] running | pid: 14899 , remainingtime: 10 
+[Process] running | pid: 14899 , remainingtime: 9 
+[Process] running | pid: 14899 , remainingtime: 8 
+[Scheduler] Pausing: 14899 
+[Scheduler] Running a child process for the first time: 14955 
+[Process] started , runtime: 17 
+[Process] running | pid: 14955 , remainingtime: 16 
+[Process] running | pid: 14955 , remainingtime: 15 
+[Process] running | pid: 14955 , remainingtime: 14 
+[Process] running | pid: 14955 , remainingtime: 13 
+[Process] running | pid: 14955 , remainingtime: 12 
+[Scheduler] Pausing: 14955 
+[Scheduler] Resuming: 14928
+[Process] running | pid: 14928 , remainingtime: 0 
+[Process] finished  , pid: 14928 
+[Scheduler] Resuming: 14909
+[Process] running | pid: 14909 , remainingtime: 15 
+[Process] running | pid: 14909 , remainingtime: 14 
+[Process] running | pid: 14909 , remainingtime: 13 
+[Process] running | pid: 14909 , remainingtime: 12 
+[Process] running | pid: 14909 , remainingtime: 11 
+[Scheduler] Pausing: 14909 
+[Scheduler] Running a child process for the first time: 14956 
+[Process] started , runtime: 5 
+[Process] running | pid: 14956 , remainingtime: 4 
+[Process] running | pid: 14956 , remainingtime: 3 
+[Process] running | pid: 14956 , remainingtime: 2 
+[Process] running | pid: 14956 , remainingtime: 1 
+[Process] running | pid: 14956 , remainingtime: 0 
+[Process] finished  , pid: 14956 
+[Scheduler] Running a child process for the first time: 14957 
+[Process] started , runtime: 16 
+[Process] running | pid: 14957 , remainingtime: 15 
+[Process] running | pid: 14957 , remainingtime: 14 
+[Process] running | pid: 14957 , remainingtime: 13 
+[Process] running | pid: 14957 , remainingtime: 12 
+[Process] running | pid: 14957 , remainingtime: 11 
+[Scheduler] Pausing: 14957 
+[Scheduler] Resuming: 14930
+[Process] running | pid: 14930 , remainingtime: 8 
+[Process] running | pid: 14930 , remainingtime: 7 
+[Process] running | pid: 14930 , remainingtime: 6 
+[Process] running | pid: 14930 , remainingtime: 5 
+[Process] running | pid: 14930 , remainingtime: 4 
+[Scheduler] Pausing: 14930 
+[Scheduler] Running a child process for the first time: 14958 
+[Process] started , runtime: 26 
+[Process] running | pid: 14958 , remainingtime: 25 
+[Process] running | pid: 14958 , remainingtime: 24 
+[Process] running | pid: 14958 , remainingtime: 23 
+[Process] running | pid: 14958 , remainingtime: 22 
+[Process] running | pid: 14958 , remainingtime: 21 
+[Scheduler] Pausing: 14958 
+[Scheduler] Resuming: 14911
+[Process] running | pid: 14911 , remainingtime: 17 
+[Process] running | pid: 14911 , remainingtime: 16 
+[Process] running | pid: 14911 , remainingtime: 15 
+[Process] running | pid: 14911 , remainingtime: 14 
+[Process] running | pid: 14911 , remainingtime: 13 
+[Scheduler] Pausing: 14911 
+[Scheduler] Running a child process for the first time: 14959 
+[Process] started , runtime: 22 
+[Process] running | pid: 14959 , remainingtime: 21 
+[Process] running | pid: 14959 , remainingtime: 20 
+[Process] running | pid: 14959 , remainingtime: 19 
+[Process] running | pid: 14959 , remainingtime: 18 
+[Process] running | pid: 14959 , remainingtime: 17 
+[Scheduler] Pausing: 14959 
+[Scheduler] Running a child process for the first time: 14960 
+[Process] started , runtime: 14 
+[Process] running | pid: 14960 , remainingtime: 13 
+[Process] running | pid: 14960 , remainingtime: 12 
+[Process] running | pid: 14960 , remainingtime: 11 
+[Process] running | pid: 14960 , remainingtime: 10 
+[Process] running | pid: 14960 , remainingtime: 9 
+[Scheduler] Pausing: 14960 
+[Scheduler] Resuming: 14895
+[Process] running | pid: 14895 , remainingtime: 0 
+[Process] finished  , pid: 14895 
+[Scheduler] Running a child process for the first time: 14961 
+[Process] started , runtime: 15 
+[Process] running | pid: 14961 , remainingtime: 14 
+[Process] running | pid: 14961 , remainingtime: 13 
+[Process] running | pid: 14961 , remainingtime: 12 
+[Process] running | pid: 14961 , remainingtime: 11 
+[Process] running | pid: 14961 , remainingtime: 10 
+[Scheduler] Pausing: 14961 
+[Scheduler] Resuming: 14931
+[Process] running | pid: 14931 , remainingtime: 7 
+[Process] running | pid: 14931 , remainingtime: 6 
+[Process] running | pid: 14931 , remainingtime: 5 
+[Process] running | pid: 14931 , remainingtime: 4 
+[Process] running | pid: 14931 , remainingtime: 3 
+[Scheduler] Pausing: 14931 
+[Scheduler] Resuming: 14932
+[Process] running | pid: 14932 , remainingtime: 16 
+[Process] running | pid: 14932 , remainingtime: 15 
+[Process] running | pid: 14932 , remainingtime: 14 
+[Process] running | pid: 14932 , remainingtime: 13 
+[Process] running | pid: 14932 , remainingtime: 12 
+[Scheduler] Pausing: 14932 
+[Scheduler] Running a child process for the first time: 14962 
+[Process] started , runtime: 2 
+[Process] running | pid: 14962 , remainingtime: 1 
+[Process] running | pid: 14962 , remainingtime: 0 
+[Process] finished  , pid: 14962 
+[Scheduler] Running a child process for the first time: 14963 
+[Process] started , runtime: 6 
+[Process] running | pid: 14963 , remainingtime: 5 
+[Process] running | pid: 14963 , remainingtime: 4 
+[Process] running | pid: 14963 , remainingtime: 3 
+[Process] running | pid: 14963 , remainingtime: 2 
+[Process] running | pid: 14963 , remainingtime: 1 
+[Scheduler] Pausing: 14963 
+[Scheduler] Resuming: 14912
+[Process] running | pid: 14912 , remainingtime: 5 
+[Process] running | pid: 14912 , remainingtime: 4 
+[Process] running | pid: 14912 , remainingtime: 3 
+[Process] running | pid: 14912 , remainingtime: 2 
+[Process] running | pid: 14912 , remainingtime: 1 
+[Scheduler] Pausing: 14912 
+[Scheduler] Running a child process for the first time: 14964 
+[Process] started , runtime: 26 
+[Process] running | pid: 14964 , remainingtime: 25 
+[Process] running | pid: 14964 , remainingtime: 24 
+[Process] running | pid: 14964 , remainingtime: 23 
+[Process] running | pid: 14964 , remainingtime: 22 
+[Process] running | pid: 14964 , remainingtime: 21 
+[Scheduler] Pausing: 14964 
+[Scheduler] Resuming: 14913
+[Process] running | pid: 14913 , remainingtime: 16 
+[Process] running | pid: 14913 , remainingtime: 15 
+[Process] running | pid: 14913 , remainingtime: 14 
+[Process] running | pid: 14913 , remainingtime: 13 
+[Process] running | pid: 14913 , remainingtime: 12 
+[Scheduler] Pausing: 14913 
+[Scheduler] Running a child process for the first time: 14965 
+[Process] started , runtime: 16 
+[Process] running | pid: 14965 , remainingtime: 15 
+[Process] running | pid: 14965 , remainingtime: 14 
+[Process] running | pid: 14965 , remainingtime: 13 
+[Process] running | pid: 14965 , remainingtime: 12 
+[Process] running | pid: 14965 , remainingtime: 11 
+[Scheduler] Pausing: 14965 
+[Scheduler] Running a child process for the first time: 14966 
+[Process] started , runtime: 22 
+[Process] running | pid: 14966 , remainingtime: 21 
+[Process] running | pid: 14966 , remainingtime: 20 
+[Process] running | pid: 14966 , remainingtime: 19 
+[Process] running | pid: 14966 , remainingtime: 18 
+[Process] running | pid: 14966 , remainingtime: 17 
+[Scheduler] Pausing: 14966 
+[Scheduler] Resuming: 14933
+[Process] running | pid: 14933 , remainingtime: 19 
+[Process] running | pid: 14933 , remainingtime: 18 
+[Process] running | pid: 14933 , remainingtime: 17 
+[Process] running | pid: 14933 , remainingtime: 16 
+[Process] running | pid: 14933 , remainingtime: 15 
+[Scheduler] Pausing: 14933 
+[Scheduler] Running a child process for the first time: 14967 
+[Process] started , runtime: 26 
+[Process] running | pid: 14967 , remainingtime: 25 
+[Process] running | pid: 14967 , remainingtime: 24 
+[Process] running | pid: 14967 , remainingtime: 23 
+[Process] running | pid: 14967 , remainingtime: 22 
+[Process] running | pid: 14967 , remainingtime: 21 
+[Scheduler] Pausing: 14967 
+[Scheduler] Running a child process for the first time: 14968 
+[Process] started , runtime: 5 
+[Process] running | pid: 14968 , remainingtime: 4 
+[Process] running | pid: 14968 , remainingtime: 3 
+[Process] running | pid: 14968 , remainingtime: 2 
+[Process] running | pid: 14968 , remainingtime: 1 
+[Process] running | pid: 14968 , remainingtime: 0 
+[Process] finished  , pid: 14968 
+[Scheduler] Running a child process for the first time: 14969 
+[Process] started , runtime: 1 
+[Process] running | pid: 14969 , remainingtime: 0 
+[Process] finished  , pid: 14969 
+[Scheduler] Running a child process for the first time: 14970 
+[Process] started , runtime: 18 
+[Process] running | pid: 14970 , remainingtime: 17 
+[Process] running | pid: 14970 , remainingtime: 16 
+[Process] running | pid: 14970 , remainingtime: 15 
+[Process] running | pid: 14970 , remainingtime: 14 
+[Process] running | pid: 14970 , remainingtime: 13 
+[Scheduler] Pausing: 14970 
+[Scheduler] Running a child process for the first time: 14971 
+[Process] started , runtime: 21 
+[Process] running | pid: 14971 , remainingtime: 20 
+[Process] running | pid: 14971 , remainingtime: 19 
+[Process] running | pid: 14971 , remainingtime: 18 
+[Process] running | pid: 14971 , remainingtime: 17 
+[Process] running | pid: 14971 , remainingtime: 16 
+[Scheduler] Pausing: 14971 
+[Scheduler] Resuming: 14936
+[Process] running | pid: 14936 , remainingtime: 19 
+[Process] running | pid: 14936 , remainingtime: 18 
+[Process] running | pid: 14936 , remainingtime: 17 
+[Process] running | pid: 14936 , remainingtime: 16 
+[Process] running | pid: 14936 , remainingtime: 15 
+[Scheduler] Pausing: 14936 
+[Scheduler] Running a child process for the first time: 14972 
+[Process] started , runtime: 8 
+[Process] running | pid: 14972 , remainingtime: 7 
+[Process] running | pid: 14972 , remainingtime: 6 
+[Process] running | pid: 14972 , remainingtime: 5 
+[Process] running | pid: 14972 , remainingtime: 4 
+[Process] running | pid: 14972 , remainingtime: 3 
+[Scheduler] Pausing: 14972 
+[Scheduler] Running a child process for the first time: 14973 
+[Process] started , runtime: 28 
+[Process] running | pid: 14973 , remainingtime: 27 
+[Process] running | pid: 14973 , remainingtime: 26 
+[Process] running | pid: 14973 , remainingtime: 25 
+[Process] running | pid: 14973 , remainingtime: 24 
+[Process] running | pid: 14973 , remainingtime: 23 
+[Scheduler] Pausing: 14973 
+[Scheduler] Resuming: 14937
+[Process] running | pid: 14937 , remainingtime: 22 
+[Process] running | pid: 14937 , remainingtime: 21 
+[Process] running | pid: 14937 , remainingtime: 20 
+[Process] running | pid: 14937 , remainingtime: 19 
+[Process] running | pid: 14937 , remainingtime: 18 
+[Scheduler] Pausing: 14937 
+[Scheduler] Running a child process for the first time: 14974 
+[Process] started , runtime: 17 
+[Process] running | pid: 14974 , remainingtime: 16 
+[Process] running | pid: 14974 , remainingtime: 15 
+[Process] running | pid: 14974 , remainingtime: 14 
+[Process] running | pid: 14974 , remainingtime: 13 
+[Process] running | pid: 14974 , remainingtime: 12 
+[Scheduler] Pausing: 14974 
+[Scheduler] Resuming: 14902
+[Process] running | pid: 14902 , remainingtime: 10 
+[Process] running | pid: 14902 , remainingtime: 9 
+[Process] running | pid: 14902 , remainingtime: 8 
+[Process] running | pid: 14902 , remainingtime: 7 
+[Process] running | pid: 14902 , remainingtime: 6 
+[Scheduler] Pausing: 14902 
+[Scheduler] Running a child process for the first time: 14975 
+[Process] started , runtime: 7 
+[Process] running | pid: 14975 , remainingtime: 6 
+[Process] running | pid: 14975 , remainingtime: 5 
+[Process] running | pid: 14975 , remainingtime: 4 
+[Process] running | pid: 14975 , remainingtime: 3 
+[Process] running | pid: 14975 , remainingtime: 2 
+[Scheduler] Pausing: 14975 
+[Scheduler] Resuming: 14938
+[Process] running | pid: 14938 , remainingtime: 20 
+[Process] running | pid: 14938 , remainingtime: 19 
+[Process] running | pid: 14938 , remainingtime: 18 
+[Process] running | pid: 14938 , remainingtime: 17 
+[Process] running | pid: 14938 , remainingtime: 16 
+[Scheduler] Pausing: 14938 
+[Scheduler] Running a child process for the first time: 14976 
+[Process] started , runtime: 12 
+[Process] running | pid: 14976 , remainingtime: 11 
+[Process] running | pid: 14976 , remainingtime: 10 
+[Process] running | pid: 14976 , remainingtime: 9 
+[Process] running | pid: 14976 , remainingtime: 8 
+[Process] running | pid: 14976 , remainingtime: 7 
+[Scheduler] Pausing: 14976 
+[Scheduler] Resuming: 14915
+[Process] running | pid: 14915 , remainingtime: 10 
+[Process] running | pid: 14915 , remainingtime: 9 
+[Process] running | pid: 14915 , remainingtime: 8 
+[Process] running | pid: 14915 , remainingtime: 7 
+[Process] running | pid: 14915 , remainingtime: 6 
+[Scheduler] Pausing: 14915 
+[Scheduler] Resuming: 14939
+[Process] running | pid: 14939 , remainingtime: 2 
+[Process] running | pid: 14939 , remainingtime: 1 
+[Process] running | pid: 14939 , remainingtime: 0 
+[Process] finished  , pid: 14939 
+[Scheduler] Running a child process for the first time: 14981 
+[Process] started , runtime: 29 
+[Process] running | pid: 14981 , remainingtime: 28 
+[Process] running | pid: 14981 , remainingtime: 27 
+[Process] running | pid: 14981 , remainingtime: 26 
+[Process] running | pid: 14981 , remainingtime: 25 
+[Process] running | pid: 14981 , remainingtime: 24 
+[Scheduler] Pausing: 14981 
+[Scheduler] Running a child process for the first time: 14982 
+[Process] started , runtime: 26 
+[Process] running | pid: 14982 , remainingtime: 25 
+[Process] running | pid: 14982 , remainingtime: 24 
+[Process] running | pid: 14982 , remainingtime: 23 
+[Process] running | pid: 14982 , remainingtime: 22 
+[Process] running | pid: 14982 , remainingtime: 21 
+[Scheduler] Pausing: 14982 
+[Scheduler] Resuming: 14903
+[Process] running | pid: 14903 , remainingtime: 8 
+[Process] running | pid: 14903 , remainingtime: 7 
+[Process] running | pid: 14903 , remainingtime: 6 
+[Process] running | pid: 14903 , remainingtime: 5 
+[Process] running | pid: 14903 , remainingtime: 4 
+[Scheduler] Pausing: 14903 
+[Scheduler] Resuming: 14940
+[Process] running | pid: 14940 , remainingtime: 7 
+[Process] running | pid: 14940 , remainingtime: 6 
+[Process] running | pid: 14940 , remainingtime: 5 
+[Process] running | pid: 14940 , remainingtime: 4 
+[Process] running | pid: 14940 , remainingtime: 3 
+[Scheduler] Pausing: 14940 
+[Scheduler] Running a child process for the first time: 14989 
+[Process] started , runtime: 8 
+[Process] running | pid: 14989 , remainingtime: 7 
+[Process] running | pid: 14989 , remainingtime: 6 
+[Process] running | pid: 14989 , remainingtime: 5 
+[Process] running | pid: 14989 , remainingtime: 4 
+[Process] running | pid: 14989 , remainingtime: 3 
+[Scheduler] Pausing: 14989 
+[Scheduler] Running a child process for the first time: 14996 
+[Process] started , runtime: 26 
+[Process] running | pid: 14996 , remainingtime: 25 
+[Process] running | pid: 14996 , remainingtime: 24 
+[Process] running | pid: 14996 , remainingtime: 23 
+[Process] running | pid: 14996 , remainingtime: 22 
+[Process] running | pid: 14996 , remainingtime: 21 
+[Scheduler] Pausing: 14996 
+[Scheduler] Resuming: 14941
+[Process] running | pid: 14941 , remainingtime: 2 
+[Process] running | pid: 14941 , remainingtime: 1 
+[Process] running | pid: 14941 , remainingtime: 0 
+[Process] finished  , pid: 14941 
+[Scheduler] Resuming: 14942
+[Process] running | pid: 14942 , remainingtime: 19 
+[Process] running | pid: 14942 , remainingtime: 18 
+[Process] running | pid: 14942 , remainingtime: 17 
+[Process] running | pid: 14942 , remainingtime: 16 
+[Process] running | pid: 14942 , remainingtime: 15 
+[Scheduler] Pausing: 14942 
+[Scheduler] Running a child process for the first time: 15013 
+[Process] started , runtime: 21 
+[Process] running | pid: 15013 , remainingtime: 20 
+[Process] running | pid: 15013 , remainingtime: 19 
+[Process] running | pid: 15013 , remainingtime: 18 
+[Process] running | pid: 15013 , remainingtime: 17 
+[Process] running | pid: 15013 , remainingtime: 16 
+[Scheduler] Pausing: 15013 
+[Scheduler] Running a child process for the first time: 15020 
+[Process] started , runtime: 19 
+[Process] running | pid: 15020 , remainingtime: 18 
+[Process] running | pid: 15020 , remainingtime: 17 
+[Process] running | pid: 15020 , remainingtime: 16 
+[Process] running | pid: 15020 , remainingtime: 15 
+[Process] running | pid: 15020 , remainingtime: 14 
+[Scheduler] Pausing: 15020 
+[Scheduler] Resuming: 14917
+[Process] running | pid: 14917 , remainingtime: 14 
+[Process] running | pid: 14917 , remainingtime: 13 
+[Process] running | pid: 14917 , remainingtime: 12 
+[Process] running | pid: 14917 , remainingtime: 11 
+[Process] running | pid: 14917 , remainingtime: 10 
+[Scheduler] Pausing: 14917 
+[Scheduler] Resuming: 14918
+[Process] running | pid: 14918 , remainingtime: 0 
+[Process] finished  , pid: 14918 
+[Scheduler] Resuming: 14943
+[Process] running | pid: 14943 , remainingtime: 19 
+[Process] running | pid: 14943 , remainingtime: 18 
+[Process] running | pid: 14943 , remainingtime: 17 
+[Process] running | pid: 14943 , remainingtime: 16 
+[Process] running | pid: 14943 , remainingtime: 15 
+[Scheduler] Pausing: 14943 
+[Scheduler] Resuming: 14944
+[Process] running | pid: 14944 , remainingtime: 6 
+[Process] running | pid: 14944 , remainingtime: 5 
+[Process] running | pid: 14944 , remainingtime: 4 
+[Process] running | pid: 14944 , remainingtime: 3 
+[Process] running | pid: 14944 , remainingtime: 2 
+[Scheduler] Pausing: 14944 
+[Scheduler] Resuming: 14919
+[Process] running | pid: 14919 , remainingtime: 11 
+[Process] running | pid: 14919 , remainingtime: 10 
+[Process] running | pid: 14919 , remainingtime: 9 
+[Process] running | pid: 14919 , remainingtime: 8 
+[Process] running | pid: 14919 , remainingtime: 7 
+[Scheduler] Pausing: 14919 
+[Scheduler] Resuming: 14945
+[Process] running | pid: 14945 , remainingtime: 4 
+[Process] running | pid: 14945 , remainingtime: 3 
+[Process] running | pid: 14945 , remainingtime: 2 
+[Process] running | pid: 14945 , remainingtime: 1 
+[Process] running | pid: 14945 , remainingtime: 0 
+[Process] finished  , pid: 14945 
+[Scheduler] Resuming: 14905
+[Process] running | pid: 14905 , remainingtime: 12 
+[Process] running | pid: 14905 , remainingtime: 11 
+[Process] running | pid: 14905 , remainingtime: 10 
+[Process] running | pid: 14905 , remainingtime: 9 
+[Process] running | pid: 14905 , remainingtime: 8 
+[Scheduler] Pausing: 14905 
+[Scheduler] Resuming: 14920
+[Process] running | pid: 14920 , remainingtime: 12 
+[Process] running | pid: 14920 , remainingtime: 11 
+[Process] running | pid: 14920 , remainingtime: 10 
+[Process] running | pid: 14920 , remainingtime: 9 
+[Process] running | pid: 14920 , remainingtime: 8 
+[Scheduler] Pausing: 14920 
+[Scheduler] Resuming: 14946
+[Process] running | pid: 14946 , remainingtime: 0 
+[Process] finished  , pid: 14946 
+[Scheduler] Resuming: 14921
+[Process] running | pid: 14921 , remainingtime: 17 
+[Process] running | pid: 14921 , remainingtime: 16 
+[Process] running | pid: 14921 , remainingtime: 15 
+[Process] running | pid: 14921 , remainingtime: 14 
+[Process] running | pid: 14921 , remainingtime: 13 
+[Scheduler] Pausing: 14921 
+[Scheduler] Resuming: 14947
+[Process] running | pid: 14947 , remainingtime: 0 
+[Process] finished  , pid: 14947 
+[Scheduler] Resuming: 14949
+[Process] running | pid: 14949 , remainingtime: 16 
+[Process] running | pid: 14949 , remainingtime: 15 
+[Process] running | pid: 14949 , remainingtime: 14 
+[Process] running | pid: 14949 , remainingtime: 13 
+[Process] running | pid: 14949 , remainingtime: 12 
+[Scheduler] Pausing: 14949 
+[Scheduler] Resuming: 14906
+[Process] running | pid: 14906 , remainingtime: 10 
+[Process] running | pid: 14906 , remainingtime: 9 
+[Process] running | pid: 14906 , remainingtime: 8 
+[Process] running | pid: 14906 , remainingtime: 7 
+[Process] running | pid: 14906 , remainingtime: 6 
+[Scheduler] Pausing: 14906 
+[Scheduler] Resuming: 14950
+[Process] running | pid: 14950 , remainingtime: 9 
+[Process] running | pid: 14950 , remainingtime: 8 
+[Process] running | pid: 14950 , remainingtime: 7 
+[Process] running | pid: 14950 , remainingtime: 6 
+[Process] running | pid: 14950 , remainingtime: 5 
+[Scheduler] Pausing: 14950 
+[Scheduler] Resuming: 14925
+[Process] running | pid: 14925 , remainingtime: 15 
+[Process] running | pid: 14925 , remainingtime: 14 
+[Process] running | pid: 14925 , remainingtime: 13 
+[Process] running | pid: 14925 , remainingtime: 12 
+[Process] running | pid: 14925 , remainingtime: 11 
+[Scheduler] Pausing: 14925 
+[Scheduler] Resuming: 14951
+[Process] running | pid: 14951 , remainingtime: 10 
+[Process] running | pid: 14951 , remainingtime: 9 
+[Process] running | pid: 14951 , remainingtime: 8 
+[Process] running | pid: 14951 , remainingtime: 7 
+[Process] running | pid: 14951 , remainingtime: 6 
+[Scheduler] Pausing: 14951 
+[Scheduler] Resuming: 14926
+[Process] running | pid: 14926 , remainingtime: 7 
+[Process] running | pid: 14926 , remainingtime: 6 
+[Process] running | pid: 14926 , remainingtime: 5 
+[Process] running | pid: 14926 , remainingtime: 4 
+[Process] running | pid: 14926 , remainingtime: 3 
+[Scheduler] Pausing: 14926 
+[Scheduler] Resuming: 14952
+[Process] running | pid: 14952 , remainingtime: 23 
+[Process] running | pid: 14952 , remainingtime: 22 
+[Process] running | pid: 14952 , remainingtime: 21 
+[Process] running | pid: 14952 , remainingtime: 20 
+[Process] running | pid: 14952 , remainingtime: 19 
+[Scheduler] Pausing: 14952 
+[Scheduler] Resuming: 14953
+[Process] running | pid: 14953 , remainingtime: 17 
+[Process] running | pid: 14953 , remainingtime: 16 
+[Process] running | pid: 14953 , remainingtime: 15 
+[Process] running | pid: 14953 , remainingtime: 14 
+[Process] running | pid: 14953 , remainingtime: 13 
+[Scheduler] Pausing: 14953 
+[Scheduler] Resuming: 14927
+[Process] running | pid: 14927 , remainingtime: 13 
+[Process] running | pid: 14927 , remainingtime: 12 
+[Process] running | pid: 14927 , remainingtime: 11 
+[Process] running | pid: 14927 , remainingtime: 10 
+[Process] running | pid: 14927 , remainingtime: 9 
+[Scheduler] Pausing: 14927 
+[Scheduler] Resuming: 14954
+[Process] running | pid: 14954 , remainingtime: 15 
+[Process] running | pid: 14954 , remainingtime: 14 
+[Process] running | pid: 14954 , remainingtime: 13 
+[Process] running | pid: 14954 , remainingtime: 12 
+[Process] running | pid: 14954 , remainingtime: 11 
+[Scheduler] Pausing: 14954 
+[Scheduler] Resuming: 14899
+[Process] running | pid: 14899 , remainingtime: 7 
+[Process] running | pid: 14899 , remainingtime: 6 
+[Process] running | pid: 14899 , remainingtime: 5 
+[Process] running | pid: 14899 , remainingtime: 4 
+[Process] running | pid: 14899 , remainingtime: 3 
+[Scheduler] Pausing: 14899 
+[Scheduler] Resuming: 14955
+[Process] running | pid: 14955 , remainingtime: 11 
+[Process] running | pid: 14955 , remainingtime: 10 
+[Process] running | pid: 14955 , remainingtime: 9 
+[Process] running | pid: 14955 , remainingtime: 8 
+[Process] running | pid: 14955 , remainingtime: 7 
+[Scheduler] Pausing: 14955 
+[Scheduler] Resuming: 14909
+[Process] running | pid: 14909 , remainingtime: 10 
+[Process] running | pid: 14909 , remainingtime: 9 
+[Process] running | pid: 14909 , remainingtime: 8 
+[Process] running | pid: 14909 , remainingtime: 7 
+[Process] running | pid: 14909 , remainingtime: 6 
+[Scheduler] Pausing: 14909 
+[Scheduler] Resuming: 14957
+[Process] running | pid: 14957 , remainingtime: 10 
+[Process] running | pid: 14957 , remainingtime: 9 
+[Process] running | pid: 14957 , remainingtime: 8 
+[Process] running | pid: 14957 , remainingtime: 7 
+[Process] running | pid: 14957 , remainingtime: 6 
+[Scheduler] Pausing: 14957 
+[Scheduler] Resuming: 14930
+[Process] running | pid: 14930 , remainingtime: 3 
+[Process] running | pid: 14930 , remainingtime: 2 
+[Process] running | pid: 14930 , remainingtime: 1 
+[Process] running | pid: 14930 , remainingtime: 0 
+[Process] finished  , pid: 14930 
+[Scheduler] Resuming: 14958
+[Process] running | pid: 14958 , remainingtime: 20 
+[Process] running | pid: 14958 , remainingtime: 19 
+[Process] running | pid: 14958 , remainingtime: 18 
+[Process] running | pid: 14958 , remainingtime: 17 
+[Process] running | pid: 14958 , remainingtime: 16 
+[Scheduler] Pausing: 14958 
+[Scheduler] Resuming: 14911
+[Process] running | pid: 14911 , remainingtime: 12 
+[Process] running | pid: 14911 , remainingtime: 11 
+[Process] running | pid: 14911 , remainingtime: 10 
+[Process] running | pid: 14911 , remainingtime: 9 
+[Process] running | pid: 14911 , remainingtime: 8 
+[Scheduler] Pausing: 14911 
+[Scheduler] Resuming: 14959
+[Process] running | pid: 14959 , remainingtime: 16 
+[Process] running | pid: 14959 , remainingtime: 15 
+[Process] running | pid: 14959 , remainingtime: 14 
+[Process] running | pid: 14959 , remainingtime: 13 
+[Process] running | pid: 14959 , remainingtime: 12 
+[Scheduler] Pausing: 14959 
+[Scheduler] Resuming: 14960
+[Process] running | pid: 14960 , remainingtime: 8 
+[Process] running | pid: 14960 , remainingtime: 7 
+[Process] running | pid: 14960 , remainingtime: 6 
+[Process] running | pid: 14960 , remainingtime: 5 
+[Process] running | pid: 14960 , remainingtime: 4 
+[Scheduler] Pausing: 14960 
+[Scheduler] Resuming: 14961
+[Process] running | pid: 14961 , remainingtime: 9 
+[Process] running | pid: 14961 , remainingtime: 8 
+[Process] running | pid: 14961 , remainingtime: 7 
+[Process] running | pid: 14961 , remainingtime: 6 
+[Process] running | pid: 14961 , remainingtime: 5 
+[Scheduler] Pausing: 14961 
+[Scheduler] Resuming: 14931
+[Process] running | pid: 14931 , remainingtime: 2 
+[Process] running | pid: 14931 , remainingtime: 1 
+[Process] running | pid: 14931 , remainingtime: 0 
+[Process] finished  , pid: 14931 
+[Scheduler] Resuming: 14932
+[Process] running | pid: 14932 , remainingtime: 11 
+[Process] running | pid: 14932 , remainingtime: 10 
+[Process] running | pid: 14932 , remainingtime: 9 
+[Process] running | pid: 14932 , remainingtime: 8 
+[Process] running | pid: 14932 , remainingtime: 7 
+[Scheduler] Pausing: 14932 
+[Scheduler] Resuming: 14963
+[Process] running | pid: 14963 , remainingtime: 0 
+[Process] finished  , pid: 14963 
+[Scheduler] Resuming: 14912
+[Process] running | pid: 14912 , remainingtime: 0 
+[Process] finished  , pid: 14912 
+[Scheduler] Resuming: 14964
+[Process] running | pid: 14964 , remainingtime: 20 
+[Process] running | pid: 14964 , remainingtime: 19 
+[Process] running | pid: 14964 , remainingtime: 18 
+[Process] running | pid: 14964 , remainingtime: 17 
+[Process] running | pid: 14964 , remainingtime: 16 
+[Scheduler] Pausing: 14964 
+[Scheduler] Resuming: 14913
+[Process] running | pid: 14913 , remainingtime: 11 
+[Process] running | pid: 14913 , remainingtime: 10 
+[Process] running | pid: 14913 , remainingtime: 9 
+[Process] running | pid: 14913 , remainingtime: 8 
+[Process] running | pid: 14913 , remainingtime: 7 
+[Scheduler] Pausing: 14913 
+[Scheduler] Resuming: 14965
+[Process] running | pid: 14965 , remainingtime: 10 
+[Process] running | pid: 14965 , remainingtime: 9 
+[Process] running | pid: 14965 , remainingtime: 8 
+[Process] running | pid: 14965 , remainingtime: 7 
+[Process] running | pid: 14965 , remainingtime: 6 
+[Scheduler] Pausing: 14965 
+[Scheduler] Resuming: 14966
+[Process] running | pid: 14966 , remainingtime: 16 
+[Process] running | pid: 14966 , remainingtime: 15 
+[Process] running | pid: 14966 , remainingtime: 14 
+[Process] running | pid: 14966 , remainingtime: 13 
+[Process] running | pid: 14966 , remainingtime: 12 
+[Scheduler] Pausing: 14966 
+[Scheduler] Resuming: 14933
+[Process] running | pid: 14933 , remainingtime: 14 
+[Process] running | pid: 14933 , remainingtime: 13 
+[Process] running | pid: 14933 , remainingtime: 12 
+[Process] running | pid: 14933 , remainingtime: 11 
+[Process] running | pid: 14933 , remainingtime: 10 
+[Scheduler] Pausing: 14933 
+[Scheduler] Resuming: 14967
+[Process] running | pid: 14967 , remainingtime: 20 
+[Process] running | pid: 14967 , remainingtime: 19 
+[Process] running | pid: 14967 , remainingtime: 18 
+[Process] running | pid: 14967 , remainingtime: 17 
+[Process] running | pid: 14967 , remainingtime: 16 
+[Scheduler] Pausing: 14967 
+[Scheduler] Resuming: 14970
+[Process] running | pid: 14970 , remainingtime: 12 
+[Process] running | pid: 14970 , remainingtime: 11 
+[Process] running | pid: 14970 , remainingtime: 10 
+[Process] running | pid: 14970 , remainingtime: 9 
+[Process] running | pid: 14970 , remainingtime: 8 
+[Scheduler] Pausing: 14970 
+[Scheduler] Resuming: 14971
+[Process] running | pid: 14971 , remainingtime: 15 
+[Process] running | pid: 14971 , remainingtime: 14 
+[Process] running | pid: 14971 , remainingtime: 13 
+[Process] running | pid: 14971 , remainingtime: 12 
+[Process] running | pid: 14971 , remainingtime: 11 
+[Scheduler] Pausing: 14971 
+[Scheduler] Resuming: 14936
+[Process] running | pid: 14936 , remainingtime: 14 
+[Process] running | pid: 14936 , remainingtime: 13 
+[Process] running | pid: 14936 , remainingtime: 12 
+[Process] running | pid: 14936 , remainingtime: 11 
+[Process] running | pid: 14936 , remainingtime: 10 
+[Scheduler] Pausing: 14936 
+[Scheduler] Resuming: 14972
+[Process] running | pid: 14972 , remainingtime: 2 
+[Process] running | pid: 14972 , remainingtime: 1 
+[Process] running | pid: 14972 , remainingtime: 0 
+[Process] finished  , pid: 14972 
+[Scheduler] Resuming: 14973
+[Process] running | pid: 14973 , remainingtime: 22 
+[Process] running | pid: 14973 , remainingtime: 21 
+[Process] running | pid: 14973 , remainingtime: 20 
+[Process] running | pid: 14973 , remainingtime: 19 
+[Process] running | pid: 14973 , remainingtime: 18 
+[Scheduler] Pausing: 14973 
+[Scheduler] Resuming: 14937
+[Process] running | pid: 14937 , remainingtime: 17 
+[Process] running | pid: 14937 , remainingtime: 16 
+[Process] running | pid: 14937 , remainingtime: 15 
+[Process] running | pid: 14937 , remainingtime: 14 
+[Process] running | pid: 14937 , remainingtime: 13 
+[Scheduler] Pausing: 14937 
+[Scheduler] Resuming: 14974
+[Process] running | pid: 14974 , remainingtime: 11 
+[Process] running | pid: 14974 , remainingtime: 10 
+[Process] running | pid: 14974 , remainingtime: 9 
+[Process] running | pid: 14974 , remainingtime: 8 
+[Process] running | pid: 14974 , remainingtime: 7 
+[Scheduler] Pausing: 14974 
+[Scheduler] Resuming: 14902
+[Process] running | pid: 14902 , remainingtime: 5 
+[Process] running | pid: 14902 , remainingtime: 4 
+[Process] running | pid: 14902 , remainingtime: 3 
+[Process] running | pid: 14902 , remainingtime: 2 
+[Process] running | pid: 14902 , remainingtime: 1 
+[Scheduler] Pausing: 14902 
+[Scheduler] Resuming: 14975
+[Process] running | pid: 14975 , remainingtime: 1 
+[Process] running | pid: 14975 , remainingtime: 0 
+[Process] finished  , pid: 14975 
+[Scheduler] Resuming: 14938
+[Process] running | pid: 14938 , remainingtime: 15 
+[Process] running | pid: 14938 , remainingtime: 14 
+[Process] running | pid: 14938 , remainingtime: 13 
+[Process] running | pid: 14938 , remainingtime: 12 
+[Process] running | pid: 14938 , remainingtime: 11 
+[Scheduler] Pausing: 14938 
+[Scheduler] Resuming: 14976
+[Process] running | pid: 14976 , remainingtime: 6 
+[Process] running | pid: 14976 , remainingtime: 5 
+[Process] running | pid: 14976 , remainingtime: 4 
+[Process] running | pid: 14976 , remainingtime: 3 
+[Process] running | pid: 14976 , remainingtime: 2 
+[Scheduler] Pausing: 14976 
+[Scheduler] Resuming: 14915
+[Process] running | pid: 14915 , remainingtime: 5 
+[Process] running | pid: 14915 , remainingtime: 4 
+[Process] running | pid: 14915 , remainingtime: 3 
+[Process] running | pid: 14915 , remainingtime: 2 
+[Process] running | pid: 14915 , remainingtime: 1 
+[Scheduler] Pausing: 14915 
+[Scheduler] Resuming: 14981
+[Process] running | pid: 14981 , remainingtime: 23 
+[Process] running | pid: 14981 , remainingtime: 22 
+[Process] running | pid: 14981 , remainingtime: 21 
+[Process] running | pid: 14981 , remainingtime: 20 
+[Process] running | pid: 14981 , remainingtime: 19 
+[Scheduler] Pausing: 14981 
+[Scheduler] Resuming: 14982
+[Process] running | pid: 14982 , remainingtime: 20 
+[Process] running | pid: 14982 , remainingtime: 19 
+[Process] running | pid: 14982 , remainingtime: 18 
+[Process] running | pid: 14982 , remainingtime: 17 
+[Process] running | pid: 14982 , remainingtime: 16 
+[Scheduler] Pausing: 14982 
+[Scheduler] Resuming: 14903
+[Process] running | pid: 14903 , remainingtime: 3 
+[Process] running | pid: 14903 , remainingtime: 2 
+[Process] running | pid: 14903 , remainingtime: 1 
+[Process] running | pid: 14903 , remainingtime: 0 
+[Process] finished  , pid: 14903 
+[Scheduler] Resuming: 14940
+[Process] running | pid: 14940 , remainingtime: 2 
+[Process] running | pid: 14940 , remainingtime: 1 
+[Process] running | pid: 14940 , remainingtime: 0 
+[Process] finished  , pid: 14940 
+[Scheduler] Resuming: 14989
+[Process] running | pid: 14989 , remainingtime: 2 
+[Process] running | pid: 14989 , remainingtime: 1 
+[Process] running | pid: 14989 , remainingtime: 0 
+[Process] finished  , pid: 14989 
+[Scheduler] Resuming: 14996
+[Process] running | pid: 14996 , remainingtime: 20 
+[Process] running | pid: 14996 , remainingtime: 19 
+[Process] running | pid: 14996 , remainingtime: 18 
+[Process] running | pid: 14996 , remainingtime: 17 
+[Process] running | pid: 14996 , remainingtime: 16 
+[Scheduler] Pausing: 14996 
+[Scheduler] Resuming: 14942
+[Process] running | pid: 14942 , remainingtime: 14 
+[Process] running | pid: 14942 , remainingtime: 13 
+[Process] running | pid: 14942 , remainingtime: 12 
+[Process] running | pid: 14942 , remainingtime: 11 
+[Process] running | pid: 14942 , remainingtime: 10 
+[Scheduler] Pausing: 14942 
+[Scheduler] Resuming: 15013
+[Process] running | pid: 15013 , remainingtime: 15 
+[Process] running | pid: 15013 , remainingtime: 14 
+[Process] running | pid: 15013 , remainingtime: 13 
+[Process] running | pid: 15013 , remainingtime: 12 
+[Process] running | pid: 15013 , remainingtime: 11 
+[Scheduler] Pausing: 15013 
+[Scheduler] Resuming: 15020
+[Process] running | pid: 15020 , remainingtime: 13 
+[Process] running | pid: 15020 , remainingtime: 12 
+[Process] running | pid: 15020 , remainingtime: 11 
+[Process] running | pid: 15020 , remainingtime: 10 
+[Process] running | pid: 15020 , remainingtime: 9 
+[Scheduler] Pausing: 15020 
+[Scheduler] Resuming: 14917
+[Process] running | pid: 14917 , remainingtime: 9 
+[Process] running | pid: 14917 , remainingtime: 8 
+[Process] running | pid: 14917 , remainingtime: 7 
+[Process] running | pid: 14917 , remainingtime: 6 
+[Process] running | pid: 14917 , remainingtime: 5 
+[Scheduler] Pausing: 14917 
+[Scheduler] Resuming: 14943
+[Process] running | pid: 14943 , remainingtime: 14 
+[Process] running | pid: 14943 , remainingtime: 13 
+[Process] running | pid: 14943 , remainingtime: 12 
+[Process] running | pid: 14943 , remainingtime: 11 
+[Process] running | pid: 14943 , remainingtime: 10 
+[Scheduler] Pausing: 14943 
+[Scheduler] Resuming: 14944
+[Process] running | pid: 14944 , remainingtime: 1 
+[Process] running | pid: 14944 , remainingtime: 0 
+[Process] finished  , pid: 14944 
+[Scheduler] Resuming: 14919
+[Process] running | pid: 14919 , remainingtime: 6 
+[Process] running | pid: 14919 , remainingtime: 5 
+[Process] running | pid: 14919 , remainingtime: 4 
+[Process] running | pid: 14919 , remainingtime: 3 
+[Process] running | pid: 14919 , remainingtime: 2 
+[Scheduler] Pausing: 14919 
+[Scheduler] Resuming: 14905
+[Process] running | pid: 14905 , remainingtime: 7 
+[Process] running | pid: 14905 , remainingtime: 6 
+[Process] running | pid: 14905 , remainingtime: 5 
+[Process] running | pid: 14905 , remainingtime: 4 
+[Process] running | pid: 14905 , remainingtime: 3 
+[Scheduler] Pausing: 14905 
+[Scheduler] Resuming: 14920
+[Process] running | pid: 14920 , remainingtime: 7 
+[Process] running | pid: 14920 , remainingtime: 6 
+[Process] running | pid: 14920 , remainingtime: 5 
+[Process] running | pid: 14920 , remainingtime: 4 
+[Process] running | pid: 14920 , remainingtime: 3 
+[Scheduler] Pausing: 14920 
+[Scheduler] Resuming: 14921
+[Process] running | pid: 14921 , remainingtime: 12 
+[Process] running | pid: 14921 , remainingtime: 11 
+[Process] running | pid: 14921 , remainingtime: 10 
+[Process] running | pid: 14921 , remainingtime: 9 
+[Process] running | pid: 14921 , remainingtime: 8 
+[Scheduler] Pausing: 14921 
+[Scheduler] Resuming: 14949
+[Process] running | pid: 14949 , remainingtime: 11 
+[Process] running | pid: 14949 , remainingtime: 10 
+[Process] running | pid: 14949 , remainingtime: 9 
+[Process] running | pid: 14949 , remainingtime: 8 
+[Process] running | pid: 14949 , remainingtime: 7 
+[Scheduler] Pausing: 14949 
+[Scheduler] Resuming: 14906
+[Process] running | pid: 14906 , remainingtime: 5 
+[Process] running | pid: 14906 , remainingtime: 4 
+[Process] running | pid: 14906 , remainingtime: 3 
+[Process] running | pid: 14906 , remainingtime: 2 
+[Process] running | pid: 14906 , remainingtime: 1 
+[Scheduler] Pausing: 14906 
+[Scheduler] Resuming: 14950
+[Process] running | pid: 14950 , remainingtime: 4 
+[Process] running | pid: 14950 , remainingtime: 3 
+[Process] running | pid: 14950 , remainingtime: 2 
+[Process] running | pid: 14950 , remainingtime: 1 
+[Process] running | pid: 14950 , remainingtime: 0 
+[Process] finished  , pid: 14950 
+[Scheduler] Resuming: 14925
+[Process] running | pid: 14925 , remainingtime: 10 
+[Process] running | pid: 14925 , remainingtime: 9 
+[Process] running | pid: 14925 , remainingtime: 8 
+[Process] running | pid: 14925 , remainingtime: 7 
+[Process] running | pid: 14925 , remainingtime: 6 
+[Scheduler] Pausing: 14925 
+[Scheduler] Resuming: 14951
+[Process] running | pid: 14951 , remainingtime: 5 
+[Process] running | pid: 14951 , remainingtime: 4 
+[Process] running | pid: 14951 , remainingtime: 3 
+[Process] running | pid: 14951 , remainingtime: 2 
+[Process] running | pid: 14951 , remainingtime: 1 
+[Scheduler] Pausing: 14951 
+[Scheduler] Resuming: 14926
+[Process] running | pid: 14926 , remainingtime: 2 
+[Process] running | pid: 14926 , remainingtime: 1 
+[Process] running | pid: 14926 , remainingtime: 0 
+[Process] finished  , pid: 14926 
+[Scheduler] Resuming: 14952
+[Process] running | pid: 14952 , remainingtime: 18 
+[Process] running | pid: 14952 , remainingtime: 17 
+[Process] running | pid: 14952 , remainingtime: 16 
+[Process] running | pid: 14952 , remainingtime: 15 
+[Process] running | pid: 14952 , remainingtime: 14 
+[Scheduler] Pausing: 14952 
+[Scheduler] Resuming: 14953
+[Process] running | pid: 14953 , remainingtime: 12 
+[Process] running | pid: 14953 , remainingtime: 11 
+[Process] running | pid: 14953 , remainingtime: 10 
+[Process] running | pid: 14953 , remainingtime: 9 
+[Process] running | pid: 14953 , remainingtime: 8 
+[Scheduler] Pausing: 14953 
+[Scheduler] Resuming: 14927
+[Process] running | pid: 14927 , remainingtime: 8 
+[Process] running | pid: 14927 , remainingtime: 7 
+[Process] running | pid: 14927 , remainingtime: 6 
+[Process] running | pid: 14927 , remainingtime: 5 
+[Process] running | pid: 14927 , remainingtime: 4 
+[Scheduler] Pausing: 14927 
+[Scheduler] Resuming: 14954
+[Process] running | pid: 14954 , remainingtime: 10 
+[Process] running | pid: 14954 , remainingtime: 9 
+[Process] running | pid: 14954 , remainingtime: 8 
+[Process] running | pid: 14954 , remainingtime: 7 
+[Process] running | pid: 14954 , remainingtime: 6 
+[Scheduler] Pausing: 14954 
+[Scheduler] Resuming: 14899
+[Process] running | pid: 14899 , remainingtime: 2 
+[Process] running | pid: 14899 , remainingtime: 1 
+[Process] running | pid: 14899 , remainingtime: 0 
+[Process] finished  , pid: 14899 
+[Scheduler] Resuming: 14955
+[Process] running | pid: 14955 , remainingtime: 6 
+[Process] running | pid: 14955 , remainingtime: 5 
+[Process] running | pid: 14955 , remainingtime: 4 
+[Process] running | pid: 14955 , remainingtime: 3 
+[Process] running | pid: 14955 , remainingtime: 2 
+[Scheduler] Pausing: 14955 
+[Scheduler] Resuming: 14909
+[Process] running | pid: 14909 , remainingtime: 5 
+[Process] running | pid: 14909 , remainingtime: 4 
+[Process] running | pid: 14909 , remainingtime: 3 
+[Process] running | pid: 14909 , remainingtime: 2 
+[Process] running | pid: 14909 , remainingtime: 1 
+[Scheduler] Pausing: 14909 
+[Scheduler] Resuming: 14957
+[Process] running | pid: 14957 , remainingtime: 5 
+[Process] running | pid: 14957 , remainingtime: 4 
+[Process] running | pid: 14957 , remainingtime: 3 
+[Process] running | pid: 14957 , remainingtime: 2 
+[Process] running | pid: 14957 , remainingtime: 1 
+[Scheduler] Pausing: 14957 
+[Scheduler] Resuming: 14958
+[Process] running | pid: 14958 , remainingtime: 15 
+[Process] running | pid: 14958 , remainingtime: 14 
+[Process] running | pid: 14958 , remainingtime: 13 
+[Process] running | pid: 14958 , remainingtime: 12 
+[Process] running | pid: 14958 , remainingtime: 11 
+[Scheduler] Pausing: 14958 
+[Scheduler] Resuming: 14911
+[Process] running | pid: 14911 , remainingtime: 7 
+[Process] running | pid: 14911 , remainingtime: 6 
+[Process] running | pid: 14911 , remainingtime: 5 
+[Process] running | pid: 14911 , remainingtime: 4 
+[Process] running | pid: 14911 , remainingtime: 3 
+[Scheduler] Pausing: 14911 
+[Scheduler] Resuming: 14959
+[Process] running | pid: 14959 , remainingtime: 11 
+[Process] running | pid: 14959 , remainingtime: 10 
+[Process] running | pid: 14959 , remainingtime: 9 
+[Process] running | pid: 14959 , remainingtime: 8 
+[Process] running | pid: 14959 , remainingtime: 7 
+[Scheduler] Pausing: 14959 
+[Scheduler] Resuming: 14960
+[Process] running | pid: 14960 , remainingtime: 3 
+[Process] running | pid: 14960 , remainingtime: 2 
+[Process] running | pid: 14960 , remainingtime: 1 
+[Process] running | pid: 14960 , remainingtime: 0 
+[Process] finished  , pid: 14960 
+[Scheduler] Resuming: 14961
+[Process] running | pid: 14961 , remainingtime: 4 
+[Process] running | pid: 14961 , remainingtime: 3 
+[Process] running | pid: 14961 , remainingtime: 2 
+[Process] running | pid: 14961 , remainingtime: 1 
+[Process] running | pid: 14961 , remainingtime: 0 
+[Process] finished  , pid: 14961 
+[Scheduler] Resuming: 14932
+[Process] running | pid: 14932 , remainingtime: 6 
+[Process] running | pid: 14932 , remainingtime: 5 
+[Process] running | pid: 14932 , remainingtime: 4 
+[Process] running | pid: 14932 , remainingtime: 3 
+[Process] running | pid: 14932 , remainingtime: 2 
+[Scheduler] Pausing: 14932 
+[Scheduler] Resuming: 14964
+[Process] running | pid: 14964 , remainingtime: 15 
+[Process] running | pid: 14964 , remainingtime: 14 
+[Process] running | pid: 14964 , remainingtime: 13 
+[Process] running | pid: 14964 , remainingtime: 12 
+[Process] running | pid: 14964 , remainingtime: 11 
+[Scheduler] Pausing: 14964 
+[Scheduler] Resuming: 14913
+[Process] running | pid: 14913 , remainingtime: 6 
+[Process] running | pid: 14913 , remainingtime: 5 
+[Process] running | pid: 14913 , remainingtime: 4 
+[Process] running | pid: 14913 , remainingtime: 3 
+[Process] running | pid: 14913 , remainingtime: 2 
+[Scheduler] Pausing: 14913 
+[Scheduler] Resuming: 14965
+[Process] running | pid: 14965 , remainingtime: 5 
+[Process] running | pid: 14965 , remainingtime: 4 
+[Process] running | pid: 14965 , remainingtime: 3 
+[Process] running | pid: 14965 , remainingtime: 2 
+[Process] running | pid: 14965 , remainingtime: 1 
+[Scheduler] Pausing: 14965 
+[Scheduler] Resuming: 14966
+[Process] running | pid: 14966 , remainingtime: 11 
+[Process] running | pid: 14966 , remainingtime: 10 
+[Process] running | pid: 14966 , remainingtime: 9 
+[Process] running | pid: 14966 , remainingtime: 8 
+[Process] running | pid: 14966 , remainingtime: 7 
+[Scheduler] Pausing: 14966 
+[Scheduler] Resuming: 14933
+[Process] running | pid: 14933 , remainingtime: 9 
+[Process] running | pid: 14933 , remainingtime: 8 
+[Process] running | pid: 14933 , remainingtime: 7 
+[Process] running | pid: 14933 , remainingtime: 6 
+[Process] running | pid: 14933 , remainingtime: 5 
+[Scheduler] Pausing: 14933 
+[Scheduler] Resuming: 14967
+[Process] running | pid: 14967 , remainingtime: 15 
+[Process] running | pid: 14967 , remainingtime: 14 
+[Process] running | pid: 14967 , remainingtime: 13 
+[Process] running | pid: 14967 , remainingtime: 12 
+[Process] running | pid: 14967 , remainingtime: 11 
+[Scheduler] Pausing: 14967 
+[Scheduler] Resuming: 14970
+[Process] running | pid: 14970 , remainingtime: 7 
+[Process] running | pid: 14970 , remainingtime: 6 
+[Process] running | pid: 14970 , remainingtime: 5 
+[Process] running | pid: 14970 , remainingtime: 4 
+[Process] running | pid: 14970 , remainingtime: 3 
+[Scheduler] Pausing: 14970 
+[Scheduler] Resuming: 14971
+[Process] running | pid: 14971 , remainingtime: 10 
+[Process] running | pid: 14971 , remainingtime: 9 
+[Process] running | pid: 14971 , remainingtime: 8 
+[Process] running | pid: 14971 , remainingtime: 7 
+[Process] running | pid: 14971 , remainingtime: 6 
+[Scheduler] Pausing: 14971 
+[Scheduler] Resuming: 14936
+[Process] running | pid: 14936 , remainingtime: 9 
+[Process] running | pid: 14936 , remainingtime: 8 
+[Process] running | pid: 14936 , remainingtime: 7 
+[Process] running | pid: 14936 , remainingtime: 6 
+[Process] running | pid: 14936 , remainingtime: 5 
+[Scheduler] Pausing: 14936 
+[Scheduler] Resuming: 14973
+[Process] running | pid: 14973 , remainingtime: 17 
+[Process] running | pid: 14973 , remainingtime: 16 
+[Process] running | pid: 14973 , remainingtime: 15 
+[Process] running | pid: 14973 , remainingtime: 14 
+[Process] running | pid: 14973 , remainingtime: 13 
+[Scheduler] Pausing: 14973 
+[Scheduler] Resuming: 14937
+[Process] running | pid: 14937 , remainingtime: 12 
+[Process] running | pid: 14937 , remainingtime: 11 
+[Process] running | pid: 14937 , remainingtime: 10 
+[Process] running | pid: 14937 , remainingtime: 9 
+[Process] running | pid: 14937 , remainingtime: 8 
+[Scheduler] Pausing: 14937 
+[Scheduler] Resuming: 14974
+[Process] running | pid: 14974 , remainingtime: 6 
+[Process] running | pid: 14974 , remainingtime: 5 
+[Process] running | pid: 14974 , remainingtime: 4 
+[Process] running | pid: 14974 , remainingtime: 3 
+[Process] running | pid: 14974 , remainingtime: 2 
+[Scheduler] Pausing: 14974 
+[Scheduler] Resuming: 14902
+[Process] running | pid: 14902 , remainingtime: 0 
+[Process] finished  , pid: 14902 
+[Scheduler] Resuming: 14938
+[Process] running | pid: 14938 , remainingtime: 10 
+[Process] running | pid: 14938 , remainingtime: 9 
+[Process] running | pid: 14938 , remainingtime: 8 
+[Process] running | pid: 14938 , remainingtime: 7 
+[Process] running | pid: 14938 , remainingtime: 6 
+[Scheduler] Pausing: 14938 
+[Scheduler] Resuming: 14976
+[Process] running | pid: 14976 , remainingtime: 1 
+[Process] running | pid: 14976 , remainingtime: 0 
+[Process] finished  , pid: 14976 
+[Scheduler] Resuming: 14915
+[Process] running | pid: 14915 , remainingtime: 0 
+[Process] finished  , pid: 14915 
+[Scheduler] Resuming: 14981
+[Process] running | pid: 14981 , remainingtime: 18 
+[Process] running | pid: 14981 , remainingtime: 17 
+[Process] running | pid: 14981 , remainingtime: 16 
+[Process] running | pid: 14981 , remainingtime: 15 
+[Process] running | pid: 14981 , remainingtime: 14 
+[Scheduler] Pausing: 14981 
+[Scheduler] Resuming: 14982
+[Process] running | pid: 14982 , remainingtime: 15 
+[Process] running | pid: 14982 , remainingtime: 14 
+[Process] running | pid: 14982 , remainingtime: 13 
+[Process] running | pid: 14982 , remainingtime: 12 
+[Process] running | pid: 14982 , remainingtime: 11 
+[Scheduler] Pausing: 14982 
+[Scheduler] Resuming: 14996
+[Process] running | pid: 14996 , remainingtime: 15 
+[Process] running | pid: 14996 , remainingtime: 14 
+[Process] running | pid: 14996 , remainingtime: 13 
+[Process] running | pid: 14996 , remainingtime: 12 
+[Process] running | pid: 14996 , remainingtime: 11 
+[Scheduler] Pausing: 14996 
+[Scheduler] Resuming: 14942
+[Process] running | pid: 14942 , remainingtime: 9 
+[Process] running | pid: 14942 , remainingtime: 8 
+[Process] running | pid: 14942 , remainingtime: 7 
+[Process] running | pid: 14942 , remainingtime: 6 
+[Process] running | pid: 14942 , remainingtime: 5 
+[Scheduler] Pausing: 14942 
+[Scheduler] Resuming: 15013
+[Process] running | pid: 15013 , remainingtime: 10 
+[Process] running | pid: 15013 , remainingtime: 9 
+[Process] running | pid: 15013 , remainingtime: 8 
+[Process] running | pid: 15013 , remainingtime: 7 
+[Process] running | pid: 15013 , remainingtime: 6 
+[Scheduler] Pausing: 15013 
+[Scheduler] Resuming: 15020
+[Process] running | pid: 15020 , remainingtime: 8 
+[Process] running | pid: 15020 , remainingtime: 7 
+[Process] running | pid: 15020 , remainingtime: 6 
+[Process] running | pid: 15020 , remainingtime: 5 
+[Process] running | pid: 15020 , remainingtime: 4 
+[Scheduler] Pausing: 15020 
+[Scheduler] Resuming: 14917
+[Process] running | pid: 14917 , remainingtime: 4 
+[Process] running | pid: 14917 , remainingtime: 3 
+[Process] running | pid: 14917 , remainingtime: 2 
+[Process] running | pid: 14917 , remainingtime: 1 
+[Process] running | pid: 14917 , remainingtime: 0 
+[Process] finished  , pid: 14917 
+[Scheduler] Resuming: 14943
+[Process] running | pid: 14943 , remainingtime: 9 
+[Process] running | pid: 14943 , remainingtime: 8 
+[Process] running | pid: 14943 , remainingtime: 7 
+[Process] running | pid: 14943 , remainingtime: 6 
+[Process] running | pid: 14943 , remainingtime: 5 
+[Scheduler] Pausing: 14943 
+[Scheduler] Resuming: 14919
+[Process] running | pid: 14919 , remainingtime: 1 
+[Process] running | pid: 14919 , remainingtime: 0 
+[Process] finished  , pid: 14919 
+[Scheduler] Resuming: 14905
+[Process] running | pid: 14905 , remainingtime: 2 
+[Process] running | pid: 14905 , remainingtime: 1 
+[Process] running | pid: 14905 , remainingtime: 0 
+[Process] finished  , pid: 14905 
+[Scheduler] Resuming: 14920
+[Process] running | pid: 14920 , remainingtime: 2 
+[Process] running | pid: 14920 , remainingtime: 1 
+[Process] running | pid: 14920 , remainingtime: 0 
+[Process] finished  , pid: 14920 
+[Scheduler] Resuming: 14921
+[Process] running | pid: 14921 , remainingtime: 7 
+[Process] running | pid: 14921 , remainingtime: 6 
+[Process] running | pid: 14921 , remainingtime: 5 
+[Process] running | pid: 14921 , remainingtime: 4 
+[Process] running | pid: 14921 , remainingtime: 3 
+[Scheduler] Pausing: 14921 
+[Scheduler] Resuming: 14949
+[Process] running | pid: 14949 , remainingtime: 6 
+[Process] running | pid: 14949 , remainingtime: 5 
+[Process] running | pid: 14949 , remainingtime: 4 
+[Process] running | pid: 14949 , remainingtime: 3 
+[Process] running | pid: 14949 , remainingtime: 2 
+[Scheduler] Pausing: 14949 
+[Scheduler] Resuming: 14906
+[Process] running | pid: 14906 , remainingtime: 0 
+[Process] finished  , pid: 14906 
+[Scheduler] Resuming: 14925
+[Process] running | pid: 14925 , remainingtime: 5 
+[Process] running | pid: 14925 , remainingtime: 4 
+[Process] running | pid: 14925 , remainingtime: 3 
+[Process] running | pid: 14925 , remainingtime: 2 
+[Process] running | pid: 14925 , remainingtime: 1 
+[Scheduler] Pausing: 14925 
+[Scheduler] Resuming: 14951
+[Process] running | pid: 14951 , remainingtime: 0 
+[Process] finished  , pid: 14951 
+[Scheduler] Resuming: 14952
+[Process] running | pid: 14952 , remainingtime: 13 
+[Process] running | pid: 14952 , remainingtime: 12 
+[Process] running | pid: 14952 , remainingtime: 11 
+[Process] running | pid: 14952 , remainingtime: 10 
+[Process] running | pid: 14952 , remainingtime: 9 
+[Scheduler] Pausing: 14952 
+[Scheduler] Resuming: 14953
+[Process] running | pid: 14953 , remainingtime: 7 
+[Process] running | pid: 14953 , remainingtime: 6 
+[Process] running | pid: 14953 , remainingtime: 5 
+[Process] running | pid: 14953 , remainingtime: 4 
+[Process] running | pid: 14953 , remainingtime: 3 
+[Scheduler] Pausing: 14953 
+[Scheduler] Resuming: 14927
+[Process] running | pid: 14927 , remainingtime: 3 
+[Process] running | pid: 14927 , remainingtime: 2 
+[Process] running | pid: 14927 , remainingtime: 1 
+[Process] running | pid: 14927 , remainingtime: 0 
+[Process] finished  , pid: 14927 
+[Scheduler] Resuming: 14954
+[Process] running | pid: 14954 , remainingtime: 5 
+[Process] running | pid: 14954 , remainingtime: 4 
+[Process] running | pid: 14954 , remainingtime: 3 
+[Process] running | pid: 14954 , remainingtime: 2 
+[Process] running | pid: 14954 , remainingtime: 1 
+[Scheduler] Pausing: 14954 
+[Scheduler] Resuming: 14955
+[Process] running | pid: 14955 , remainingtime: 1 
+[Process] running | pid: 14955 , remainingtime: 0 
+[Process] finished  , pid: 14955 
+[Scheduler] Resuming: 14909
+[Process] running | pid: 14909 , remainingtime: 0 
+[Process] finished  , pid: 14909 
+[Scheduler] Resuming: 14957
+[Process] running | pid: 14957 , remainingtime: 0 
+[Process] finished  , pid: 14957 
+[Scheduler] Resuming: 14958
+[Process] running | pid: 14958 , remainingtime: 10 
+[Process] running | pid: 14958 , remainingtime: 9 
+[Process] running | pid: 14958 , remainingtime: 8 
+[Process] running | pid: 14958 , remainingtime: 7 
+[Process] running | pid: 14958 , remainingtime: 6 
+[Scheduler] Pausing: 14958 
+[Scheduler] Resuming: 14911
+[Process] running | pid: 14911 , remainingtime: 2 
+[Process] running | pid: 14911 , remainingtime: 1 
+[Process] running | pid: 14911 , remainingtime: 0 
+[Process] finished  , pid: 14911 
+[Scheduler] Resuming: 14959
+[Process] running | pid: 14959 , remainingtime: 6 
+[Process] running | pid: 14959 , remainingtime: 5 
+[Process] running | pid: 14959 , remainingtime: 4 
+[Process] running | pid: 14959 , remainingtime: 3 
+[Process] running | pid: 14959 , remainingtime: 2 
+[Scheduler] Pausing: 14959 
+[Scheduler] Resuming: 14932
+[Process] running | pid: 14932 , remainingtime: 1 
+[Process] running | pid: 14932 , remainingtime: 0 
+[Process] finished  , pid: 14932 
+[Scheduler] Resuming: 14964
+[Process] running | pid: 14964 , remainingtime: 10 
+[Process] running | pid: 14964 , remainingtime: 9 
+[Process] running | pid: 14964 , remainingtime: 8 
+[Process] running | pid: 14964 , remainingtime: 7 
+[Process] running | pid: 14964 , remainingtime: 6 
+[Scheduler] Pausing: 14964 
+[Scheduler] Resuming: 14913
+[Process] running | pid: 14913 , remainingtime: 1 
+[Process] running | pid: 14913 , remainingtime: 0 
+[Process] finished  , pid: 14913 
+[Scheduler] Resuming: 14965
+[Process] running | pid: 14965 , remainingtime: 0 
+[Process] finished  , pid: 14965 
+[Scheduler] Resuming: 14966
+[Process] running | pid: 14966 , remainingtime: 6 
+[Process] running | pid: 14966 , remainingtime: 5 
+[Process] running | pid: 14966 , remainingtime: 4 
+[Process] running | pid: 14966 , remainingtime: 3 
+[Process] running | pid: 14966 , remainingtime: 2 
+[Scheduler] Pausing: 14966 
+[Scheduler] Resuming: 14933
+[Process] running | pid: 14933 , remainingtime: 4 
+[Process] running | pid: 14933 , remainingtime: 3 
+[Process] running | pid: 14933 , remainingtime: 2 
+[Process] running | pid: 14933 , remainingtime: 1 
+[Process] running | pid: 14933 , remainingtime: 0 
+[Process] finished  , pid: 14933 
+[Scheduler] Resuming: 14967
+[Process] running | pid: 14967 , remainingtime: 10 
+[Process] running | pid: 14967 , remainingtime: 9 
+[Process] running | pid: 14967 , remainingtime: 8 
+[Process] running | pid: 14967 , remainingtime: 7 
+[Process] running | pid: 14967 , remainingtime: 6 
+[Scheduler] Pausing: 14967 
+[Scheduler] Resuming: 14970
+[Process] running | pid: 14970 , remainingtime: 2 
+[Process] running | pid: 14970 , remainingtime: 1 
+[Process] running | pid: 14970 , remainingtime: 0 
+[Process] finished  , pid: 14970 
+[Scheduler] Resuming: 14971
+[Process] running | pid: 14971 , remainingtime: 5 
+[Process] running | pid: 14971 , remainingtime: 4 
+[Process] running | pid: 14971 , remainingtime: 3 
+[Process] running | pid: 14971 , remainingtime: 2 
+[Process] running | pid: 14971 , remainingtime: 1 
+[Scheduler] Pausing: 14971 
+[Scheduler] Resuming: 14936
+[Process] running | pid: 14936 , remainingtime: 4 
+[Process] running | pid: 14936 , remainingtime: 3 
+[Process] running | pid: 14936 , remainingtime: 2 
+[Process] running | pid: 14936 , remainingtime: 1 
+[Process] running | pid: 14936 , remainingtime: 0 
+[Process] finished  , pid: 14936 
+[Scheduler] Resuming: 14973
+[Process] running | pid: 14973 , remainingtime: 12 
+[Process] running | pid: 14973 , remainingtime: 11 
+[Process] running | pid: 14973 , remainingtime: 10 
+[Process] running | pid: 14973 , remainingtime: 9 
+[Process] running | pid: 14973 , remainingtime: 8 
+[Scheduler] Pausing: 14973 
+[Scheduler] Resuming: 14937
+[Process] running | pid: 14937 , remainingtime: 7 
+[Process] running | pid: 14937 , remainingtime: 6 
+[Process] running | pid: 14937 , remainingtime: 5 
+[Process] running | pid: 14937 , remainingtime: 4 
+[Process] running | pid: 14937 , remainingtime: 3 
+[Scheduler] Pausing: 14937 
+[Scheduler] Resuming: 14974
+[Process] running | pid: 14974 , remainingtime: 1 
+[Process] running | pid: 14974 , remainingtime: 0 
+[Process] finished  , pid: 14974 
+[Scheduler] Resuming: 14938
+[Process] running | pid: 14938 , remainingtime: 5 
+[Process] running | pid: 14938 , remainingtime: 4 
+[Process] running | pid: 14938 , remainingtime: 3 
+[Process] running | pid: 14938 , remainingtime: 2 
+[Process] running | pid: 14938 , remainingtime: 1 
+[Scheduler] Pausing: 14938 
+[Scheduler] Resuming: 14981
+[Process] running | pid: 14981 , remainingtime: 13 
+[Process] running | pid: 14981 , remainingtime: 12 
+[Process] running | pid: 14981 , remainingtime: 11 
+[Process] running | pid: 14981 , remainingtime: 10 
+[Process] running | pid: 14981 , remainingtime: 9 
+[Scheduler] Pausing: 14981 
+[Scheduler] Resuming: 14982
+[Process] running | pid: 14982 , remainingtime: 10 
+[Process] running | pid: 14982 , remainingtime: 9 
+[Process] running | pid: 14982 , remainingtime: 8 
+[Process] running | pid: 14982 , remainingtime: 7 
+[Process] running | pid: 14982 , remainingtime: 6 
+[Scheduler] Pausing: 14982 
+[Scheduler] Resuming: 14996
+[Process] running | pid: 14996 , remainingtime: 10 
+[Process] running | pid: 14996 , remainingtime: 9 
+[Process] running | pid: 14996 , remainingtime: 8 
+[Process] running | pid: 14996 , remainingtime: 7 
+[Process] running | pid: 14996 , remainingtime: 6 
+[Scheduler] Pausing: 14996 
+[Scheduler] Resuming: 14942
+[Process] running | pid: 14942 , remainingtime: 4 
+[Process] running | pid: 14942 , remainingtime: 3 
+[Process] running | pid: 14942 , remainingtime: 2 
+[Process] running | pid: 14942 , remainingtime: 1 
+[Process] running | pid: 14942 , remainingtime: 0 
+[Process] finished  , pid: 14942 
+[Scheduler] Resuming: 15013
+[Process] running | pid: 15013 , remainingtime: 5 
+[Process] running | pid: 15013 , remainingtime: 4 
+[Process] running | pid: 15013 , remainingtime: 3 
+[Process] running | pid: 15013 , remainingtime: 2 
+[Process] running | pid: 15013 , remainingtime: 1 
+[Scheduler] Pausing: 15013 
+[Scheduler] Resuming: 15020
+[Process] running | pid: 15020 , remainingtime: 3 
+[Process] running | pid: 15020 , remainingtime: 2 
+[Process] running | pid: 15020 , remainingtime: 1 
+[Process] running | pid: 15020 , remainingtime: 0 
+[Process] finished  , pid: 15020 
+[Scheduler] Resuming: 14943
+[Process] running | pid: 14943 , remainingtime: 4 
+[Process] running | pid: 14943 , remainingtime: 3 
+[Process] running | pid: 14943 , remainingtime: 2 
+[Process] running | pid: 14943 , remainingtime: 1 
+[Process] running | pid: 14943 , remainingtime: 0 
+[Process] finished  , pid: 14943 
+[Scheduler] Resuming: 14921
+[Process] running | pid: 14921 , remainingtime: 2 
+[Process] running | pid: 14921 , remainingtime: 1 
+[Process] running | pid: 14921 , remainingtime: 0 
+[Process] finished  , pid: 14921 
+[Scheduler] Resuming: 14949
+[Process] running | pid: 14949 , remainingtime: 1 
+[Process] running | pid: 14949 , remainingtime: 0 
+[Process] finished  , pid: 14949 
+[Scheduler] Resuming: 14925
+[Process] running | pid: 14925 , remainingtime: 0 
+[Process] finished  , pid: 14925 
+[Scheduler] Resuming: 14952
+[Process] running | pid: 14952 , remainingtime: 8 
+[Process] running | pid: 14952 , remainingtime: 7 
+[Process] running | pid: 14952 , remainingtime: 6 
+[Process] running | pid: 14952 , remainingtime: 5 
+[Process] running | pid: 14952 , remainingtime: 4 
+[Scheduler] Pausing: 14952 
+[Scheduler] Resuming: 14953
+[Process] running | pid: 14953 , remainingtime: 2 
+[Process] running | pid: 14953 , remainingtime: 1 
+[Process] running | pid: 14953 , remainingtime: 0 
+[Process] finished  , pid: 14953 
+[Scheduler] Resuming: 14954
+[Process] running | pid: 14954 , remainingtime: 0 
+[Process] finished  , pid: 14954 
+[Scheduler] Resuming: 14958
+[Process] running | pid: 14958 , remainingtime: 5 
+[Process] running | pid: 14958 , remainingtime: 4 
+[Process] running | pid: 14958 , remainingtime: 3 
+[Process] running | pid: 14958 , remainingtime: 2 
+[Process] running | pid: 14958 , remainingtime: 1 
+[Scheduler] Pausing: 14958 
+[Scheduler] Resuming: 14959
+[Process] running | pid: 14959 , remainingtime: 1 
+[Process] running | pid: 14959 , remainingtime: 0 
+[Process] finished  , pid: 14959 
+[Scheduler] Resuming: 14964
+[Process] running | pid: 14964 , remainingtime: 5 
+[Process] running | pid: 14964 , remainingtime: 4 
+[Process] running | pid: 14964 , remainingtime: 3 
+[Process] running | pid: 14964 , remainingtime: 2 
+[Process] running | pid: 14964 , remainingtime: 1 
+[Scheduler] Pausing: 14964 
+[Scheduler] Resuming: 14966
+[Process] running | pid: 14966 , remainingtime: 1 
+[Process] running | pid: 14966 , remainingtime: 0 
+[Process] finished  , pid: 14966 
+[Scheduler] Resuming: 14967
+[Process] running | pid: 14967 , remainingtime: 5 
+[Process] running | pid: 14967 , remainingtime: 4 
+[Process] running | pid: 14967 , remainingtime: 3 
+[Process] running | pid: 14967 , remainingtime: 2 
+[Process] running | pid: 14967 , remainingtime: 1 
+[Scheduler] Pausing: 14967 
+[Scheduler] Resuming: 14971
+[Process] running | pid: 14971 , remainingtime: 0 
+[Process] finished  , pid: 14971 
+[Scheduler] Resuming: 14973
+[Process] running | pid: 14973 , remainingtime: 7 
+[Process] running | pid: 14973 , remainingtime: 6 
+[Process] running | pid: 14973 , remainingtime: 5 
+[Process] running | pid: 14973 , remainingtime: 4 
+[Process] running | pid: 14973 , remainingtime: 3 
+[Scheduler] Pausing: 14973 
+[Scheduler] Resuming: 14937
+[Process] running | pid: 14937 , remainingtime: 2 
+[Process] running | pid: 14937 , remainingtime: 1 
+[Process] running | pid: 14937 , remainingtime: 0 
+[Process] finished  , pid: 14937 
+[Scheduler] Resuming: 14938
+[Process] running | pid: 14938 , remainingtime: 0 
+[Process] finished  , pid: 14938 
+[Scheduler] Resuming: 14981
+[Process] running | pid: 14981 , remainingtime: 8 
+[Process] running | pid: 14981 , remainingtime: 7 
+[Process] running | pid: 14981 , remainingtime: 6 
+[Process] running | pid: 14981 , remainingtime: 5 
+[Process] running | pid: 14981 , remainingtime: 4 
+[Scheduler] Pausing: 14981 
+[Scheduler] Resuming: 14982
+[Process] running | pid: 14982 , remainingtime: 5 
+[Process] running | pid: 14982 , remainingtime: 4 
+[Process] running | pid: 14982 , remainingtime: 3 
+[Process] running | pid: 14982 , remainingtime: 2 
+[Process] running | pid: 14982 , remainingtime: 1 
+[Scheduler] Pausing: 14982 
+[Scheduler] Resuming: 14996
+[Process] running | pid: 14996 , remainingtime: 5 
+[Process] running | pid: 14996 , remainingtime: 4 
+[Process] running | pid: 14996 , remainingtime: 3 
+[Process] running | pid: 14996 , remainingtime: 2 
+[Process] running | pid: 14996 , remainingtime: 1 
+[Scheduler] Pausing: 14996 
+[Scheduler] Resuming: 15013
+[Process] running | pid: 15013 , remainingtime: 0 
+[Process] finished  , pid: 15013 
+[Scheduler] Resuming: 14952
+[Process] running | pid: 14952 , remainingtime: 3 
+[Process] running | pid: 14952 , remainingtime: 2 
+[Process] running | pid: 14952 , remainingtime: 1 
+[Process] running | pid: 14952 , remainingtime: 0 
+[Process] finished  , pid: 14952 
+[Scheduler] Resuming: 14958
+[Process] running | pid: 14958 , remainingtime: 0 
+[Process] finished  , pid: 14958 
+[Scheduler] Resuming: 14964
+[Process] running | pid: 14964 , remainingtime: 0 
+[Process] finished  , pid: 14964 
+[Scheduler] Resuming: 14967
+[Process] running | pid: 14967 , remainingtime: 0 
+[Process] finished  , pid: 14967 
+[Scheduler] Resuming: 14973
+[Process] running | pid: 14973 , remainingtime: 2 
+[Process] running | pid: 14973 , remainingtime: 1 
+[Process] running | pid: 14973 , remainingtime: 0 
+[Process] finished  , pid: 14973 
+[Scheduler] Resuming: 14981
+[Process] running | pid: 14981 , remainingtime: 3 
+[Process] running | pid: 14981 , remainingtime: 2 
+[Process] running | pid: 14981 , remainingtime: 1 
+[Process] running | pid: 14981 , remainingtime: 0 
+[Process] finished  , pid: 14981 
+[Scheduler] Resuming: 14982
+[Process] running | pid: 14982 , remainingtime: 0 
+[Process] finished  , pid: 14982 
+[Scheduler] Resuming: 14996
+[Process] running | pid: 14996 , remainingtime: 0 
+[Process] finished  , pid: 14996 
+[Scheduler] Finished RR
+[Scheduler] Finished 
+                           [results]
+#             id     arrival  start_time     runtime finish_time    priority
+0000          11          70          74           0          74           5
+0001           2          15          44           6          75           8
+0002           5          35          54           6          96           7
+0003          19         103         106           0         106           8
+0004           7          50          75           7         128           4
+0005          18          98         163           5         168          10
+0006           1          11          34          16         169           5
+0007           4          26          39          19         173           2
+0008          34         170         173           0         173           1
+0009          10          64         106           9         182           3
+0010          22         120         197           2         199           3
+0011          43         209         209           0         209           2
+0012           3          25          49          16         210           0
+0013          48         230         231           0         231           6
+0014          14          86         138           7         233           1
+0015          29         154         268           1         269           8
+0016          38         189         309           5         314           5
+0017          39         194         329           2         331           7
+0018          25         132         215          10         371           5
+0019          46         216         371           4         375           4
+0020           8          55          90          16         411           3
+0021          15          93         148          14         420           2
+0022          52         252         420           4         424           1
+0023          53         252         424           5         429           6
+0024          31         157         253           9         433           1
+0025          12          70         111          17         561           1
+0026          66         313         566           3         569           4
+0027           6          42          69          25         574           9
+0028          40         197         319           8         577           4
+0029          23         122         199          11         608           4
+0030          45         210         356           6         639           8
+0031          74         362         644           5         649           9
+0032           9          55          85          21         680           2
+0033          81         402         695           2         697           1
+0034          86         420         737           5         742           6
+0035          89         429         742           1         743           4
+0036          57         265         458           8         814          10
+0037          59         274         473           8         847           9
+0038          32         166         279          11         869           8
+0039          62         286         508          10         889           7
+0040          64         296         523           6         900           2
+0041          65         306         561           6         906           0
+0042          47         224         375          14        1005           7
+0043          49         230         390          13        1033           1
+0044          82         405         697           6        1039           8
+0045          27         139         233          16        1040           5
+0046          90         436         758           8        1088           9
+0047          93         449         789           7        1110           5
+0048          16          96         158          24        1139           7
+0049          58         272         468          13        1142           2
+0050          97         468         834           8        1145           9
+0051          63         289         498          12        1177           6
+0052          68         330         587          15        1212           6
+0053          42         200         336          18        1225           5
+0054          13          79         121          28        1249           8
+0055          78         387         674          14        1283           1
+0056          79         395         680          15        1288           9
+0057          17          96         153          26        1354           2
+0058          94         453         799          12        1361           2
+0059          30         156         263          21        1362           1
+0060          33         167         274          25        1397           2
+0061          35         178         284          22        1404           7
+0062          20         108         173          28        1407           9
+0063          36         180         294          23        1410           3
+0064          21         117         192          26        1421          10
+0065          69         339         597          16        1427           9
+0066          44         209         346          24        1441          10
+0067          72         352         633          17        1448           5
+0068          24         132         210          26        1449           6
+0069          75         372         649          16        1450           4
+0070          26         133         221          28        1458           1
+0071          50         236         395          22        1465           9
+0072          28         147         238          27        1472           1
+0073          84         416         717          16        1473           2
+0074          51         246         411          25        1483           6
+0075          88         429         743          18        1493           3
+0076          54         255         433          25        1503           2
+0077          92         439         779          17        1515           3
+0078          60         275         478          25        1540           6
+0079          99         484         858          19        1549           9
+0080          61         284         493          25        1554           6
+0081          37         183         299          28        1557           9
+0082          67         322         577          22        1559           3
+0083          41         199         331          26        1560           9
+0084          71         345         613          23        1568           3
+0085          73         355         623          21        1569           6
+0086          76         382         669          22        1576           4
+0087          85         416         722          22        1583           6
+0088          87         428         748          21        1589           2
+0089          55         257         438          28        1597           8
+0090          56         265         448          26        1598           4
+0091         100         485         852          21        1614           7
+0092          70         344         608          29        1618           8
+0093          77         383         659          26        1619           5
+0094          80         401         707          26        1620           5
+0095          83         413         732          26        1621           7
+0096          91         437         763          28        1624           1
+0097          95         460         814          29        1628           9
+0098          96         462         819          26        1629           4
+0099          98         474         839          26        1630           5
+[PG] Terminating[CLK] terminating!

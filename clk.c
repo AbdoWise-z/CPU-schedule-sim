@@ -8,7 +8,7 @@
 #include "headers.h"
 #include <time.h>
 
-#define CLK_MS 20
+#define CLK_MS 1
 
 int shmid;
 
@@ -23,6 +23,11 @@ void cleanup(int signum)
 /* This file represents the system clock for ease of calculations */
 int main(int argc, char * argv[])
 {
+    
+#ifdef OUT_TO_FILE
+    SYNC_IO;
+#endif
+
     printf("[CLK] starting\n");
     signal(SIGINT, cleanup);
     int clk = 0;

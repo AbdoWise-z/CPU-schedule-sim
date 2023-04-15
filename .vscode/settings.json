@@ -8,6 +8,7 @@
         "type_traits": "c",
         "stdlib.h": "c",
         "types.h": "c",
-        "msg.h": "c"
+        "msg.h": "c",
+        "data_structure.h": "c"
     }
 }

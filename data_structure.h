@@ -18,6 +18,13 @@ typedef struct {
 } SchedulerMessage;
 
 typedef struct {
+    int have_data;
+    int ready;
+    int done_recieving;
+    ProcessInfo data;
+} ProcessTransferBlock;
+
+typedef struct {
     int active_pid; //which processes should be running right now ?
     int remainning; //a value that the process returns to the scheduler
     int lock1;      //a lock before storing the value
