@@ -41,37 +41,31 @@ void insertLL(LL_L_t* ll , LL_t val){
 }
 
 
+void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
+    if (t == NULL){ //if we want to insert at the start
+        LL_Node* insert = (LL_Node*) malloc( sizeof(LL_Node) );
+        insert->value = val;
 
-//NOT FINISHED YET!!!!!!!!!
-void insertAtLL(LL_L_t* ll , LL_Node* prev , LL_t val){
-    if (prev == NULL){
-        prev = (LL_Node*) malloc( sizeof(LL_Node) );
-        prev->value = val;
         if (ll->start){
-            ll->start->prev = prev;
+            ll->start->prev = insert;
+            if (ll->size == 1)
+                ll->end = ll->start;
         }
-        ll->start = prev;
+
+        insert->next = ll->start;
+        ll->start = insert;
+
     }else{
         LL_Node* insert = (LL_Node*) malloc( sizeof(LL_Node) );
+        insert->value = val;
+
+        insert->next = t->next;
+        insert->prev = t;
+        if (t->next)
+            ((LL_Node*) t->next)->prev = insert;
+        t->next = insert;
     }
 
-    if (ll->size == 0){
-        LL_Node* node = (LL_Node*) malloc( sizeof(LL_Node) );
-        node->next = NULL;
-        node->value = val;
-        ll->start = node;
-        ll->end = node;
-        ll->size++;
-        return;
-    }
-
-    //setup end and the next node values
-    ll->end->next = malloc( sizeof(LL_Node) );
-    ((LL_Node*) ll->end->next)->next  = NULL;
-    ((LL_Node*) ll->end->next)->value = val;
-    ((LL_Node*) ll->end->next)->prev = ll->end;
-
-    ll->end = ll->end->next;
     ll->size++;
 }
 

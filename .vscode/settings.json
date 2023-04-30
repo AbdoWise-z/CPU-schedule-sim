@@ -29,6 +29,7 @@
         "linkedlist.h": "c",
         "wait.h": "c",
         "file.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "map": "c"
     }
 }
