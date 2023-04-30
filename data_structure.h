@@ -44,7 +44,7 @@ typedef struct ProcessesMessage{
 
 #define CQ_Q_t CircularQueue
 #define CQ_t ProcessInfo
-#define CQ_MAX_SIZE 1000
+#define CQ_MAX_SIZE 2000
 
 #include "CircularQueue.h"
 

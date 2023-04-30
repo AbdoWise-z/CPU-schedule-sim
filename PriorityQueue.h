@@ -57,7 +57,7 @@ void insert(PQ_Q_t *pq, int priority , PQ_t item) {
     pq->data[pq->size++]   = item;
 
     int i = pq->size - 1;
-    while (i > 0 && pq->priority[(i - 1) / 2] < pq->priority[i]) {
+    while (i > 0 && pq->priority[(i - 1) / 2] <= pq->priority[i]) {
         swap_pqt(&pq->data[(i - 1) / 2], &pq->data[i]);
         swap(&pq->priority[(i - 1) / 2], &pq->priority[i]);
         i = (i - 1) / 2;

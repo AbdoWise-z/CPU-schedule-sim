@@ -34,9 +34,11 @@ void enqueue(CQ_Q_t *queue, CQ_t data) {
         printf("CQueue is Full!\n");
         return;
     }
+    
     if (queue->front == -1) {
         queue->front = 0;
     }
+
     queue->rear = (queue->rear + 1) % CQ_MAX_SIZE;
     queue->arr[queue->rear] = data;
     queue->size++;

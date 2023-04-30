@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
                 }
 
                 sq_type = atoi(argv[i + 1]);
-                if (sq_type < 1 || sq_type > 4){
+                if (sq_type < 1 || sq_type > 5){
                     printf("Invalid run command [ Invalid SCH type ], requesting info from user.");
                     ui = true;
                     break;
@@ -82,7 +82,7 @@ int main(int argc, char * argv[])
         }
     }
 
-    if (mem_type > 4 || mem_type < 1 || sq_type > 4 || sq_type < 1 || quanta_size < 1){
+    if (mem_type > 3 || mem_type < 1 || sq_type > 5 || sq_type < 1 || quanta_size < 1){
         ui = true;
     }
 
@@ -94,10 +94,11 @@ int main(int argc, char * argv[])
         printf("    2. Shortest Remaining time Next (SRTN).\n");
         printf("    3. Round Robin (RR).\n");
         printf("    4. Preemptive Highest Priority First (HPF).\n");
+        printf("    5. First Come First Serve.\n");
         
-        while (sq_type > 4 || sq_type < 1){
+        while (sq_type > 5 || sq_type < 1){
             scanf("%d" , &sq_type);
-            if (sq_type <= 4 || sq_type >= 1)
+            if (sq_type <= 5 || sq_type >= 1)
                 break;
             printf("invalid input , select a number between [ 1 , 4 ]");
         }
