@@ -48,14 +48,14 @@ typedef struct ProcessesMessage{
 
 #include "CircularQueue.h"
 
-typedef struct MemroySlot{
+typedef struct MemorySlot{
     int start;
     int end;
-    int id; //the id of the processes taking this slot
-} MemroySlot;
+    int id;
+} MemorySlot;
 
-#define LL_t MemroySlot
-#define LL_L_t MemoryMap
+#define LL_t MemorySlot
+#define LL_L_t LinkedList
 
 #include "LinkedList.h"
 

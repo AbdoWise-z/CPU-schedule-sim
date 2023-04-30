@@ -28,6 +28,7 @@
         "initializer_list": "cpp",
         "linkedlist.h": "c",
         "wait.h": "c",
-        "file.h": "c"
+        "file.h": "c",
+        "time.h": "c"
     }
 }

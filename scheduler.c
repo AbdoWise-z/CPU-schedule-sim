@@ -40,7 +40,7 @@ bool switch_to(ProcessInfo* p);
 PriorityQueue* pq;
 PriorityQueue* finish_queue;
 CircularQueue* waiting_queue;
-MemoryMap* memMap;
+LinkedList* memMap;
 
 SchedulerMessage msg;
 //ProcessesMessage pMsg;
@@ -206,6 +206,7 @@ void run_for(ProcessInfo* p , int qouta){
 void get_process(ProcessInfo* p){
     
     //printf("get_p in\n");
+    usleep(CLK_MS / 4);
 
     while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
         enqueue(waiting_queue , msg.p);
