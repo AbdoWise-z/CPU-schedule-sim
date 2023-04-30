@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <math.h>
 
 #include "data_structure.h"
 
@@ -28,7 +29,7 @@ typedef short bool;
 int * shmaddr;                 //
 //===============================
 
-#define CLK_MS 1000
+#define CLK_MS 100
 #define CLK_START_DELAY_MS 100
 
 

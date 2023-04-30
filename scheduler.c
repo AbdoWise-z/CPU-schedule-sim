@@ -173,7 +173,6 @@ void run_for(ProcessInfo* p , int qouta){
         ProcessControl->active_pid = p->pid; //tell the process it can start its jop
         ProcessControl->ready = 0;
 
-        CLK_INIT;
         CLK_WAIT(1);
         
         //int k = msgrcv(p_m_q , &pMsg , sizeof(ProcessesMessage) - sizeof(long) , 0 , !IPC_NOWAIT);
@@ -205,33 +204,26 @@ void run_for(ProcessInfo* p , int qouta){
 
 void get_process(ProcessInfo* p){
     
-    //printf("get_p in\n");
-    usleep(CLK_MS / 4);
+    usleep(CLK_MS); //sleep for 1/1000 of the clk
 
     while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
         enqueue(waiting_queue , msg.p);
-
-        //received_all = false;
-
         if (msg.type == 1){
             printf("[Scheduler] No more processes to receive.\n");
             received_all = true; //done receiving ...
         }
-        
+
+        usleep(CLK_MS / 100);
     }
 
     p->id = -1;
 
     int s = waiting_queue->size;
     if (s > 0){
-        //printf("get_p size -> %d\n" , waiting_queue->size);
-        
         ProcessInfo temp;
         for (int i = 0;i < s;i++){
             temp = dequeue(waiting_queue);
-            //printf("get_p dequeue\n");
             if (mem_type == 1){
-                //printf("get_p memtype1\n");
                 if (mm_firstFitAlloc(&temp)){
                     *p = temp;
 
@@ -239,8 +231,6 @@ void get_process(ProcessInfo* p){
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
 
-                    //printf("get_p out\n");
-        
                     return;
                 }
             }else if (mem_type == 2){
@@ -267,29 +257,6 @@ void get_process(ProcessInfo* p){
             enqueue(waiting_queue , temp);
         }
     }
-
-    //printf("get_p out empty\n");
-    
-
-    // p->id = -1; //didnt receive anything
-
-    // int s = msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT);
-    // if (s > 0){
-    //     *p = msg.p;
-    //     p->pid = -1; //default value
-    //     p->state = STATE_NOT_READY;
-    //     p->remainning = p->runtime;
-        
-    //     if (msg.type == 1){
-    //         printf("[Scheduler] No more processes to receive.\n");
-    //         return true; //done reading
-    //     }
-    //     return false;
-    // }
-
-    // p->id = -1; //didnt receive anything
-
-    // return false;
 }
 
 void hpf(bool preemptive){
@@ -297,8 +264,10 @@ void hpf(bool preemptive){
     ProcessInfo recv;
     
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
+        CLK_INIT;
+        
         recv.id = INT_MAX;
-        while (recv.id > 0 && !received_all){
+        while (recv.id > 0){
             get_process(&recv);
 
             if (recv.id > 0){
@@ -323,15 +292,14 @@ void hpf(bool preemptive){
                 insert(pq , preemptive ? -next.priority : INT_MAX , next);
             else{
                 //printf("[Scheduler] process finished\n");
-                insert(finish_queue , -getClk() , next);
                 mm_clearMemory(&next);
+                insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
                 
             }
         } else {
-            CLK_INIT;
             CLK_WAIT(1);
-            printf("[Scheduler] waiting...\n");
+            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
     printf("[Scheduler] Finished HPF\n");
@@ -342,8 +310,10 @@ void srtn(){
     ProcessInfo recv;
 
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
+        CLK_INIT;
+
         recv.id = INT_MAX;
-        while (recv.id > 0 && !received_all){
+        while (recv.id > 0){
             get_process(&recv);
 
             if (recv.id > 0){
@@ -368,26 +338,30 @@ void srtn(){
                 insert(pq , -next.remainning , next);
             else{
                 //printf("[Scheduler] process finished\n");
+                mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
         } else {
-            CLK_INIT;
             CLK_WAIT(1);
-            printf("[Scheduler] waiting...\n");
+            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
     printf("[Scheduler] Finished SRTN\n");
 }
 
+int rq;
 void rr(int q){
     printf("[Scheduler] Running RR\n");
     ProcessInfo recv;
-    
+    rq = 0;
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
+        CLK_INIT;
+
         recv.id = INT_MAX;
-        while (recv.id > 0 && !received_all){
+        while (recv.id > 0){
             get_process(&recv);
+
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 if (recv.remainning == 0){
@@ -402,15 +376,20 @@ void rr(int q){
         }
 
         if (pq->size > 0){ //we have something to run
+            if (rq == 0)
+                rq = q;
+            
             ProcessInfo next = extract(pq);
             //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
-            run_for(&next , q);
+            run_for(&next , 1);
             current_process = next;
             if (next.remainning > 0){
                 //printf("[Scheduler] re-inserting\n");
-                insert(pq , -getClk() , next);
+                insert(pq , (--rq) > 0 ? rq : -getClk() , next);
             }else{
                 //printf("[Scheduler] process finished\n");
+                rq = 0;
+                mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
@@ -418,9 +397,8 @@ void rr(int q){
             //printf("[Scheduler] jop done for %d\n" , next.id);
 
         } else {
-            CLK_INIT;
             CLK_WAIT(1);
-            printf("[Scheduler] waiting...\n");
+            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
     printf("[Scheduler] Finished RR\n");
@@ -431,8 +409,10 @@ void fcfs(){
     ProcessInfo recv;
 
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
+        CLK_INIT;
+
         recv.id = INT_MAX;
-        while (recv.id > 0 && !received_all){
+        while (recv.id > 0){
             get_process(&recv);
 
             if (recv.id > 0){
@@ -457,13 +437,13 @@ void fcfs(){
                 insert(pq , 1 , next);
             else{
                 //printf("[Scheduler] process finished\n");
+                mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
         } else {
-            CLK_INIT;
             CLK_WAIT(1);
-            printf("[Scheduler] waiting...\n");
+            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
     printf("[Scheduler] Finished FCFS\n");
@@ -471,21 +451,28 @@ void fcfs(){
 
 bool mm_firstFitAlloc(ProcessInfo* info){
     //TODO: impelement this
+    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
+    if (getClk() != info->arrival){ //TDO: remove this if
+        printf("[MEM] ERROR : clk != arrival (%d)\n" , getClk() - info->arrival);
+    }
     return true;
 }
 
 bool mm_nextFitAlloc(ProcessInfo* info){
     //TODO: implement this
+    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
     return true;
 }
 
 bool mm_buddyAlloc(ProcessInfo* info){
     //TODO: implement this
+    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
     return true;
 }
 
 void mm_clearMemory(ProcessInfo* info){
     //TODO: implement this
+    printf("At time %d removed process %d from memory\n" , getClk() , info->id );
 }
 
 void clearResources(int i){

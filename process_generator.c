@@ -19,7 +19,6 @@ int main(int argc, char * argv[])
     SYNC_IO;
 #endif
 
-    
     signal(SIGINT, clearResources);
     
     printf("[PG] pid: %d , gpid: %d \n" , getpid() , getpgrp());
