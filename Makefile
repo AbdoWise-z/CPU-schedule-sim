@@ -1,7 +1,7 @@
 build:
 	gcc process_generator.c -o "out/process_generator.out"
 	gcc clk.c -o "out/clk.out"
-	gcc scheduler.c -o "out/scheduler.out"
+	gcc scheduler.c -o "out/scheduler.out" -lm
 	gcc process.c -o "out/process.out"
 	gcc test_generator.c -o "out/test_generator.out"
 

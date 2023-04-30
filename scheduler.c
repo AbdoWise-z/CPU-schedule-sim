@@ -1,4 +1,6 @@
 #include "headers.h"
+#include <ctype.h>
+#include <time.h>
 
 #define CLK_INIT clk = getClk()
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
@@ -244,6 +246,7 @@ void get_process(ProcessInfo* p){
                     return;
                 }
             }else if (mem_type == 3){
+                printf("trying to alloc %d for %d t3\n" , temp.memSize , temp.id);
                 if (mm_buddyAlloc(&temp)){
                     *p = temp;
 
@@ -452,7 +455,7 @@ void fcfs(){
 bool mm_firstFitAlloc(ProcessInfo* info){
     //TODO: impelement this
     printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
-    if (getClk() != info->arrival){ //TDO: remove this if
+    if (getClk() != info->arrival){ //TODO: remove this if
         printf("[MEM] ERROR : clk != arrival (%d)\n" , getClk() - info->arrival);
     }
     return true;
@@ -465,14 +468,57 @@ bool mm_nextFitAlloc(ProcessInfo* info){
 }
 
 bool mm_buddyAlloc(ProcessInfo* info){
-    //TODO: implement this
-    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
-    return true;
+    int level = (int)ceil(log2(info->memSize));
+    int blockSize = (int)pow(2 , level);
+
+    MemorySlot m;
+   
+    for(int i = 0; i < 1024; i += blockSize){
+        
+        LL_Node* temp = memMap->start;
+        bool free = true;
+        int blockStart = i;
+        int blockEnd = i + blockSize - 1;
+
+        while(temp != NULL){
+            if((temp->value.start >= blockStart && temp->value.end <= blockEnd ) || ( blockStart >= temp->value.start && blockEnd <= temp->value.end)){
+                free = false;
+                break;
+            }
+            temp = temp->next;
+        }
+
+        if(!free)
+            continue;
+
+        m.start = blockStart;
+        m.end = blockEnd;
+        m.id = info->id;
+        insertLL(memMap , m);
+
+        info->mem_start = i;
+        info->mem_end = i + blockSize - 1;
+        printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
+        return true;
+    }
+
+    return false;
 }
 
 void mm_clearMemory(ProcessInfo* info){
-    //TODO: implement this
-    printf("At time %d removed process %d from memory\n" , getClk() , info->id );
+    LL_Node* temp = memMap->start;
+
+    while(temp){
+        if(info->mem_start == temp->value.start && info->mem_end == temp->value.end)
+            break;
+        temp = temp->next;
+    }
+
+    removeLL(memMap , temp);
+    int blockSize = info->mem_end - info->mem_start + 1;
+    printf("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
+    //info->mem_start = -1;
+    //info->mem_end = -1;
 }
 
 void clearResources(int i){
