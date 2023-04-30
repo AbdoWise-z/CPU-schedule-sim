@@ -21,14 +21,16 @@ void rr(int);
 
 //Memory mapping types
 bool mm_firstFitAlloc(ProcessInfo* info);
-bool mm_nextFit(ProcessInfo* info);
-bool mm_buddy(ProcessInfo* info);
+bool mm_nextFitAlloc(ProcessInfo* info);
+bool mm_buddyAlloc(ProcessInfo* info);
 
-bool isTaken(int);
-void markTaken(int start , int end);
-void freeMem(int start , int end);
+void mm_clearMemory(ProcessInfo* info);
 
-bool get_process(ProcessInfo* p); //returns true if this is the last processes to come
+// bool isTaken(int);
+// void markTaken(int start , int end);
+// void freeMem(int start , int end);
+
+void get_process(ProcessInfo* p);
 
 ProcessInfo current_process;
 void run_for(ProcessInfo* p , int qouta);
@@ -37,6 +39,7 @@ bool switch_to(ProcessInfo* p);
 PriorityQueue* pq;
 PriorityQueue* finish_queue;
 CircularQueue* waiting_queue;
+MemoryMap* memMap;
 
 SchedulerMessage msg;
 //ProcessesMessage pMsg;
@@ -66,7 +69,7 @@ int main(int argc, char* argv[])
     mem_type = atoi(argv[2]);
 
 
-    printf("[Scheduler] cfg , t : %d  , q : %d\n" , t , q);
+    printf("[Scheduler] cfg , t : %d  , q : %d , mem_type: %d\n" , t , q , mem_type);
 
     sc_m_q = msgget(ftok("PG_SC" , 15) , 0666 | IPC_CREAT);
     //p_m_q  = msgget(ftok("SC_P"  , 15) , 0666 | IPC_CREAT);
@@ -82,6 +85,7 @@ int main(int argc, char* argv[])
     createPriorityQueue(&pq);
     createPriorityQueue(&finish_queue);
     createCircularQueue(&waiting_queue);
+    createLL(&memMap);
 
     switch (t)
     {
@@ -195,57 +199,88 @@ void run_for(ProcessInfo* p , int qouta){
 
 }
 
-bool get_process(ProcessInfo* p){
+void get_process(ProcessInfo* p){
     
-    // while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
-    //     enqueue(waiting_queue , msg.p);
+    printf("get_p in\n");
 
-    //     // p->pid = -1; //default value
-    //     // p->state = STATE_NOT_READY;
-    //     // p->remainning = p->runtime;
+    while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
+        enqueue(waiting_queue , msg.p);
+
+        
+        if (msg.type == 1){
+            printf("[Scheduler] No more processes to receive.\n");
+            received_all = true; //done receiving ...
+        }
+
+        received_all = false;
+    }
+
+    p->id = -1;
+
+    if (waiting_queue->size > 0){
+        printf("get_p size -> %d\n" , waiting_queue->size);
+        
+        ProcessInfo temp;
+        for (int i = 0;i < waiting_queue->size;i++){
+            temp = dequeue(waiting_queue);
+            if (mem_type == 1){
+                if (mm_firstFitAlloc(&temp)){
+                    *p = temp;
+                    p->pid = -1; //default value
+                    p->state = STATE_NOT_READY;
+                    p->remainning = p->runtime;
+
+                    printf("get_p out\n");
+        
+                    return;
+                }
+            }else if (mem_type == 2){
+                if (mm_nextFitAlloc(&temp)){
+                    *p = temp;
+
+                    p->pid = -1; //default value
+                    p->state = STATE_NOT_READY;
+                    p->remainning = p->runtime;
+        
+                    return;
+                }
+            }else if (mem_type == 3){
+                if (mm_buddyAlloc(&temp)){
+                    *p = temp;
+
+                    p->pid = -1; //default value
+                    p->state = STATE_NOT_READY;
+                    p->remainning = p->runtime;
+        
+                    return;
+                }
+            }
+            enqueue(waiting_queue , temp);
+        }
+    }
+
+    printf("get_p out empty\n");
+    
+
+    // p->id = -1; //didnt receive anything
+
+    // int s = msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT);
+    // if (s > 0){
+    //     *p = msg.p;
+    //     p->pid = -1; //default value
+    //     p->state = STATE_NOT_READY;
+    //     p->remainning = p->runtime;
         
     //     if (msg.type == 1){
     //         printf("[Scheduler] No more processes to receive.\n");
-    //         received_all = true; //done reading
+    //         return true; //done reading
     //     }
-    //     received_all = false;
-    // }
-
-    // if (!isCQEmpty(waiting_queue)){
-    //     ProcessInfo temp;
-    //     for (int i = 0;i < waiting_queue->size;i++){
-    //         temp = dequeue(waiting_queue);
-    //         switch (mem_type)
-    //         {
-    //         case 1:
-
-    //             break;
-            
-    //         default:
-    //             break;
-    //         }
-    //     }
+    //     return false;
     // }
 
     // p->id = -1; //didnt receive anything
 
-    int s = msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT);
-    if (s > 0){
-        *p = msg.p;
-        p->pid = -1; //default value
-        p->state = STATE_NOT_READY;
-        p->remainning = p->runtime;
-        
-        if (msg.type == 1){
-            printf("[Scheduler] No more processes to receive.\n");
-            return true; //done reading
-        }
-        return false;
-    }
-
-    p->id = -1; //didnt receive anything
-
-    return false;
+    // return false;
 }
 
 
@@ -253,11 +288,10 @@ void hpf(bool preemptive){
     printf("[Scheduler] Running HPF\n");
     ProcessInfo recv;
     bool run = true;
-    while (run || pq->size > 0){
+    while (!received_all || waiting_queue->size > 0 || pq->size > 0){
         recv.id = INT_MAX;
-        
-        while (recv.id > 0 && run){
-            run = !get_process(&recv);
+        while (recv.id > 0 && !received_all){
+            get_process(&recv);
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , Priority: %d\n" , recv.id , recv.priority);
                 if (recv.remainning == 0){
@@ -281,6 +315,7 @@ void hpf(bool preemptive){
             else{
                 //printf("[Scheduler] process finished\n");
                 insert(finish_queue , -getClk() , next);
+                mm_clearMemory(&next);
                 current_process.id = -1; //no current , no need to stop the next one
                 
             }
@@ -301,7 +336,7 @@ void srtn(){
         recv.id = INT_MAX;
         
         while (recv.id > 0 && run){
-            run = !get_process(&recv);
+            //run = !get_process(&recv);
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 if (recv.remainning == 0){
@@ -344,7 +379,7 @@ void rr(int q){
         recv.id = INT_MAX;
         
         while (recv.id > 0 && run){
-            run = !get_process(&recv);
+            //run = !get_process(&recv);
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 if (recv.remainning == 0){
@@ -383,7 +418,24 @@ void rr(int q){
     printf("[Scheduler] Finished RR\n");
 }
 
+bool mm_firstFitAlloc(ProcessInfo* info){
+    //TODO: impelement this
+    return true;
+}
 
+bool mm_nextFitAlloc(ProcessInfo* info){
+    //TODO: implement this
+    return true;
+}
+
+bool mm_buddyAlloc(ProcessInfo* info){
+    //TODO: implement this
+    return true;
+}
+
+void mm_clearMemory(ProcessInfo* info){
+    //TODO: implement this
+}
 
 void clearResources(int i){
 

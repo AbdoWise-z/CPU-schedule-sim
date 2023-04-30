@@ -51,6 +51,7 @@ typedef struct ProcessesMessage{
 typedef struct MemroySlot{
     int start;
     int end;
+    int id; //the id of the processes taking this slot
 } MemroySlot;
 
 #define LL_t MemroySlot

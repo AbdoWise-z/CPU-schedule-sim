@@ -73,7 +73,7 @@ int main(int argc, char * argv[])
                 }
 
                 mem_type = atoi(argv[i + 1]);
-                if (mem_type < 1 || mem_type > 4){
+                if (mem_type < 1 || mem_type > 3){
                     printf("Invalid run command [ Invalid mem type ], requesting info from user.");
                     ui = true;
                     break;
@@ -110,10 +110,16 @@ int main(int argc, char * argv[])
         }
 
         printf("Select memory mapping type: \n");
-        printf("    1. Buddy.\n");
-        printf("    2. idk1 .\n");
-        printf("    3. idk2 .\n");
-        //TODO: complete this
+        printf("    1. First fit\n");
+        printf("    2. Next fit\n");
+        printf("    3. Buddy\n");
+        
+        while (mem_type > 3 || mem_type < 1){
+            scanf("%d" , &mem_type);
+            if (mem_type <= 4 || mem_type >= 1)
+                break;
+            printf("invalid input , select a number between [ 1 , 3 ]");
+        }
     }
 
     // 2. Read the input files.
