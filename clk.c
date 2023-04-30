@@ -8,7 +8,7 @@
 #include "headers.h"
 #include <time.h>
 
-#define CLK_MS 1000
+#define CLK_MS 10
 #define CLK_START_DELAY_MS 100
 
 int shmid;
