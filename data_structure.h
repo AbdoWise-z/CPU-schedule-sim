@@ -2,29 +2,28 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define MAX_SIZE 2000
-
 #define STATE_NOT_READY   0
 #define STATE_READY       1
 
-typedef struct {
-    int id , arrival , runtime , priority; //input values
+typedef struct ProcessInfo{
+    int id , arrival , runtime , priority , memSize; //input values
     int pid , state , finish_time , start_time , remainning; //runtime values
+    int mem_start , mem_end; //mem values
 } ProcessInfo;
 
-typedef struct {
+typedef struct SchedulerMessage{
     long type;
     ProcessInfo p;
 } SchedulerMessage;
 
-typedef struct {
+typedef struct ProcessTransferBlock{
     int have_data;
     int ready;
     int done_recieving;
     ProcessInfo data;
 } ProcessTransferBlock;
 
-typedef struct {
+typedef struct ControlBlock{
     int active_pid; //which processes should be running right now ?
     int remainning; //a value that the process returns to the scheduler
     int lock1;      //a lock before storing the value
@@ -32,141 +31,30 @@ typedef struct {
     int ready;      //a flag to determine if the process is ready to store a value
 } ControlBlock;
 
-typedef struct {
+typedef struct ProcessesMessage{
     long type;
     int remainning;
 } ProcessesMessage;
 
+#define PQ_MAX_SIZE 2000
 #define PQ_t ProcessInfo
+#define PQ_Q_t PriorityQueue
+
+#include "PriorityQueue.h"
+
+#define CQ_Q_t CircularQueue
 #define CQ_t ProcessInfo
+#define CQ_MAX_SIZE 1000
 
-typedef struct {
-    int priority[MAX_SIZE];
-    PQ_t data[MAX_SIZE];
+#include "CircularQueue.h"
 
-    int size;
-} PriorityQueue;
+typedef struct MemroySlot{
+    int start;
+    int end;
+} MemroySlot;
 
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+#define LL_t MemroySlot
+#define LL_L_t MemoryMap
 
-void swap_pqt(PQ_t *a, PQ_t *b) {
-    PQ_t temp = *a;
-    *a = *b;
-    *b = temp;
-}
+#include "LinkedList.h"
 
-void maxHeapify(PriorityQueue *pq, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    if (left < pq->size && pq->priority[left] > pq->priority[largest]) {
-        largest = left;
-    }
-
-    if (right < pq->size && pq->priority[right] > pq->priority[largest]) {
-        largest = right;
-    }
-
-    if (largest != i) {
-        swap(&pq->priority[i], &pq->priority[largest]);
-        swap_pqt(&pq->data[i], &pq->data[largest]);
-        maxHeapify(pq, largest);
-    }
-}
-
-PriorityQueue *createPriorityQueue() {
-    PriorityQueue *pq = (PriorityQueue *) malloc(sizeof(PriorityQueue));
-    pq->size = 0;
-    return pq;
-}
-
-void insert(PriorityQueue *pq, int priority , PQ_t item) {
-    if (pq->size >= MAX_SIZE) {
-        printf("Priority Queue is full\n");
-        return;
-    }
-
-    pq->priority[pq->size] = priority;
-    pq->data[pq->size++]   = item;
-
-    int i = pq->size - 1;
-    while (i > 0 && pq->priority[(i - 1) / 2] < pq->priority[i]) {
-        swap_pqt(&pq->data[(i - 1) / 2], &pq->data[i]);
-        swap(&pq->priority[(i - 1) / 2], &pq->priority[i]);
-        i = (i - 1) / 2;
-    }
-}
-
-PQ_t extractMax(PriorityQueue *pq) {
-    if (pq->size <= 0) {
-        printf("Priority Queue is empty\n");
-        return pq->data[0];
-    }
-
-    int max = pq->priority[0];
-    PQ_t m_data = pq->data[0];
-    pq->data[0] = pq->data[--pq->size];
-    pq->priority[0] = pq->priority[  pq->size];
-    maxHeapify(pq, 0);
-
-    return m_data;
-}
-
-typedef struct {
-    CQ_t *arr;
-    int front;
-    int rear;
-    int size;
-} CircularQueue;
-
-CircularQueue* createCircularQueue(){
-    CircularQueue* c = (CircularQueue*) malloc(sizeof(CircularQueue));
-    c->arr = (CQ_t*) malloc(sizeof(CQ_t) * MAX_SIZE);
-    c->front = -1;
-    c->rear = -1;
-    c->size = 0;
-    return c;
-}
-
-int isCQFull(CircularQueue *queue) {
-    return ((queue->front == 0 && queue->rear == MAX_SIZE - 1) || 
-            (queue->rear == (queue->front - 1) % (MAX_SIZE - 1)));
-}
-
-int isCQEmpty(CircularQueue *queue) {
-    return (queue->front == -1);
-}
-
-void enqueue(CircularQueue *queue, CQ_t data) {
-    if (isCQFull(queue)) {
-        printf("CQueue is Full!\n");
-        return;
-    }
-    if (queue->front == -1) {
-        queue->front = 0;
-    }
-    queue->rear = (queue->rear + 1) % MAX_SIZE;
-    queue->arr[queue->rear] = data;
-    queue->size++;
-}
-
-CQ_t dequeue(CircularQueue *queue) {
-    if (isCQEmpty(queue)) {
-        printf("Queue is Empty!\n");
-        return queue->arr[0];
-    }
-    CQ_t data = queue->arr[queue->front];
-    if (queue->front == queue->rear) {
-        queue->front = -1;
-        queue->rear = -1;
-    } else {
-        queue->front = (queue->front + 1) % MAX_SIZE;
-    }
-    queue->size--;
-    return data;
-}

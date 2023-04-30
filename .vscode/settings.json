@@ -9,6 +9,25 @@
         "stdlib.h": "c",
         "types.h": "c",
         "msg.h": "c",
-        "data_structure.h": "c"
+        "data_structure.h": "c",
+        "*.tcc": "c",
+        "istream": "c",
+        "mutex": "c",
+        "ostream": "c",
+        "stop_token": "c",
+        "typeinfo": "c",
+        "array": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "linkedlist.h": "c",
+        "wait.h": "c",
+        "file.h": "c"
     }
 }

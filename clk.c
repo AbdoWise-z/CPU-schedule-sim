@@ -8,7 +8,8 @@
 #include "headers.h"
 #include <time.h>
 
-#define CLK_MS 1
+#define CLK_MS 100
+#define CLK_START_DELAY_MS 100
 
 int shmid;
 
@@ -23,7 +24,7 @@ void cleanup(int signum)
 /* This file represents the system clock for ease of calculations */
 int main(int argc, char * argv[])
 {
-    
+
 #ifdef OUT_TO_FILE
     SYNC_IO;
 #endif
@@ -45,6 +46,9 @@ int main(int argc, char * argv[])
         exit(-1);
     }
     *shmaddr = clk; /* initialize shared memory */
+
+    usleep(CLK_START_DELAY_MS * 1000);
+    
     while (1)
     {
         //sleep(1);

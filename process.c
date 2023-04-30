@@ -26,7 +26,6 @@ void finish(int i){
 
 int main(int agrc, char * argv[])
 {
-    
 #ifdef OUT_TO_FILE
     SYNC_IO;
 #endif

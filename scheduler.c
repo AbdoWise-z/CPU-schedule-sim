@@ -10,10 +10,23 @@ ControlBlock* ProcessControl;
 int controlBlockId;
 
 int clk;
+int mem_type;
+bool received_all = false;
 
+
+//Scheduling types
 void hpf(bool);
 void srtn();
 void rr(int);
+
+//Memory mapping types
+bool mm_firstFitAlloc(ProcessInfo* info);
+bool mm_nextFit(ProcessInfo* info);
+bool mm_buddy(ProcessInfo* info);
+
+bool isTaken(int);
+void markTaken(int start , int end);
+void freeMem(int start , int end);
 
 bool get_process(ProcessInfo* p); //returns true if this is the last processes to come
 
@@ -23,6 +36,8 @@ bool switch_to(ProcessInfo* p);
 
 PriorityQueue* pq;
 PriorityQueue* finish_queue;
+CircularQueue* waiting_queue;
+
 SchedulerMessage msg;
 //ProcessesMessage pMsg;
 
@@ -44,10 +59,12 @@ int main(int argc, char* argv[])
     //upon termination release the clock resources.
 
     //init all the variables
-    int t , q;
+    int t , q , mem_type;
 
     t = atoi(argv[0]);
     q = atoi(argv[1]);
+    mem_type = atoi(argv[2]);
+
 
     printf("[Scheduler] cfg , t : %d  , q : %d\n" , t , q);
 
@@ -61,8 +78,10 @@ int main(int argc, char* argv[])
     
     current_process.state = STATE_NOT_READY;
     current_process.id    = -1;
-    pq = createPriorityQueue();
-    finish_queue = createPriorityQueue();
+
+    createPriorityQueue(&pq);
+    createPriorityQueue(&finish_queue);
+    createCircularQueue(&waiting_queue);
 
     switch (t)
     {
@@ -94,7 +113,7 @@ int main(int argc, char* argv[])
     PQ_t proc;
     int i = 0;
     while (finish_queue->size){
-        proc = extractMax(finish_queue);
+        proc = extract(finish_queue);
         printf("%04d%12d%12d%12d%12d%12d%12d\n" , i++ , proc.id , proc.arrival , proc.start_time , proc.runtime , proc.finish_time , proc.priority);
     }
 
@@ -177,6 +196,38 @@ void run_for(ProcessInfo* p , int qouta){
 }
 
 bool get_process(ProcessInfo* p){
+    
+    // while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
+    //     enqueue(waiting_queue , msg.p);
+
+    //     // p->pid = -1; //default value
+    //     // p->state = STATE_NOT_READY;
+    //     // p->remainning = p->runtime;
+        
+    //     if (msg.type == 1){
+    //         printf("[Scheduler] No more processes to receive.\n");
+    //         received_all = true; //done reading
+    //     }
+    //     received_all = false;
+    // }
+
+    // if (!isCQEmpty(waiting_queue)){
+    //     ProcessInfo temp;
+    //     for (int i = 0;i < waiting_queue->size;i++){
+    //         temp = dequeue(waiting_queue);
+    //         switch (mem_type)
+    //         {
+    //         case 1:
+
+    //             break;
+            
+    //         default:
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // p->id = -1; //didnt receive anything
 
     int s = msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT);
     if (s > 0){
@@ -221,7 +272,7 @@ void hpf(bool preemptive){
         }
 
         if (pq->size > 0){ //we have something to run
-            ProcessInfo next = extractMax(pq);
+            ProcessInfo next = extract(pq);
             //printf("[Scheduler] selecting next , id: %d , pid: %d , pri: %d\n" , next.id , next.pid , next.priority);
             run_for(&next , 1);
             current_process = next;
@@ -265,7 +316,7 @@ void srtn(){
         }
 
         if (pq->size > 0){ //we have something to run
-            ProcessInfo next = extractMax(pq);
+            ProcessInfo next = extract(pq);
             //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
             run_for(&next , 1);
             current_process = next;
@@ -308,7 +359,7 @@ void rr(int q){
         }
 
         if (pq->size > 0){ //we have something to run
-            ProcessInfo next = extractMax(pq);
+            ProcessInfo next = extract(pq);
             //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
             run_for(&next , q);
             current_process = next;
@@ -331,6 +382,8 @@ void rr(int q){
     }
     printf("[Scheduler] Finished RR\n");
 }
+
+
 
 void clearResources(int i){
 
