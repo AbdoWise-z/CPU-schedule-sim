@@ -1,3 +1,4 @@
 *.log
 *.perf
+*.txt
 out/*.out

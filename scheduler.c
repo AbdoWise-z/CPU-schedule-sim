@@ -217,6 +217,7 @@ bool switch_to(ProcessInfo* p){
                 execl("./out/process.out" , buff , NULL);
                 exit(-1);
             }
+
             printf("[Scheduler] Running a child process for the first time: %d \n" , p->pid);
             int wait = p->start_time - p->arrival;
             fprintf(schPtr,"At time %d process %d started arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
@@ -237,7 +238,7 @@ bool switch_to(ProcessInfo* p){
 }
 
 void run_for(ProcessInfo* p , int qouta){
-    if (p->remainning <= 0){
+    if (p->remainning < 0){ //should be "<=" but the document said no ..
         printf("[Scheduler] Error , trying to run a process that should have finished: %d\n" , p->pid);
         return;
     }
@@ -252,7 +253,8 @@ void run_for(ProcessInfo* p , int qouta){
         ProcessControl->lock1 = 1;           //tell the process that the Scheduler is busy now and can't receive values now
         ProcessControl->active_pid = p->pid; //tell the process it can start its jop
         
-        CLK_WAIT(1);
+        if (p->runtime){
+            CLK_WAIT(1);
         
         //int k = msgrcv(p_m_q , &pMsg , sizeof(ProcessesMessage) - sizeof(long) , 0 , !IPC_NOWAIT);
         //if (k < 0){
@@ -260,17 +262,19 @@ void run_for(ProcessInfo* p , int qouta){
         //    return;
         //}
         
-        while (ProcessControl->ready == 0){} //wait for the process to be ready
-        ProcessControl->ready = 0;
+            while (ProcessControl->ready == 0){} //wait for the process to be ready
+            ProcessControl->ready = 0;
 
-        ProcessControl->active_pid = -1;     //prevent the process from taking extra quota
-        ProcessControl->lock1 = 0;           //tell the process that the scheduler is ready to receive the value
+            ProcessControl->active_pid = -1;     //prevent the process from taking extra quota
+            ProcessControl->lock1 = 0;           //tell the process that the scheduler is ready to receive the value
         
-        while (ProcessControl->lock1 == 0){} //wait for the process to write
+            while (ProcessControl->lock1 == 0){} //wait for the process to write
         
         //printf("[Scheduler] Processes %d ran for 1 quota \n" , p->pid);
 
-        p->remainning = ProcessControl->remainning;
+            p->remainning = ProcessControl->remainning;
+        }
+
         if (p->remainning == 0){
             p->finish_time = getClk();
             //printf("[Scheduler] process finished , pid: %d , id: %d\n" , p->pid , p->id);
@@ -374,14 +378,15 @@ void hpf(bool preemptive){
 
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , Priority: %d\n" , recv.id , recv.priority);
-                if (recv.remainning == 0){
-                    printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
-                    recv.start_time = getClk();
-                    recv.finish_time = recv.start_time;
-                    insert(finish_queue , -getClk() , recv);
-                }else{
-                    insert(pq , -recv.priority , recv);
-                }
+                insert(pq , -recv.priority , recv);
+                // if (recv.remainning == 0){
+                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     recv.start_time = getClk();
+                //     recv.finish_time = recv.start_time;
+                //     insert(finish_queue , -getClk() , recv);
+                // }else{
+                //     insert(pq , -recv.priority , recv);
+                // }
             }
         }
 
@@ -419,14 +424,15 @@ void srtn(){
 
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
-                if (recv.remainning == 0){
-                    printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
-                    recv.start_time = getClk();
-                    recv.finish_time = recv.start_time;
-                    insert(finish_queue , -getClk() , recv);
-                }else{
-                    insert(pq , -recv.remainning , recv);
-                }
+                insert(pq , -recv.remainning , recv);
+                // if (recv.remainning == 0){
+                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     recv.start_time = getClk();
+                //     recv.finish_time = recv.start_time;
+                //     insert(finish_queue , -getClk() , recv);
+                // }else{
+                //     insert(pq , -recv.remainning , recv);
+                // }
             }
         }
 
@@ -466,14 +472,16 @@ void rr(int q){
 
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
-                if (recv.remainning == 0){
-                    printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
-                    recv.start_time = getClk();
-                    recv.finish_time = recv.start_time;
-                    insert(finish_queue , -getClk() , recv);
-                }else{
-                    insert(pq , -getClk() , recv);
-                }
+                insert(pq , -getClk() , recv);
+                
+                // if (recv.remainning == 0){
+                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     recv.start_time = getClk();
+                //     recv.finish_time = recv.start_time;
+                //     insert(finish_queue , -getClk() , recv);
+                // }else{
+                //     insert(pq , -getClk() , recv);
+                // }
             }
         }
 
@@ -520,14 +528,16 @@ void fcfs(){
 
             if (recv.id > 0){
                 printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
-                if (recv.remainning == 0){
-                    printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
-                    recv.start_time = getClk();
-                    recv.finish_time = recv.start_time;
-                    insert(finish_queue , -getClk() , recv);
-                }else{
-                    insert(pq , -recv.arrival , recv);
-                }
+                insert(pq , -recv.arrival , recv);
+                
+                // if (recv.remainning == 0){
+                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     recv.start_time = getClk();
+                //     recv.finish_time = recv.start_time;
+                //     insert(finish_queue , -getClk() , recv);
+                // }else{
+                //     insert(pq , -recv.arrival , recv);
+                // }
             }
         }
 
