@@ -1,7 +1,7 @@
 #include "headers.h"
 #include <ctype.h>
 #include <time.h>
-//hello
+//whats up
 #define CLK_INIT clk = getClk()
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
 
@@ -637,7 +637,7 @@ void mm_clearMemory(ProcessInfo* info){
             break;
         temp = temp->next;
     }
-    
+
     if (temp)
         removeLL(memMap , temp);
 
