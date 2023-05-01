@@ -1,7 +1,7 @@
 #include "headers.h"
 #include <ctype.h>
 #include <time.h>
-
+//hello
 #define CLK_INIT clk = getClk()
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
 
