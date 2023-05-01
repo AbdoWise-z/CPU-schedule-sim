@@ -1,10 +1,12 @@
 #include "headers.h"
 #include <ctype.h>
 #include <time.h>
-//whats up
+
 #define CLK_INIT clk = getClk()
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
 
+FILE* memPtr;
+FILE* schPtr;
 int sc_m_q; //PG --> SC message queue
 //int p_m_q;  //SC <-> process message queu
 
@@ -15,6 +17,8 @@ int clk;
 int mem_type;
 bool received_all = false;
 
+int sch_start_time = 0;
+int sch_finish_time = 0;
 
 //Scheduling types
 void hpf(bool);
@@ -49,6 +53,7 @@ SchedulerMessage msg;
 //ProcessesMessage pMsg;
 
 void clearResources(int);
+float calculateSD(float data[] , int);
 
 
 int main(int argc, char* argv[])
@@ -66,6 +71,18 @@ int main(int argc, char* argv[])
     //upon termination release the clock resources.
 
     //init all the variables
+
+    schPtr = fopen("scheduler.log" , "w");
+    if(schPtr == NULL)
+        printf("couldn't find scheduler file\n");
+    setbuf(schPtr , NULL);
+
+    memPtr = fopen("memory.log" , "w");
+    if(memPtr == NULL)
+        printf("couldn't find memory file\n");
+    setbuf(memPtr , NULL);
+    
+
     int t , q;
 
     t = atoi(argv[0]);
@@ -92,6 +109,8 @@ int main(int argc, char* argv[])
     createCircularQueue(&waiting_queue);
     createLL(&memMap);
 
+    sch_start_time = getClk();
+
     switch (t)
     {
     case 1:
@@ -115,6 +134,8 @@ int main(int argc, char* argv[])
         break;
     }
 
+    sch_finish_time = getClk();
+
     printf("[Scheduler] Finished \n");
     
     msg.type = 3; //tell pg it can exit
@@ -124,12 +145,54 @@ int main(int argc, char* argv[])
     printf("#             id     arrival  start_time     runtime finish_time    priority\n");
     PQ_t proc;
     int i = 0;
+
+    int run_time_total = 0;
+    float* arr = (float*) malloc(sizeof(float) * finish_queue->size);
+    int size = finish_queue->size;
+    float tWTA = 0;
+    float tW = 0;
+
     while (finish_queue->size){
         proc = extract(finish_queue);
+        
+        run_time_total += proc.runtime;
+        int wait = proc.start_time - proc.arrival;
+        int TA = proc.finish_time - proc.arrival;
+        double WTA = TA / (double) proc.runtime;
+        tW += wait;
+        tWTA += WTA;
+        arr[i] = WTA;
+
+
         printf("%04d%12d%12d%12d%12d%12d%12d\n" , i++ , proc.id , proc.arrival , proc.start_time , proc.runtime , proc.finish_time , proc.priority);
     }
 
+    FILE* final = fopen("scheduler.perf" , "w");
+    if(final == NULL)
+        printf("couldn't find final file\n");
+    //setbuf(final , NULL);
+
+    fprintf(final , "CPU Utilization: %0.2f%%\n" , ((float) run_time_total * 100.0f / (sch_finish_time - sch_start_time)));
+    fprintf(final , "Avg WTA: %0.2f\n" , (tWTA / size));
+    fprintf(final , "Avg Waiting: %0.2f\n" , ((float)tW / size));
+    fprintf(final , "Std WTA: %0.2f\n" , calculateSD(arr , size));
+
+    fclose(final);
+    
     destroyClk(true);
+}
+
+float calculateSD(float data[] , int s) {
+    float sum = 0.0, mean, SD = 0.0;
+    int i;
+    for (i = 0; i < s; ++i) {
+        sum += data[i];
+    }
+    mean = sum / s;
+    for (i = 0; i < s; ++i) {
+        SD += pow(data[i] - mean, 2);
+    }
+    return sqrt(SD / s);
 }
 
 bool switch_to(ProcessInfo* p){
@@ -139,6 +202,9 @@ bool switch_to(ProcessInfo* p){
         if (current_process.id != -1){
             kill(current_process.pid , SIGSTOP);
             printf("[Scheduler] Pausing: %d \n" , current_process.pid);
+            int wait = current_process.start_time - current_process.arrival;
+            fprintf(schPtr,"At time %d process %d stopped arr %d total %d remain %d wait %d\n",getClk(), current_process.id, current_process.arrival , current_process.runtime , current_process.remainning , wait);
+
         }
 
         if (p->state == STATE_NOT_READY){
@@ -152,9 +218,13 @@ bool switch_to(ProcessInfo* p){
                 exit(-1);
             }
             printf("[Scheduler] Running a child process for the first time: %d \n" , p->pid);
+            int wait = p->start_time - p->arrival;
+            fprintf(schPtr,"At time %d process %d started arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             p->state = STATE_READY;
         }else if (p->state == STATE_READY){
             printf("[Scheduler] Resuming: %d\n" , p->pid);
+            int wait = p->start_time - p->arrival;
+            fprintf(schPtr,"At time %d process %d resumed arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             kill(p->pid , SIGCONT);
         }
 
@@ -204,6 +274,10 @@ void run_for(ProcessInfo* p , int qouta){
         if (p->remainning == 0){
             p->finish_time = getClk();
             //printf("[Scheduler] process finished , pid: %d , id: %d\n" , p->pid , p->id);
+            int wait = p->start_time - p->arrival;
+            int TA = p->finish_time - p->arrival;
+            double WTA = TA / (double) p->runtime; 
+            fprintf(schPtr,"At time %d process %d finished arr %d total %d remain %d wait %d TA %d WTA %.2f\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait, TA , WTA);
             break;//no need to continue
         }
     }
@@ -612,6 +686,7 @@ bool mm_buddyAlloc(ProcessInfo* info){
 
         info->mem_start = i;
         info->mem_end = i + blockSize - 1;
+        fprintf(memPtr, "At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
         printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
         return true;
     }
@@ -642,6 +717,7 @@ void mm_clearMemory(ProcessInfo* info){
         removeLL(memMap , temp);
 
     int blockSize = info->mem_end - info->mem_start + 1;
+    fprintf(memPtr,"At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
     printf("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
     //printf("mm_clearMemory: out\n");
     //info->mem_start = -1;
@@ -670,6 +746,11 @@ void clearResources(int i){
     if (finish_queue)
         free(finish_queue);
 
+    if (schPtr)
+        fclose(schPtr);
+    
+    if (memPtr)
+        fclose(memPtr);
         
     exit(0);
 }
