@@ -11,6 +11,7 @@ PriorityQueue* pq = NULL;
 int sc_m_q = -1;
 FILE* cfg = NULL;
 
+
 int main(int argc, char * argv[])
 {
     
@@ -72,7 +73,7 @@ int main(int argc, char * argv[])
                 }
 
                 mem_type = atoi(argv[i + 1]);
-                if (mem_type < 1 || mem_type > 3){
+                if (mem_type < 1 || mem_type > 4){
                     printf("Invalid run command [ Invalid mem type ], requesting info from user.");
                     ui = true;
                     break;
@@ -81,7 +82,7 @@ int main(int argc, char * argv[])
         }
     }
 
-    if (mem_type > 3 || mem_type < 1 || sq_type > 5 || sq_type < 1 || quanta_size < 1){
+    if (mem_type > 4 || mem_type < 1 || sq_type > 5 || sq_type < 1 || quanta_size < 1){
         ui = true;
     }
 
@@ -113,8 +114,9 @@ int main(int argc, char * argv[])
         printf("    1. First fit\n");
         printf("    2. Next fit\n");
         printf("    3. Buddy\n");
+        printf("    3. Inf\n");
         
-        while (mem_type > 3 || mem_type < 1){
+        while (mem_type > 4 || mem_type < 1){
             scanf("%d" , &mem_type);
             if (mem_type <= 4 || mem_type >= 1)
                 break;

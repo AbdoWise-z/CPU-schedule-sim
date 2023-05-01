@@ -16,6 +16,7 @@
 
 //#define OUT_TO_FILE
 #define SYNC_IO setbuf(stdout , NULL);
+//#define PHASE_1 
 
 typedef short bool;
 #define true 1

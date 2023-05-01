@@ -26,6 +26,7 @@ void fcfs();
 bool mm_firstFitAlloc(ProcessInfo* info);
 bool mm_nextFitAlloc(ProcessInfo* info);
 bool mm_buddyAlloc(ProcessInfo* info);
+bool mm_inf(ProcessInfo* info);
 
 void mm_clearMemory(ProcessInfo* info);
 
@@ -269,6 +270,14 @@ void get_process(ProcessInfo* p){
                     //printf("get_process: out\n");
                     return;
                 }
+            } else {
+                mm_inf(&temp);
+                *p = temp;
+                p->pid = -1; //default value
+                p->state = STATE_NOT_READY;
+                p->remainning = p->runtime;
+                //printf("get_process: out\n");
+                return;
             }
             enqueue(waiting_queue , temp);
         }
@@ -610,6 +619,15 @@ bool mm_buddyAlloc(ProcessInfo* info){
     return false;
 }
 
+int inf_mem_pos = 0;
+bool mm_inf(ProcessInfo* info){
+    info->mem_start = inf_mem_pos;
+    inf_mem_pos += info->memSize;
+    info->mem_end = inf_mem_pos - 1;
+    printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
+    return true;
+}
+
 void mm_clearMemory(ProcessInfo* info){
     //printf("mm_clearMemory: in\n");
     LL_Node* temp = memMap->start;
@@ -619,8 +637,10 @@ void mm_clearMemory(ProcessInfo* info){
             break;
         temp = temp->next;
     }
+    
+    if (temp)
+        removeLL(memMap , temp);
 
-    removeLL(memMap , temp);
     int blockSize = info->mem_end - info->mem_start + 1;
     printf("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
     //printf("mm_clearMemory: out\n");
