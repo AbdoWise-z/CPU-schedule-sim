@@ -80,7 +80,8 @@ int main(int argc, char* argv[])
     controlBlockId = shmget(ftok("SC_P"  , 15), sizeof(ControlBlock), IPC_CREAT | 0666);
     ProcessControl = (ControlBlock *) shmat(controlBlockId, (void *)0, 0);
     ProcessControl->active_pid = -1;
-    ProcessControl->lock1 = -1;
+    ProcessControl->lock1 = 1;
+    ProcessControl->ready = 0;
     
     current_process.state = STATE_NOT_READY;
     current_process.id    = -1;
@@ -131,6 +132,8 @@ int main(int argc, char* argv[])
 }
 
 bool switch_to(ProcessInfo* p){
+    //printf("switch_to: in\n");
+    
     if (current_process.id != p->id){
         if (current_process.id != -1){
             kill(current_process.pid , SIGSTOP);
@@ -153,8 +156,12 @@ bool switch_to(ProcessInfo* p){
             printf("[Scheduler] Resuming: %d\n" , p->pid);
             kill(p->pid , SIGCONT);
         }
+
+        //printf("switch_to: out\n");
         return true;
     }
+    //printf("switch_to: out\n");
+    
     return false;
 }
 
@@ -166,15 +173,14 @@ void run_for(ProcessInfo* p , int qouta){
 
     switch_to(p);
 
-    //rintf("in: run_for %d\n" , qouta);
+    //printf("in: run_for %d\n" , qouta);
 
     while (qouta){
         qouta--;
         
         ProcessControl->lock1 = 1;           //tell the process that the Scheduler is busy now and can't receive values now
         ProcessControl->active_pid = p->pid; //tell the process it can start its jop
-        ProcessControl->ready = 0;
-
+        
         CLK_WAIT(1);
         
         //int k = msgrcv(p_m_q , &pMsg , sizeof(ProcessesMessage) - sizeof(long) , 0 , !IPC_NOWAIT);
@@ -184,12 +190,13 @@ void run_for(ProcessInfo* p , int qouta){
         //}
         
         while (ProcessControl->ready == 0){} //wait for the process to be ready
+        ProcessControl->ready = 0;
 
         ProcessControl->active_pid = -1;     //prevent the process from taking extra quota
         ProcessControl->lock1 = 0;           //tell the process that the scheduler is ready to receive the value
         
         while (ProcessControl->lock1 == 0){} //wait for the process to write
-
+        
         //printf("[Scheduler] Processes %d ran for 1 quota \n" , p->pid);
 
         p->remainning = ProcessControl->remainning;
@@ -205,6 +212,9 @@ void run_for(ProcessInfo* p , int qouta){
 }
 
 void get_process(ProcessInfo* p){
+
+    //printf("get_process: in\n");
+    
     
     usleep(CLK_MS); //sleep for 1/1000 of the clk
 
@@ -217,6 +227,9 @@ void get_process(ProcessInfo* p){
 
         usleep(CLK_MS / 100);
     }
+
+    //printf("get_process: mem-alloc\n");
+    
 
     p->id = -1;
 
@@ -232,7 +245,7 @@ void get_process(ProcessInfo* p){
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-
+                    //printf("get_process: out\n");
                     return;
                 }
             }else if (mem_type == 2){
@@ -242,24 +255,27 @@ void get_process(ProcessInfo* p){
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-        
+                    //printf("get_process: out\n");
                     return;
                 }
             }else if (mem_type == 3){
-                printf("trying to alloc %d for %d t3\n" , temp.memSize , temp.id);
+                //printf("trying to alloc %d for %d t3\n" , temp.memSize , temp.id);
                 if (mm_buddyAlloc(&temp)){
                     *p = temp;
 
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-        
+                    //printf("get_process: out\n");
                     return;
                 }
             }
             enqueue(waiting_queue , temp);
         }
     }
+
+    //printf("get_process: out\n");
+    
 }
 
 void hpf(bool preemptive){
@@ -298,7 +314,6 @@ void hpf(bool preemptive){
                 mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
-                
             }
         } else {
             CLK_WAIT(1);
@@ -360,6 +375,7 @@ void rr(int q){
     rq = 0;
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
         CLK_INIT;
+        //printf("rr-loop-start\n");
 
         recv.id = INT_MAX;
         while (recv.id > 0){
@@ -379,6 +395,7 @@ void rr(int q){
         }
 
         if (pq->size > 0){ //we have something to run
+            //printf("rr-pq-get\n");
             if (rq == 0)
                 rq = q;
             
@@ -452,13 +469,100 @@ void fcfs(){
     printf("[Scheduler] Finished FCFS\n");
 }
 
-bool mm_firstFitAlloc(ProcessInfo* info){
-    //TODO: impelement this
-    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
-    if (getClk() != info->arrival){ //TODO: remove this if
-        printf("[MEM] ERROR : clk != arrival (%d)\n" , getClk() - info->arrival);
+bool FF_insert(LinkedList* ll, ProcessInfo *new_process)
+{
+    if(ll->start == NULL)
+    {
+        //i'm here so head is null insert at position 1
+        LL_Node* temp = malloc(sizeof(LL_Node)); //                 allocate new node
+        temp->value.id= new_process->id; //                         temp id = passed process id
+        ll->start=temp; //                                          the head of ll is the new node 
+        ll->size++;//                                               increase number of nodes in ll
+        ll->start->value.start=1; //                                set start val of memory
+        ll->start->value.end= new_process->memSize+1;//             set end val of memory
+        new_process->mem_start=1;
+        new_process->mem_end=new_process->memSize+1; //             set the ranges in the process info : needed for output in the future
+        return 1; //                                                successful insertion
     }
-    return true;
+    else
+    {
+        // there was a start node -> check for holes or reach the end
+         if(ll->start->value.start != 1)//                         is the first position in memory vacant ?
+    {
+        // I'm here so -> first position in memory is vacant
+        // check if this place is valid 
+        if(ll->start->value.start >= (new_process->memSize) )
+        {
+        // this place is valid
+        LL_Node* temp = ll->start; //                               store the start of linked list
+        LL_Node* new = malloc(sizeof(LL_Node));//                   create new node and set it
+        new->value.id=new_process->id;
+        ll->start= new;
+        new->next= temp;//                                          the start returned to carry the linked list
+        ll->start->value.start=1;
+        ll->start->value.end=new_process->memSize+1;//              set the start and end of the memory location
+        ll->size++;//                                               increase the linked list count 
+        new_process->mem_start=1;
+        new_process->mem_end=new_process->memSize+1;
+        return 1; //                                                successeful insertion
+        }
+    }
+    // then let's iterate on linked list to find suitable place "it may be a hole"
+    LL_Node* iterator= ll->start;
+    while(iterator->next!= NULL)
+    {
+        // check for hole
+        if(iterator->value.end+1 != ((LL_Node*)iterator->next)->value.start )
+        {
+            // i'm a hole get my size and check whether it's available to be done
+            // 20 ->40 || 60 ->80
+            // hole = 60 -40 = 20 
+            // 41 to 59 = 19 
+            if(((LL_Node*)iterator->next)->value.start - iterator->value.end -1 >= new_process->memSize)
+            {
+                // valid position
+                LL_Node* new = malloc (sizeof(LL_Node)); // create a new node
+                new->next=iterator->next; //                                            make her a joint in the linked list -> it looks on the after of my iterator
+                iterator->next=new;//                                                   iterator looks on her == successful insertion now set the paramaters
+                new->value.id=new_process->id; //                                       set pid
+                new->value.start=iterator->value.end+1;// set start range = end of the previous one +1  
+                new->value.end=new->value.start+new_process->memSize -  1 ; //          end range = start + mem size if start =41 
+                //                                                                      and i want to allocate 19 -> 41 to 59 
+                //                                                                      then the equation = 41 + 19 - 1 == 19 location 
+                new_process->mem_start=new->value.start; 
+                new_process->mem_end=new->value.end; //                                 set process paramaters helps in the output
+                ll->size++;
+                return 1; //                                                             successfull insertion
+            }
+        }
+            iterator=iterator->next; // no hole yet go to the next node
+    }
+    //i'm here , i wasn't successfull in insertion yet -> check if the tail is valid to insert after
+    if(1024 - iterator->value.end >=  new_process->memSize) //1024 -980 =  44  = 981 to 1024
+    {
+        // valid to enter 
+        LL_Node* new = malloc (sizeof(LL_Node));  //        create a new node and insert it after iterator
+        iterator->next=new;
+        new->value.id=new_process->id;
+        new->value.start=iterator->value.end+1;
+        new->value.end=new->value.start+new_process->memSize-1;
+        new_process->mem_start=new->value.start;
+        new_process->mem_end= new->value.end;
+        ll->size++;
+        return 1;
+    } 
+    return 0; // i wasn't successfull after all let the scheduler block me
+    }
+}
+
+bool mm_firstFitAlloc(ProcessInfo* info){
+    if(FF_insert(memMap,info))
+    {
+        printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
+        info->mem_end - info->mem_start +1 , info->id , info->mem_start , info->mem_end);
+        return 1;
+    }
+    return 0;
 }
 
 bool mm_nextFitAlloc(ProcessInfo* info){
@@ -470,10 +574,11 @@ bool mm_nextFitAlloc(ProcessInfo* info){
 bool mm_buddyAlloc(ProcessInfo* info){
     int level = (int)ceil(log2(info->memSize));
     int blockSize = (int)pow(2 , level);
+    if (blockSize == 0) blockSize = 1; //idk how would this happen , but well ..
 
     MemorySlot m;
    
-    for(int i = 0; i < 1024; i += blockSize){
+    for (int i = 0; i < 1024; i += blockSize){
         
         LL_Node* temp = memMap->start;
         bool free = true;
@@ -481,7 +586,7 @@ bool mm_buddyAlloc(ProcessInfo* info){
         int blockEnd = i + blockSize - 1;
 
         while(temp != NULL){
-            if((temp->value.start >= blockStart && temp->value.end <= blockEnd ) || ( blockStart >= temp->value.start && blockEnd <= temp->value.end)){
+            if ((temp->value.start >= blockStart && temp->value.end <= blockEnd ) || ( blockStart >= temp->value.start && blockEnd <= temp->value.end)){
                 free = false;
                 break;
             }
@@ -506,10 +611,11 @@ bool mm_buddyAlloc(ProcessInfo* info){
 }
 
 void mm_clearMemory(ProcessInfo* info){
+    //printf("mm_clearMemory: in\n");
     LL_Node* temp = memMap->start;
 
     while(temp){
-        if(info->mem_start == temp->value.start && info->mem_end == temp->value.end)
+        if(info->id == temp->value.id)
             break;
         temp = temp->next;
     }
@@ -517,6 +623,7 @@ void mm_clearMemory(ProcessInfo* info){
     removeLL(memMap , temp);
     int blockSize = info->mem_end - info->mem_start + 1;
     printf("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
+    //printf("mm_clearMemory: out\n");
     //info->mem_start = -1;
     //info->mem_end = -1;
 }

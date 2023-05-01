@@ -81,6 +81,7 @@ void removeLL(LL_L_t* ll , LL_Node* n){
     }else{
         if (n->prev && n->next) {
             ((LL_Node*) n->prev)->next = n->next;
+            ((LL_Node*) n->next)->prev = n->prev;
         } else if (n == ll->start){
             ll->start = n->next;
             ll->start->prev = NULL;
@@ -91,6 +92,11 @@ void removeLL(LL_L_t* ll , LL_Node* n){
     }
 
     ll->size--;
+
+    if (ll->size <= 1){
+        ll->end = ll->start;
+    }
+    
     free(n);
 }
 
