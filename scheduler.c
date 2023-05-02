@@ -5,8 +5,8 @@
 #define CLK_INIT clk = getClk()
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
 
-FILE* memPtr;
-FILE* schPtr;
+FILE* memPtr = NULL;
+FILE* schPtr = NULL;
 int sc_m_q; //PG --> SC message queue
 //int p_m_q;  //SC <-> process message queu
 
@@ -79,10 +79,12 @@ int main(int argc, char* argv[])
         Logger("couldn't find scheduler file\n");
     setbuf(schPtr , NULL);
 
+#ifndef PHASE_1_CODE
     memPtr = fopen("memory.log" , "w");
     if(memPtr == NULL)
         Logger("couldn't find memory file\n");
     setbuf(memPtr , NULL);
+#endif
     
 
     int t , q;
@@ -186,6 +188,11 @@ int main(int argc, char* argv[])
     msg.type = 3; //tell pg it can exit
     msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
     usleep(5 * 1000);
+
+
+#ifdef INTERACTIVE
+    printf("Simulation done , took %d clk\n" , sch_finish_time - sch_start_time);
+#endif 
     
     destroyClk(true);
 }
@@ -232,7 +239,7 @@ bool switch_to(ProcessInfo* p){
             fprintf(schPtr,"At time %d process %d started arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             p->state = STATE_READY;
             p->remainning = p->runtime;
-            
+
         }else if (p->state == STATE_READY){
             Logger("[Scheduler] Resuming: %d\n" , p->pid);
             int wait = p->start_time - p->arrival;
@@ -362,8 +369,8 @@ void drawInteractive(){
         printf("%04d " , i);
     }
     printf("\n");
-    for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
-        if ((i > 7) && (i - 6) % 5 == 0){
+    for (int i = 0;i < CONSOLE_WIDTH + 7 + 5;i++){
+        if ((i >= 6) && (i - 6) % 5 == 0){
             printf("|");
             continue;
         }
@@ -409,7 +416,7 @@ void drawInteractive(){
 
     //printf("Inter: Processes done\n");
 
-    for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
+    for (int i = 0;i < CONSOLE_WIDTH + 7 + 5;i++){
         printf("-");
     }
 
@@ -514,11 +521,12 @@ void hpf(bool preemptive){
     Logger("[Scheduler] Running HPF\n");
     ProcessInfo recv;
     
+    //check if we have processes to queue
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
-        CLK_INIT;
+        CLK_INIT; //init the clk variable
         
         recv.id = INT_MAX;
-        while (recv.id > 0){
+        while (recv.id > 0){ //receive any incoming processes
             get_process(&recv);
 
             if (recv.id > 0){
@@ -556,6 +564,9 @@ void hpf(bool preemptive){
     Logger("[Scheduler] Finished HPF\n");
 }
 
+
+//same rules as in hpf
+//it also applies to rr , fcfs
 void srtn(){
     Logger("[Scheduler] Running SRTN\n");
     ProcessInfo recv;
@@ -707,7 +718,7 @@ void fcfs(){
     Logger("[Scheduler] Finished FCFS\n");
 }
 
-
+//First fit insert function
 bool FF_insert(LL_L_t* ll, ProcessInfo *new_process)
 {
     MemorySlot temp ;
@@ -789,6 +800,8 @@ bool FF_insert(LL_L_t* ll, ProcessInfo *new_process)
     }
 }
 
+//first fit base function
+//true if success , false other wise
 bool mm_firstFitAlloc(ProcessInfo* info){
     if(FF_insert(memMap,info))
     {
@@ -801,6 +814,8 @@ bool mm_firstFitAlloc(ProcessInfo* info){
     return 0;
 }
 
+//next fit base function
+//true if success , false other wise
 bool mm_nextFitAlloc(ProcessInfo* info){
     LL_Node* end = memMap->end;
     int pos = -1;
@@ -864,6 +879,8 @@ bool mm_nextFitAlloc(ProcessInfo* info){
     return true;
 }
 
+//buddy base function
+//true if success , false other wise
 bool mm_buddyAlloc(ProcessInfo* info){
     int level = (int)ceil(log2(info->memSize));
     int blockSize = (int)pow(2 , level);
@@ -904,6 +921,19 @@ bool mm_buddyAlloc(ProcessInfo* info){
     return false;
 }
 
+#ifdef PHASE_1_CODE
+
+bool mm_inf(ProcessInfo* info){
+    return true;
+}
+
+void mm_clearMemory(ProcessInfo* info){
+}
+
+#else
+
+//Simulate infinite memory , for phase 1
+//always returns true
 int inf_mem_pos = 0;
 bool mm_inf(ProcessInfo* info){
     info->mem_start = inf_mem_pos;
@@ -913,6 +943,8 @@ bool mm_inf(ProcessInfo* info){
     return true;
 }
 
+
+//clears a MemorySlot after a process is finished
 void mm_clearMemory(ProcessInfo* info){
     //Logger("mm_clearMemory: in\n");
     LL_Node* temp = memMap->start;
@@ -934,6 +966,9 @@ void mm_clearMemory(ProcessInfo* info){
     //info->mem_end = -1;
 }
 
+#endif
+
+//incase of interrupt .. this will be called
 void clearResources(int i){
 
     
@@ -961,11 +996,6 @@ void clearResources(int i){
     
     if (memPtr)
         fclose(memPtr);
-
-#ifdef INTERACTIVE
-    printf("Simulation done , took %d clk\n" , sch_finish_time - sch_start_time);
-#endif 
-
         
     exit(0);
 }

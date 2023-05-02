@@ -31,13 +31,17 @@ typedef short bool;
 int * shmaddr;                 //
 //===============================
 
-#define CLK_MS 10
+#define CLK_MS 100
 #define CLK_START_DELAY_MS 100
 
+//if defined , the code will work as phase 1
+//#define PHASE_1_CODE
+
 //enable Interactive mode if this is defined
-//#define INTERACTIVE
+#define INTERACTIVE
+
 //enable if you want to see log output
-#define ENABLE_LOG
+//#define ENABLE_LOG
 
 //the console size , vs-code is 143 (143 - 7 = 136 ~= 130)
 #define CONSOLE_WIDTH 130

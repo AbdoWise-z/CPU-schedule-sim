@@ -70,7 +70,8 @@ int main(int argc, char * argv[])
                     break;
                 }
             }
-
+            
+#ifndef PHASE_1_CODE
             if (strcmp(argv[i] , "-mem") == 0){
                 if (i + 1 >= argc) {
                     ui = true;
@@ -85,8 +86,14 @@ int main(int argc, char * argv[])
                     break;
                 }
             }
+#endif
+
         }
     }
+
+#ifdef PHASE_1_CODE
+    mem_type = 4;
+#endif
 
     //some validations .
     if (mem_type > 4 || mem_type < 1 || sq_type > 5 || sq_type < 1 || quanta_size < 1){
@@ -118,6 +125,8 @@ int main(int argc, char * argv[])
             }
         }
 
+#ifndef PHASE_1_CODE
+
         printf("Select memory mapping type: \n");
         printf("    1. First fit\n");
         printf("    2. Next fit\n");
@@ -130,8 +139,11 @@ int main(int argc, char * argv[])
                 break;
             printf("invalid input , select a number between [ 1 , 3 ]");
         }
+#endif
+
     }
-    
+
+
     // 2. Read the input files.
     cfg = fopen(input_file , "r");
     int i , j = 0;

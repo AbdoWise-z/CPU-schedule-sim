@@ -1,2 +1,22 @@
 this a our 2nd year cmp OS project
 it is a simple program to simulate diffrent ways of scheduling processes
+
+note that:
+    1. extra parameters in the run command , will be ignored
+    2. if parameters in the run command are invalid , then the program will ask the user to re-enter them
+
+
+have a look at headers.h to edit the launch props
+1. Enable / Disable interactive mode [line 41]
+2. Enable / Disable logging [line 44]
+3. Change console Dimentions [line 47]
+4. Change clk speed (clk < 10 is not recommneded) [line 34]
+5. Enable / Disable phase 1 code [line 38]
+
+Build & Run :
+    make build      -> builds the project
+    make run        -> runs the projec after build
+    make generate   -> generate a test case
+    make test       -> runs the test.c file
+    make cleans     -> delets the previues test case
+    make all        -> cleans then builds the project and makes new test-cases and runs process_generator.c
