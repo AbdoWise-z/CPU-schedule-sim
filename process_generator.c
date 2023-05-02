@@ -178,7 +178,7 @@ int main(int argc, char * argv[])
     }
 
     
-    Logger("[PG] Scadular running at : %d\n" , scheduler);
+    Logger("[PG] Scheduler running at : %d\n" , scheduler);
     Logger("[PG] clk running at      : %d\n" , scheduler);
 
 

@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
         run_time_total += proc.runtime;
         int wait = proc.start_time - proc.arrival;
         int TA = proc.finish_time - proc.arrival;
-        double WTA = TA / (double) proc.runtime;
+        double WTA = TA / (double) (proc.runtime ? proc.runtime : 1);
         tW += wait;
         tWTA += WTA;
         arr[i] = WTA;
@@ -290,7 +290,7 @@ void run_for(ProcessInfo* p , int qouta){
             //Logger("[Scheduler] process finished , pid: %d , id: %d\n" , p->pid , p->id);
             int wait = p->start_time - p->arrival;
             int TA = p->finish_time - p->arrival;
-            double WTA = TA / (double) p->runtime; 
+            double WTA = TA / (double) (p->runtime ? p->runtime : 1); 
             fprintf(schPtr,"At time %d process %d finished arr %d total %d remain %d wait %d TA %d WTA %.2f\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait, TA , WTA);
             break;//no need to continue
         }
