@@ -74,12 +74,12 @@ int main(int argc, char* argv[])
 
     //init all the variables
 
-    schPtr = fopen("scheduler.Logger" , "w");
+    schPtr = fopen("scheduler.log" , "w");
     if(schPtr == NULL)
         Logger("couldn't find scheduler file\n");
     setbuf(schPtr , NULL);
 
-    memPtr = fopen("memory.Logger" , "w");
+    memPtr = fopen("memory.log" , "w");
     if(memPtr == NULL)
         Logger("couldn't find memory file\n");
     setbuf(memPtr , NULL);
