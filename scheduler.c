@@ -231,6 +231,8 @@ bool switch_to(ProcessInfo* p){
             int wait = p->start_time - p->arrival;
             fprintf(schPtr,"At time %d process %d started arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             p->state = STATE_READY;
+            p->remainning = p->runtime;
+            
         }else if (p->state == STATE_READY){
             Logger("[Scheduler] Resuming: %d\n" , p->pid);
             int wait = p->start_time - p->arrival;

@@ -5,7 +5,11 @@
 #define CLK_WAIT(x) while (clk + x > getClk()) {}
 
 int remainingtime;
+//int p_m_q;
+
+bool runninning = true;
 int clk;
+
 ControlBlock* ProcessControl;
 int controlBlockId;
 
@@ -36,7 +40,7 @@ int main(int agrc, char * argv[])
     
     //p_m_q  = msgget(ftok("SC_P"  , 15) , 0666 | IPC_CREAT);
 
-    //get a handle to the control block
+    //get a handle to the control
     controlBlockId = shmget(ftok("SC_P"  , 15), sizeof(ControlBlock), IPC_CREAT | 0666);
     ProcessControl = (ControlBlock *) shmat(controlBlockId, (void *)0, 0);
     
@@ -46,8 +50,7 @@ int main(int agrc, char * argv[])
     
     while (remainingtime > 0){
         
-        //make sure the Scheduler allows us to take one quota
-        while (ProcessControl->active_pid != getpid()){}
+        while (ProcessControl->active_pid != getpid()){} //make sure that its our quota to take
 
         CLK_INIT;
         //Logger("[Process] clk=%d" , clk);

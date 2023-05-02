@@ -29,6 +29,7 @@ void insertLL(LL_L_t* ll , LL_t val){
     if (ll->size == 0){
         LL_Node* node = (LL_Node*) malloc( sizeof(LL_Node) );
         node->next = NULL;
+        node->prev = NULL;
         node->value = val;
         ll->start = node;
         ll->end = node;
@@ -55,6 +56,8 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
     if (t == NULL){ //if we want to insert at the start
         LL_Node* insert = (LL_Node*) malloc( sizeof(LL_Node) );
         insert->value = val;
+        insert->next = NULL;
+        insert->prev = NULL;
 
         if (ll->start){
             ll->start->prev = insert;
@@ -70,6 +73,8 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
     }else{
         LL_Node* insert = (LL_Node*) malloc( sizeof(LL_Node) );
         insert->value = val;
+        insert->next = NULL;
+        insert->prev = NULL;
 
         insert->next = t->next;
         insert->prev = t;

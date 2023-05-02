@@ -31,11 +31,11 @@ typedef short bool;
 int * shmaddr;                 //
 //===============================
 
-#define CLK_MS 100
+#define CLK_MS 10
 #define CLK_START_DELAY_MS 100
 
 //enable Interactive mode if this is defined
-#define INTERACTIVE
+//#define INTERACTIVE
 //enable if you want to see log output
 #define ENABLE_LOG
 
