@@ -13,6 +13,8 @@
 #include <math.h>
 
 
+//enable if you want to see the output written to a file
+//shouldn't use this in INTERACTIVE mode btw ...
 //#define OUT_TO_FILE
 #define SYNC_IO setbuf(stdout , NULL);
 //#define PHASE_1 
@@ -34,6 +36,7 @@ int * shmaddr;                 //
 
 //enable Interactive mode if this is defined
 #define INTERACTIVE
+//enable if you want to see log output
 #define ENABLE_LOG
 
 //the console size , vs-code is 143 (143 - 7 = 136 ~= 130)

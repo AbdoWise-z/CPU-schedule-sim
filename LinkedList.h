@@ -1,3 +1,6 @@
+//dounle jointed linked list , mainly used to store the memory slots
+//but its also used in other locations in code
+
 #ifdef LL_L_t
 #ifdef LL_t
 
@@ -14,11 +17,14 @@ typedef struct {
     LL_Node* end;
 } LL_L_t;
 
+
+//creates LinkedList
 void createLL(LL_L_t** ll){
     *ll = (LL_L_t*) malloc( sizeof(LL_L_t) );
     (*ll)->size = 0;
 }
 
+//inserts item at the end
 void insertLL(LL_L_t* ll , LL_t val){
     if (ll->size == 0){
         LL_Node* node = (LL_Node*) malloc( sizeof(LL_Node) );
@@ -40,7 +46,11 @@ void insertLL(LL_L_t* ll , LL_t val){
     ll->size++;
 }
 
-
+//inserts item of the node t
+//if t == null , then it will add it to the start
+//please not that this function does not check if
+//t belogns to ll or not , cuz its going to coat
+//alot of performance
 void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
     if (t == NULL){ //if we want to insert at the start
         LL_Node* insert = (LL_Node*) malloc( sizeof(LL_Node) );
@@ -75,6 +85,7 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
     ll->size++;
 }
 
+//removes node n from ll
 void removeLL(LL_L_t* ll , LL_Node* n){
     if (ll->size < 1){
         Logger("LL is empty !!\n");
@@ -106,6 +117,8 @@ void removeLL(LL_L_t* ll , LL_Node* n){
     free(n);
 }
 
+
+//removes all nodes from ll
 void clearLL(LL_L_t** ll){
     LL_Node* n = (*ll)->start;
     while (n){

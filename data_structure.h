@@ -1,6 +1,11 @@
+//a header file to hold all types of structs that we use in the program
+//and defines some constants
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+
+
 
 #define STATE_NOT_READY   0
 #define STATE_READY       1
@@ -31,31 +36,33 @@ typedef struct ControlBlock{
     int ready;      //a flag to determine if the process is ready to store a value
 } ControlBlock;
 
+//no longer used .
 typedef struct ProcessesMessage{
     long type;
     int remainning;
 } ProcessesMessage;
 
+//include the other structs
+
 #define PQ_MAX_SIZE 20000
 #define PQ_t ProcessInfo
 #define PQ_Q_t PriorityQueue
-
 #include "PriorityQueue.h"
 
 #define CQ_Q_t CircularQueue
 #define CQ_t ProcessInfo
 #define CQ_MAX_SIZE 20000
-
 #include "CircularQueue.h"
 
+
+//a struct that represent a MemoryRegeon taken by a process
 typedef struct MemorySlot{
-    int start;
-    int end;
-    int id;
+    int start; //start adddress
+    int end;   //end address
+    int id;    //the id of process holding this memory
 } MemorySlot;
 
 #define LL_t MemorySlot
 #define LL_L_t LinkedList
-
 #include "LinkedList.h"
 

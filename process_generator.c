@@ -3,23 +3,28 @@
 #include <ctype.h>
 #include <time.h>
 
-//TODO: fix the high clk speed issue between PG and SC , (queues are bad ...)
-
 void clearResources(int);
 
+//a queue to store the processes before sending them to the SCH
 PriorityQueue* pq = NULL;
+
+//handle to the message queue between shaeduler and process_generator
 int sc_m_q = -1;
+
+//handle to the processes.txt file
 FILE* cfg = NULL;
 
 
 int main(int argc, char * argv[])
 {
     
+    //if I want to output to a file instead of a console
 #ifdef OUT_TO_FILE
     freopen("results.txt" , "a+" , stdout);
     SYNC_IO;
 #endif
 
+    //set signal handler 
     signal(SIGINT, clearResources);
     
     printf("[PG] pid: %d , gpid: %d \n" , getpid() , getpgrp());
@@ -31,6 +36,7 @@ int main(int argc, char * argv[])
 
     char* input_file = NULL;
 
+    //load the command line arguments
     if (argc > 1){
         ui = false;
         input_file = argv[1];
@@ -82,10 +88,12 @@ int main(int argc, char * argv[])
         }
     }
 
+    //some validations .
     if (mem_type > 4 || mem_type < 1 || sq_type > 5 || sq_type < 1 || quanta_size < 1){
         ui = true;
     }
 
+    //if there is not command , or the command was invalid , ask the user for the parameters
     if (ui){
         // 1. Ask the user for the chosen scheduling algorithm and its parameters, if there are any.
         if (input_file == NULL) input_file = "processes.txt";
@@ -123,9 +131,7 @@ int main(int argc, char * argv[])
             printf("invalid input , select a number between [ 1 , 3 ]");
         }
     }
-
-    system("clear");
-
+    
     // 2. Read the input files.
     cfg = fopen(input_file , "r");
     int i , j = 0;

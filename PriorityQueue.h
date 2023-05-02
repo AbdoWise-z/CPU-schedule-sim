@@ -1,3 +1,6 @@
+//a priority queue implementation using heaps
+//made it with heaps for better performance , since its gonna have alot of swaps
+//the higher the priority , higher the location in the queue
 
 #ifdef PQ_MAX_SIZE
 #ifdef PQ_Q_t
@@ -10,18 +13,22 @@ typedef struct PQ_Q_t{
     int size;
 } PQ_Q_t;
 
+
+//utility .. private
 void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
+//utitliy.. private 
 void swap_pqt(PQ_t *a, PQ_t *b) {
     PQ_t temp = *a;
     *a = *b;
     *b = temp;
 }
 
+//utility , private
 void maxHeapify(PQ_Q_t *pq, int i) {
     int largest = i;
     int left = 2 * i + 1;
@@ -42,11 +49,14 @@ void maxHeapify(PQ_Q_t *pq, int i) {
     }
 }
 
+
+//creates a PQ
 void createPriorityQueue(PQ_Q_t** pq) {
     *pq = (PQ_Q_t *) malloc(sizeof(PQ_Q_t));
     (*pq)->size = 0;
 }
 
+//inserts item to the PQ with a priority
 void insert(PQ_Q_t *pq, int priority , PQ_t item) {
     if (pq->size >= PQ_MAX_SIZE) {
         Logger("Priority Queue is full\n");
@@ -64,6 +74,7 @@ void insert(PQ_Q_t *pq, int priority , PQ_t item) {
     }
 }
 
+//returns the first item in the PQ
 PQ_t extract(PQ_Q_t *pq) {
     if (pq->size <= 0) {
         Logger("Priority Queue is empty\n");
