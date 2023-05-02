@@ -145,10 +145,6 @@ int main(int argc, char* argv[])
     sch_finish_time = getClk();
 
     Logger("[Scheduler] Finished \n");
-    
-    msg.type = 3; //tell pg it can exit
-    msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
-
     Logger("                           [results]\n");
     Logger("#             id     arrival  start_time     runtime finish_time    priority\n");
     PQ_t proc;
@@ -186,12 +182,12 @@ int main(int argc, char* argv[])
     fprintf(final , "Std WTA: %0.2f\n" , calculateSD(arr , size));
 
     fclose(final);
+
+    msg.type = 3; //tell pg it can exit
+    msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
+    usleep(5 * 1000);
     
     destroyClk(true);
-
-#ifdef INTERACTIVE
-    printf("Simulation done , took %d clk\n" , sch_finish_time - sch_start_time);
-#endif 
 }
 
 
@@ -351,6 +347,8 @@ void drawInteractive(){
 
     system("clear");
 
+    //printf("Inter: Started\n");
+
     int clk_end = getClk();
     if (clk_end < CONSOLE_WIDTH / 5){
         clk_end = CONSOLE_WIDTH / 5;
@@ -363,7 +361,7 @@ void drawInteractive(){
     }
     printf("\n");
     for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
-        if ((i > 7 ) && (i - 7) % 5 == 0){
+        if ((i > 7) && (i - 6) % 5 == 0){
             printf("|");
             continue;
         }
@@ -371,6 +369,9 @@ void drawInteractive(){
     }
     printf("\n");
 
+    //printf("Inter: Clk bar done\n");
+
+    
     for (int i = 0;i < processes;i++){
         printf("P%04d |" , i+1);
         LL_Node* node = lists[i]->start;
@@ -404,19 +405,31 @@ void drawInteractive(){
         printf("\n");
     }
 
+    //printf("Inter: Processes done\n");
+
     for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
         printf("-");
     }
 
     printf("\n");
 
+
+
+    //printf("Inter: clean started : %d\n" , processes);
+
+
     for (int i = 0;i < processes;i++){
         clearLL(&lists[i]);
+        free(lists[i]);
     }
+
+    //printf("Inter: clean finished\n");
+
+    //printf("Inter: Free\n");
 
     free(lists);
 
-    //Logger("drawInteractive: out\n");
+    //printf("Inter: out\n");
 
 }
 
@@ -946,6 +959,11 @@ void clearResources(int i){
     
     if (memPtr)
         fclose(memPtr);
+
+#ifdef INTERACTIVE
+    printf("Simulation done , took %d clk\n" , sch_finish_time - sch_start_time);
+#endif 
+
         
     exit(0);
 }
