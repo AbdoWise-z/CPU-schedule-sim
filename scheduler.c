@@ -114,7 +114,8 @@ int main(int argc, char* argv[])
 
 #ifdef INTERACTIVE
     drawInteractive();
-#endif 
+#endif
+
     sch_start_time = getClk();
 
 
@@ -187,8 +188,9 @@ int main(int argc, char* argv[])
     fclose(final);
     
     destroyClk(true);
+
 #ifdef INTERACTIVE
-    printf("Simulation Done lesgoo\n");
+    printf("Simulation done , took %d clk\n" , sch_finish_time - sch_start_time);
 #endif 
 }
 
@@ -317,6 +319,7 @@ int max(int a , int b){
 
 void drawInteractive(){
     //heavy function ..
+    //Logger("drawInteractive: in\n");
     setbuf(stdout , NULL);
     
     int processes = 0;
@@ -401,11 +404,19 @@ void drawInteractive(){
         printf("\n");
     }
 
+    for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
+        printf("-");
+    }
+
+    printf("\n");
 
     for (int i = 0;i < processes;i++){
         clearLL(&lists[i]);
     }
 
+    free(lists);
+
+    //Logger("drawInteractive: out\n");
 
 }
 
@@ -867,7 +878,7 @@ bool mm_buddyAlloc(ProcessInfo* info){
         m.end = blockEnd;
         m.id = info->id;
         insertLL(memMap , m);
-
+        
         info->mem_start = i;
         info->mem_end = i + blockSize - 1;
         fprintf(memPtr, "At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);

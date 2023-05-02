@@ -34,13 +34,12 @@ int * shmaddr;                 //
 
 //enable Interactive mode if this is defined
 #define INTERACTIVE
+#define ENABLE_LOG
 
 //the console size , vs-code is 143 (143 - 7 = 136 ~= 130)
 #define CONSOLE_WIDTH 130
-//the block char in ascii
 
-
-#ifdef INTERACTIVE
+#ifndef ENABLE_LOG
 #define Logger(x...) 
 #else
 #define Logger(x...) printf(x)
