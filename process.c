@@ -42,17 +42,17 @@ int main(int agrc, char * argv[])
     
     remainingtime = atoi(argv[0]);
 
-    printf("[Process] started , runtime: %d \n" , remainingtime);
+    Logger("[Process] started , runtime: %d \n" , remainingtime);
     
     while (remainingtime > 0){
         
         while (ProcessControl->active_pid != getpid()){}
 
         CLK_INIT;
-        //printf("[Process] clk=%d" , clk);
+        //Logger("[Process] clk=%d" , clk);
         CLK_WAIT(1);
         remainingtime--;
-        printf("[Process] running | pid: %d , remainingtime: %d \n" , getpid() , remainingtime);
+        Logger("[Process] running | pid: %d , remainingtime: %d \n" , getpid() , remainingtime);
 
         //ProcessesMessage pmsg;
         //pmsg.type = 1;
@@ -68,7 +68,7 @@ int main(int agrc, char * argv[])
 
     }
 
-    printf("[Process] finished  , pid: %d \n" , getpid());
+    Logger("[Process] finished  , pid: %d \n" , getpid());
     
 
     return 0;

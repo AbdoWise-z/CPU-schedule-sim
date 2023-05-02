@@ -31,7 +31,7 @@ int isCQEmpty(CQ_Q_t *queue) {
 
 void enqueue(CQ_Q_t *queue, CQ_t data) {
     if (isCQFull(queue)) {
-        printf("CQueue is Full!\n");
+        Logger("CQueue is Full!\n");
         return;
     }
     
@@ -46,7 +46,7 @@ void enqueue(CQ_Q_t *queue, CQ_t data) {
 
 CQ_t dequeue(CQ_Q_t *queue) {
     if (isCQEmpty(queue)) {
-        printf("Queue is Empty!\n");
+        Logger("Queue is Empty!\n");
         return queue->arr[0];
     }
     CQ_t data = queue->arr[queue->front];

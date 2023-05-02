@@ -124,6 +124,8 @@ int main(int argc, char * argv[])
         }
     }
 
+    system("clear");
+
     // 2. Read the input files.
     cfg = fopen(input_file , "r");
     int i , j = 0;
@@ -170,8 +172,8 @@ int main(int argc, char * argv[])
     }
 
     
-    printf("[PG] Scadular running at : %d\n" , scheduler);
-    printf("[PG] clk running at      : %d\n" , scheduler);
+    Logger("[PG] Scadular running at : %d\n" , scheduler);
+    Logger("[PG] clk running at      : %d\n" , scheduler);
 
 
     initClk();
@@ -184,15 +186,15 @@ int main(int argc, char * argv[])
     sc_m_q = msgget(ftok("PG_SC" , 15) , 0666 | IPC_CREAT);
 
     SchedulerMessage msg;
-    printf("[PG] Preparing %d processes\n" , pq->size);
+    Logger("[PG] Preparing %d processes\n" , pq->size);
     while (pq->size){
         ProcessInfo process = extract(pq);
         while (getClk() < process.arrival){} //wait until it arrives
         if (getClk() != process.arrival)
-            printf("[PG] Warnning , Process '%d' was unable to arrive on time (offset: %d)\n" , process.id , getClk() - process.arrival);
+            Logger("[PG] Warnning , Process '%d' was unable to arrive on time (offset: %d)\n" , process.id , getClk() - process.arrival);
         msg.p = process;
         msg.type = (pq->size > 0) ? 2 : 1;
-        printf("[PG] Sending process: %d , at time %d\n" , process.id , getClk());
+        Logger("[PG] Sending process: %d , at time %d\n" , process.id , getClk());
         msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0);
     }
 
@@ -203,9 +205,9 @@ int main(int argc, char * argv[])
         pq = NULL;
     }
 
-    printf("[PG] finished\n");
+    Logger("[PG] finished\n");
     msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 3 , !IPC_NOWAIT); //wait for exit message from Scheduler
-    printf("[PG] Terminating\n");
+    Logger("[PG] Terminating\n");
 }
 
 

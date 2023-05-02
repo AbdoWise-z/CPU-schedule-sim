@@ -30,6 +30,12 @@
         "wait.h": "c",
         "file.h": "c",
         "time.h": "c",
-        "map": "c"
+        "map": "c",
+        "sstream": "c",
+        "ratio": "c",
+        "functional": "c",
+        "tuple": "c",
+        "utility": "c",
+        "variant": "c"
     }
 }

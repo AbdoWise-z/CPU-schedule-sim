@@ -49,7 +49,7 @@ void createPriorityQueue(PQ_Q_t** pq) {
 
 void insert(PQ_Q_t *pq, int priority , PQ_t item) {
     if (pq->size >= PQ_MAX_SIZE) {
-        printf("Priority Queue is full\n");
+        Logger("Priority Queue is full\n");
         return;
     }
 
@@ -66,7 +66,7 @@ void insert(PQ_Q_t *pq, int priority , PQ_t item) {
 
 PQ_t extract(PQ_Q_t *pq) {
     if (pq->size <= 0) {
-        printf("Priority Queue is empty\n");
+        Logger("Priority Queue is empty\n");
         return pq->data[0];
     }
 

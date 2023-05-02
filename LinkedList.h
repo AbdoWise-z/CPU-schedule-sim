@@ -77,7 +77,7 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
 
 void removeLL(LL_L_t* ll , LL_Node* n){
     if (ll->size < 1){
-        printf("LL is empty !!\n");
+        Logger("LL is empty !!\n");
         return;
     }
 
@@ -106,6 +106,18 @@ void removeLL(LL_L_t* ll , LL_Node* n){
     free(n);
 }
 
+void clearLL(LL_L_t** ll){
+    LL_Node* n = (*ll)->start;
+    while (n){
+        LL_Node* d = n;
+        n = n->next;
+        free(d);
+    }
+
+    (*ll)->size = 0;
+    (*ll)->start = NULL;
+    (*ll)->end = NULL;
+}
 
 #endif
 #endif

@@ -43,11 +43,13 @@ void get_process(ProcessInfo* p);
 ProcessInfo current_process;
 void run_for(ProcessInfo* p , int qouta);
 bool switch_to(ProcessInfo* p);
+void drawInteractive();
 
 PriorityQueue* pq;
 PriorityQueue* finish_queue;
 CircularQueue* waiting_queue;
 LinkedList* memMap;
+LinkedList* executionGraph;
 
 SchedulerMessage msg;
 //ProcessesMessage pMsg;
@@ -72,14 +74,14 @@ int main(int argc, char* argv[])
 
     //init all the variables
 
-    schPtr = fopen("scheduler.log" , "w");
+    schPtr = fopen("scheduler.Logger" , "w");
     if(schPtr == NULL)
-        printf("couldn't find scheduler file\n");
+        Logger("couldn't find scheduler file\n");
     setbuf(schPtr , NULL);
 
-    memPtr = fopen("memory.log" , "w");
+    memPtr = fopen("memory.Logger" , "w");
     if(memPtr == NULL)
-        printf("couldn't find memory file\n");
+        Logger("couldn't find memory file\n");
     setbuf(memPtr , NULL);
     
 
@@ -90,7 +92,7 @@ int main(int argc, char* argv[])
     mem_type = atoi(argv[2]);
 
 
-    printf("[Scheduler] cfg , t : %d  , q : %d , mem_type: %d\n" , t , q , mem_type);
+    Logger("[Scheduler] cfg , t : %d  , q : %d , mem_type: %d\n" , t , q , mem_type);
 
     sc_m_q = msgget(ftok("PG_SC" , 15) , 0666 | IPC_CREAT);
     //p_m_q  = msgget(ftok("SC_P"  , 15) , 0666 | IPC_CREAT);
@@ -108,6 +110,7 @@ int main(int argc, char* argv[])
     createPriorityQueue(&finish_queue);
     createCircularQueue(&waiting_queue);
     createLL(&memMap);
+    createLL(&executionGraph);
 
     sch_start_time = getClk();
 
@@ -130,19 +133,19 @@ int main(int argc, char* argv[])
         break;
     
     default:
-        printf("[Scheduler] failed to select a type.\n");
+        Logger("[Scheduler] failed to select a type.\n");
         break;
     }
 
     sch_finish_time = getClk();
 
-    printf("[Scheduler] Finished \n");
+    Logger("[Scheduler] Finished \n");
     
     msg.type = 3; //tell pg it can exit
     msgsnd(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , !IPC_NOWAIT);
 
-    printf("                           [results]\n");
-    printf("#             id     arrival  start_time     runtime finish_time    priority\n");
+    Logger("                           [results]\n");
+    Logger("#             id     arrival  start_time     runtime finish_time    priority\n");
     PQ_t proc;
     int i = 0;
 
@@ -164,12 +167,12 @@ int main(int argc, char* argv[])
         arr[i] = WTA;
 
 
-        printf("%04d%12d%12d%12d%12d%12d%12d\n" , i++ , proc.id , proc.arrival , proc.start_time , proc.runtime , proc.finish_time , proc.priority);
+        Logger("%04d%12d%12d%12d%12d%12d%12d\n" , i++ , proc.id , proc.arrival , proc.start_time , proc.runtime , proc.finish_time , proc.priority);
     }
 
     FILE* final = fopen("scheduler.perf" , "w");
     if(final == NULL)
-        printf("couldn't find final file\n");
+        Logger("couldn't find final file\n");
     //setbuf(final , NULL);
 
     fprintf(final , "CPU Utilization: %0.2f%%\n" , ((float) run_time_total * 100.0f / (sch_finish_time - sch_start_time)));
@@ -196,12 +199,12 @@ float calculateSD(float data[] , int s) {
 }
 
 bool switch_to(ProcessInfo* p){
-    //printf("switch_to: in\n");
+    //Logger("switch_to: in\n");
     
     if (current_process.id != p->id){
         if (current_process.id != -1){
             kill(current_process.pid , SIGSTOP);
-            printf("[Scheduler] Pausing: %d \n" , current_process.pid);
+            Logger("[Scheduler] Pausing: %d \n" , current_process.pid);
             int wait = current_process.start_time - current_process.arrival;
             fprintf(schPtr,"At time %d process %d stopped arr %d total %d remain %d wait %d\n",getClk(), current_process.id, current_process.arrival , current_process.runtime , current_process.remainning , wait);
 
@@ -218,34 +221,36 @@ bool switch_to(ProcessInfo* p){
                 exit(-1);
             }
 
-            printf("[Scheduler] Running a child process for the first time: %d \n" , p->pid);
+            Logger("[Scheduler] Running a child process for the first time: %d \n" , p->pid);
             int wait = p->start_time - p->arrival;
             fprintf(schPtr,"At time %d process %d started arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             p->state = STATE_READY;
         }else if (p->state == STATE_READY){
-            printf("[Scheduler] Resuming: %d\n" , p->pid);
+            Logger("[Scheduler] Resuming: %d\n" , p->pid);
             int wait = p->start_time - p->arrival;
             fprintf(schPtr,"At time %d process %d resumed arr %d total %d remain %d wait %d\n",getClk(), p->id, p->arrival , p->runtime , p->remainning , wait);
             kill(p->pid , SIGCONT);
         }
 
-        //printf("switch_to: out\n");
+        //Logger("switch_to: out\n");
         return true;
     }
-    //printf("switch_to: out\n");
+    //Logger("switch_to: out\n");
     
     return false;
 }
 
 void run_for(ProcessInfo* p , int qouta){
     if (p->remainning < 0){ //should be "<=" but the document said no ..
-        printf("[Scheduler] Error , trying to run a process that should have finished: %d\n" , p->pid);
+        Logger("[Scheduler] Error , trying to run a process that should have finished: %d\n" , p->pid);
         return;
     }
 
     switch_to(p);
 
-    //printf("in: run_for %d\n" , qouta);
+    //Logger("in: run_for %d\n" , qouta);
+
+    int start = getClk();
 
     while (qouta){
         qouta--;
@@ -258,7 +263,7 @@ void run_for(ProcessInfo* p , int qouta){
         
         //int k = msgrcv(p_m_q , &pMsg , sizeof(ProcessesMessage) - sizeof(long) , 0 , !IPC_NOWAIT);
         //if (k < 0){
-        //    printf("[Scheduler] Error in run_for , process didn't return any result\n");
+        //    Logger("[Scheduler] Error in run_for , process didn't return any result\n");
         //    return;
         //}
         
@@ -270,14 +275,13 @@ void run_for(ProcessInfo* p , int qouta){
         
             while (ProcessControl->lock1 == 0){} //wait for the process to write
         
-        //printf("[Scheduler] Processes %d ran for 1 quota \n" , p->pid);
-
+        //Logger("[Scheduler] Processes %d ran for 1 quota \n" , p->pid);
             p->remainning = ProcessControl->remainning;
         }
 
         if (p->remainning == 0){
             p->finish_time = getClk();
-            //printf("[Scheduler] process finished , pid: %d , id: %d\n" , p->pid , p->id);
+            //Logger("[Scheduler] process finished , pid: %d , id: %d\n" , p->pid , p->id);
             int wait = p->start_time - p->arrival;
             int TA = p->finish_time - p->arrival;
             double WTA = TA / (double) p->runtime; 
@@ -286,13 +290,120 @@ void run_for(ProcessInfo* p , int qouta){
         }
     }
 
-    //printf("out: run_for %d\n" , qouta);
+    int end = getClk();
+#ifdef INTERACTIVE
+//, (p->start_time == start ? 2 : 0) | (p->finish_time == end ? 1 : 0)
+
+    MemorySlot slot = {start , end , p->id }; //MemorySlot ~= GraphSlot in the the concept of the data it holds
+    insertLL(executionGraph , slot);
+    drawInteractive();
+#endif
+    //Logger("out: run_for %d\n" , qouta);
+
+}
+
+//C doesn't have it for some reason xD
+int max(int a , int b){
+    return a > b ? a : b;
+}
+
+void drawInteractive(){
+    //heavy function ..
+    setbuf(stdout , NULL);
+    
+    int processes = 0;
+    LL_Node* start = executionGraph->start;
+    while (start){
+        processes = max(processes , start->value.id);
+        start = start->next;
+    }
+
+    LinkedList** lists = malloc(sizeof(LinkedList*) * processes);
+    for (int i = 0;i < processes;i++){
+        createLL(&lists[i]);
+    }
+
+    start = executionGraph->start;
+    while (start){
+        insertLL(lists[start->value.id - 1] , start->value);
+        start = start->next;
+    }
+
+    // LL_Node* test = lists[0]->start;
+    // while (test){
+    //     printf("%d : %d -> %d\n" , test->value.id , test->value.start , test->value.end);
+    //     test = test->next;
+    // }
+    // printf("------------\n");
+
+    // //for (int i = 0;i < processes)
+
+    system("clear");
+
+    int clk_end = getClk();
+    if (clk_end < CONSOLE_WIDTH / 5){
+        clk_end = CONSOLE_WIDTH / 5;
+    }
+    int clk_start = clk_end - CONSOLE_WIDTH / 5;
+
+    printf(" CLK  |");
+    for (int i = clk_start;i <= clk_end;i++){
+        printf("%04d " , i);
+    }
+    printf("\n");
+    for (int i = 0;i < CONSOLE_WIDTH + 7;i++){
+        if ((i > 7 ) && (i - 7) % 5 == 0){
+            printf("|");
+            continue;
+        }
+        printf("-");
+    }
+    printf("\n");
+
+    for (int i = 0;i < processes;i++){
+        printf("P%04d |" , i+1);
+        LL_Node* node = lists[i]->start;
+
+        for (int j = clk_start;j <= clk_end;j++){
+            
+            while (node && node->value.end < j){
+                node = node->next;
+            }
+            
+            if (node == NULL) break;
+
+            bool quota = false;
+            bool enter = false;
+            bool exit  = false;
+
+            if (node->value.start < j && node->value.end >= j){
+                quota = true;
+            }
+
+            if (quota){
+                printf("\u2597");
+                printf("\u2584");
+                printf("\u2584");
+                printf("\u2584");
+                printf("\u2596");
+            }else{
+                printf("     ");
+            }
+        }
+        printf("\n");
+    }
+
+
+    for (int i = 0;i < processes;i++){
+        clearLL(&lists[i]);
+    }
+
 
 }
 
 void get_process(ProcessInfo* p){
 
-    //printf("get_process: in\n");
+    //Logger("get_process: in\n");
     
     
     usleep(CLK_MS); //sleep for 1/1000 of the clk
@@ -300,14 +411,14 @@ void get_process(ProcessInfo* p){
     while (msgrcv(sc_m_q , &msg , sizeof(SchedulerMessage) - sizeof(long) , 0 , IPC_NOWAIT) > 0){
         enqueue(waiting_queue , msg.p);
         if (msg.type == 1){
-            printf("[Scheduler] No more processes to receive.\n");
+            Logger("[Scheduler] No more processes to receive.\n");
             received_all = true; //done receiving ...
         }
 
         usleep(CLK_MS / 100);
     }
 
-    //printf("get_process: mem-alloc\n");
+    //Logger("get_process: mem-alloc\n");
     
 
     p->id = -1;
@@ -324,7 +435,7 @@ void get_process(ProcessInfo* p){
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-                    //printf("get_process: out\n");
+                    //Logger("get_process: out\n");
                     return;
                 }
             }else if (mem_type == 2){
@@ -334,18 +445,18 @@ void get_process(ProcessInfo* p){
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-                    //printf("get_process: out\n");
+                    //Logger("get_process: out\n");
                     return;
                 }
             }else if (mem_type == 3){
-                //printf("trying to alloc %d for %d t3\n" , temp.memSize , temp.id);
+                //Logger("trying to alloc %d for %d t3\n" , temp.memSize , temp.id);
                 if (mm_buddyAlloc(&temp)){
                     *p = temp;
 
                     p->pid = -1; //default value
                     p->state = STATE_NOT_READY;
                     p->remainning = p->runtime;
-                    //printf("get_process: out\n");
+                    //Logger("get_process: out\n");
                     return;
                 }
             } else {
@@ -354,19 +465,19 @@ void get_process(ProcessInfo* p){
                 p->pid = -1; //default value
                 p->state = STATE_NOT_READY;
                 p->remainning = p->runtime;
-                //printf("get_process: out\n");
+                //Logger("get_process: out\n");
                 return;
             }
             enqueue(waiting_queue , temp);
         }
     }
 
-    //printf("get_process: out\n");
+    //Logger("get_process: out\n");
     
 }
 
 void hpf(bool preemptive){
-    printf("[Scheduler] Running HPF\n");
+    Logger("[Scheduler] Running HPF\n");
     ProcessInfo recv;
     
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
@@ -377,10 +488,10 @@ void hpf(bool preemptive){
             get_process(&recv);
 
             if (recv.id > 0){
-                printf("[Scheduler] Adding a processes to the queue: %d , Priority: %d\n" , recv.id , recv.priority);
+                Logger("[Scheduler] Adding a processes to the queue: %d , Priority: %d\n" , recv.id , recv.priority);
                 insert(pq , -recv.priority , recv);
                 // if (recv.remainning == 0){
-                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     Logger("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
                 //     recv.start_time = getClk();
                 //     recv.finish_time = recv.start_time;
                 //     insert(finish_queue , -getClk() , recv);
@@ -392,27 +503,27 @@ void hpf(bool preemptive){
 
         if (pq->size > 0){ //we have something to run
             ProcessInfo next = extract(pq);
-            //printf("[Scheduler] selecting next , id: %d , pid: %d , pri: %d\n" , next.id , next.pid , next.priority);
+            //Logger("[Scheduler] selecting next , id: %d , pid: %d , pri: %d\n" , next.id , next.pid , next.priority);
             run_for(&next , 1);
             current_process = next;
             if (next.remainning > 0)
                 insert(pq , preemptive ? -next.priority : INT_MAX , next);
             else{
-                //printf("[Scheduler] process finished\n");
+                //Logger("[Scheduler] process finished\n");
                 mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
         } else {
             CLK_WAIT(1);
-            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
+            Logger("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
-    printf("[Scheduler] Finished HPF\n");
+    Logger("[Scheduler] Finished HPF\n");
 }
 
 void srtn(){
-    printf("[Scheduler] Running SRTN\n");
+    Logger("[Scheduler] Running SRTN\n");
     ProcessInfo recv;
 
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
@@ -423,10 +534,10 @@ void srtn(){
             get_process(&recv);
 
             if (recv.id > 0){
-                printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
+                Logger("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 insert(pq , -recv.remainning , recv);
                 // if (recv.remainning == 0){
-                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     Logger("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
                 //     recv.start_time = getClk();
                 //     recv.finish_time = recv.start_time;
                 //     insert(finish_queue , -getClk() , recv);
@@ -438,44 +549,44 @@ void srtn(){
 
         if (pq->size > 0){ //we have something to run
             ProcessInfo next = extract(pq);
-            //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
+            //Logger("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
             run_for(&next , 1);
             current_process = next;
             if (next.remainning > 0)
                 insert(pq , -next.remainning , next);
             else{
-                //printf("[Scheduler] process finished\n");
+                //Logger("[Scheduler] process finished\n");
                 mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
         } else {
             CLK_WAIT(1);
-            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
+            Logger("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
-    printf("[Scheduler] Finished SRTN\n");
+    Logger("[Scheduler] Finished SRTN\n");
 }
 
 int rq;
 void rr(int q){
-    printf("[Scheduler] Running RR\n");
+    Logger("[Scheduler] Running RR\n");
     ProcessInfo recv;
     rq = 0;
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
         CLK_INIT;
-        //printf("rr-loop-start\n");
+        //Logger("rr-loop-start\n");
 
         recv.id = INT_MAX;
         while (recv.id > 0){
             get_process(&recv);
 
             if (recv.id > 0){
-                printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
+                Logger("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 insert(pq , -getClk() , recv);
                 
                 // if (recv.remainning == 0){
-                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     Logger("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
                 //     recv.start_time = getClk();
                 //     recv.finish_time = recv.start_time;
                 //     insert(finish_queue , -getClk() , recv);
@@ -486,37 +597,37 @@ void rr(int q){
         }
 
         if (pq->size > 0){ //we have something to run
-            //printf("rr-pq-get\n");
+            //Logger("rr-pq-get\n");
             if (rq == 0)
                 rq = q;
             
             ProcessInfo next = extract(pq);
-            //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
+            //Logger("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
             run_for(&next , 1);
             current_process = next;
             if (next.remainning > 0){
-                //printf("[Scheduler] re-inserting\n");
+                //Logger("[Scheduler] re-inserting\n");
                 insert(pq , (--rq) > 0 ? rq : -getClk() , next);
             }else{
-                //printf("[Scheduler] process finished\n");
+                //Logger("[Scheduler] process finished\n");
                 rq = 0;
                 mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
 
-            //printf("[Scheduler] jop done for %d\n" , next.id);
+            //Logger("[Scheduler] jop done for %d\n" , next.id);
 
         } else {
             CLK_WAIT(1);
-            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
+            Logger("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
-    printf("[Scheduler] Finished RR\n");
+    Logger("[Scheduler] Finished RR\n");
 }
 
 void fcfs(){
-    printf("[Scheduler] Running FCFS\n");
+    Logger("[Scheduler] Running FCFS\n");
     ProcessInfo recv;
 
     while (!received_all || waiting_queue->size > 0 || pq->size > 0){
@@ -527,11 +638,11 @@ void fcfs(){
             get_process(&recv);
 
             if (recv.id > 0){
-                printf("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
+                Logger("[Scheduler] Adding a processes to the queue: %d , RT: %d\n" , recv.id , recv.remainning);
                 insert(pq , -recv.arrival , recv);
                 
                 // if (recv.remainning == 0){
-                //     printf("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
+                //     Logger("[Scheduler] Input Error , process %d has no runtime , ignoring\n" , recv.id);
                 //     recv.start_time = getClk();
                 //     recv.finish_time = recv.start_time;
                 //     insert(finish_queue , -getClk() , recv);
@@ -543,23 +654,23 @@ void fcfs(){
 
         if (pq->size > 0){ //we have something to run
             ProcessInfo next = extract(pq);
-            //printf("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
+            //Logger("[Scheduler] selecting next , id: %d , pid: %d , RT: %d\n" , next.id , next.pid , next.remainning);
             run_for(&next , 1);
             current_process = next;
             if (next.remainning > 0)
                 insert(pq , 1 , next);
             else{
-                //printf("[Scheduler] process finished\n");
+                //Logger("[Scheduler] process finished\n");
                 mm_clearMemory(&next);
                 insert(finish_queue , -getClk() , next);
                 current_process.id = -1; //no current , no need to stop the next one
             }
         } else {
             CLK_WAIT(1);
-            printf("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
+            Logger("[Scheduler] waiting... %d %d %d\n" , received_all , waiting_queue->size , pq->size);
         }
     }
-    printf("[Scheduler] Finished FCFS\n");
+    Logger("[Scheduler] Finished FCFS\n");
 }
 
 
@@ -593,7 +704,7 @@ bool FF_insert(LL_L_t* ll, ProcessInfo *new_process)
         temp.start=0;
         temp.end=new_process->memSize-1;
         insertAfterLL(ll,NULL,temp);
-        printf("I'm here");
+        Logger("I'm here");
         new_process->mem_start=0;
         new_process->mem_end=temp.end;
         return 1; //                                                successeful insertion
@@ -631,7 +742,7 @@ bool FF_insert(LL_L_t* ll, ProcessInfo *new_process)
     if(1023 - iterator->value.end >=  new_process->memSize-1) //1024 -980 =  44  = 981 to 1024
     {
         // valid to enter 
-        printf("BYE\n");
+        Logger("BYE\n");
         temp.start=iterator->value.end+1;
         temp.end=temp.start+new_process->memSize-1;
         temp.id= new_process->id;
@@ -649,7 +760,7 @@ bool mm_firstFitAlloc(ProcessInfo* info){
     {
         fprintf(memPtr,"At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
         info->mem_end - info->mem_start  , info->id , info->mem_start , info->mem_end);
-        printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
+        Logger("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
         info->mem_end - info->mem_start  , info->id , info->mem_start , info->mem_end);
         return 1;
     }
@@ -684,7 +795,7 @@ bool mm_nextFitAlloc(ProcessInfo* info){
     if (pos == -1)
         return false;
 
-    //printf("pos = %d\n"  , pos);
+    //Logger("pos = %d\n"  , pos);
 
     MemorySlot slot = {pos , pos + info->memSize - 1 , info->id};
     info->mem_start = pos;
@@ -714,7 +825,7 @@ bool mm_nextFitAlloc(ProcessInfo* info){
     }
 
     fprintf(memPtr, "At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
-    printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
+    Logger("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
         
     return true;
 }
@@ -752,7 +863,7 @@ bool mm_buddyAlloc(ProcessInfo* info){
         info->mem_start = i;
         info->mem_end = i + blockSize - 1;
         fprintf(memPtr, "At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
-        printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
+        Logger("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start , info->mem_end);
         return true;
     }
 
@@ -764,12 +875,12 @@ bool mm_inf(ProcessInfo* info){
     info->mem_start = inf_mem_pos;
     inf_mem_pos += info->memSize;
     info->mem_end = inf_mem_pos - 1;
-    printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
+    Logger("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
     return true;
 }
 
 void mm_clearMemory(ProcessInfo* info){
-    //printf("mm_clearMemory: in\n");
+    //Logger("mm_clearMemory: in\n");
     LL_Node* temp = memMap->start;
 
     while(temp){
@@ -783,8 +894,8 @@ void mm_clearMemory(ProcessInfo* info){
 
     int blockSize = info->mem_end - info->mem_start + 1;
     fprintf(memPtr,"At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
-    printf("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
-    //printf("mm_clearMemory: out\n");
+    Logger("At time %d freed %d bytes for process %d from %d to %d\n", getClk(), blockSize , info->id , info->mem_start, info->mem_end);
+    //Logger("mm_clearMemory: out\n");
     //info->mem_start = -1;
     //info->mem_end = -1;
 }

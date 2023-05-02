@@ -12,7 +12,6 @@
 #include <signal.h>
 #include <math.h>
 
-#include "data_structure.h"
 
 //#define OUT_TO_FILE
 #define SYNC_IO setbuf(stdout , NULL);
@@ -33,6 +32,19 @@ int * shmaddr;                 //
 #define CLK_MS 100
 #define CLK_START_DELAY_MS 100
 
+//enable Interactive mode if this is defined
+#define INTERACTIVE
+
+//the console size , vs-code is 143 (143 - 7 = 136 ~= 130)
+#define CONSOLE_WIDTH 130
+//the block char in ascii
+
+
+#ifdef INTERACTIVE
+#define Logger(x...) 
+#else
+#define Logger(x...) printf(x)
+#endif
 
 int getClk()
 {
@@ -50,7 +62,7 @@ void initClk()
     while ((int)shmid == -1)
     {
         //Make sure that the clock exists
-        printf("Wait! The clock not initialized yet!\n");
+        Logger("Wait! The clock not initialized yet!\n");
         sleep(1);
         shmid = shmget(SHKEY, 4, 0444);
     }
@@ -74,3 +86,6 @@ void destroyClk(bool terminateAll)
         killpg(getpgrp(), SIGINT);
     }
 }
+
+
+#include "data_structure.h"

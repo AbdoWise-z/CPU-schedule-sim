@@ -14,7 +14,7 @@ int shmid;
 void cleanup(int signum)
 {
     shmctl(shmid, IPC_RMID, NULL);
-    printf("[CLK] terminating!\n");
+    Logger("[CLK] terminating!\n");
     exit(0);
 }
 
@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
     SYNC_IO;
 #endif
 
-    printf("[CLK] starting\n");
+    Logger("[CLK] starting\n");
     signal(SIGINT, cleanup);
     int clk = 0;
     //Create shared memory for one integer variable 4 bytes
