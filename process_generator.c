@@ -114,7 +114,7 @@ int main(int argc, char * argv[])
         printf("    1. First fit\n");
         printf("    2. Next fit\n");
         printf("    3. Buddy\n");
-        printf("    3. Inf\n");
+        printf("    4. Inf\n");
         
         while (mem_type > 4 || mem_type < 1){
             scanf("%d" , &mem_type);

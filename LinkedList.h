@@ -48,8 +48,10 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
 
         if (ll->start){
             ll->start->prev = insert;
-            if (ll->size == 1)
-                ll->end = ll->start;
+            // if (ll->size == 1)
+            //     ll->end = ll->start;
+        } else {
+            ll->end = insert; //this is the first item to insert
         }
 
         insert->next = ll->start;
@@ -64,6 +66,10 @@ void insertAfterLL(LL_L_t* ll , LL_Node* t , LL_t val){
         if (t->next)
             ((LL_Node*) t->next)->prev = insert;
         t->next = insert;
+
+        if (t == ll->end){
+            ll->end = insert;
+        }
     }
 
     ll->size++;

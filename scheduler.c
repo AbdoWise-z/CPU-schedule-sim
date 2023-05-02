@@ -173,8 +173,8 @@ int main(int argc, char* argv[])
     //setbuf(final , NULL);
 
     fprintf(final , "CPU Utilization: %0.2f%%\n" , ((float) run_time_total * 100.0f / (sch_finish_time - sch_start_time)));
-    fprintf(final , "Avg WTA: %0.2f\n" , (tWTA / size));
     fprintf(final , "Avg Waiting: %0.2f\n" , ((float)tW / size));
+    fprintf(final , "Avg WTA: %0.2f\n" , (tWTA / size));
     fprintf(final , "Std WTA: %0.2f\n" , calculateSD(arr , size));
 
     fclose(final);
@@ -562,47 +562,48 @@ void fcfs(){
     printf("[Scheduler] Finished FCFS\n");
 }
 
-bool FF_insert(LinkedList* ll, ProcessInfo *new_process)
+
+bool FF_insert(LL_L_t* ll, ProcessInfo *new_process)
 {
+    MemorySlot temp ;
     if(ll->start == NULL)
     {
         //i'm here so head is null insert at position 1
-        LL_Node* temp = malloc(sizeof(LL_Node)); //                 allocate new node
-        temp->value.id= new_process->id; //                         temp id = passed process id
-        ll->start=temp; //                                          the head of ll is the new node 
-        ll->size++;//                                               increase number of nodes in ll
-        ll->start->value.start=1; //                                set start val of memory
-        ll->start->value.end= new_process->memSize+1;//             set end val of memory
-        new_process->mem_start=1;
-        new_process->mem_end=new_process->memSize+1; //             set the ranges in the process info : needed for output in the future
+        // allocate memory slot :
+        temp.id=new_process->id; // get id of process
+        temp.start=0;
+        temp.end=new_process->memSize-1;
+        // insert node: 
+        insertLL(ll,temp);
+        new_process->mem_start=0;
+        new_process->mem_end=new_process->memSize-1; //             set the ranges in the process info : needed for output in the future
         return 1; //                                                successful insertion
     }
     else
     {
         // there was a start node -> check for holes or reach the end
-         if(ll->start->value.start != 1)//                         is the first position in memory vacant ?
+         if(ll->start->value.start != 0)//                         is the first position in memory vacant ?
     {
         // I'm here so -> first position in memory is vacant
         // check if this place is valid 
         if(ll->start->value.start >= (new_process->memSize) )
         {
         // this place is valid
-        LL_Node* temp = ll->start; //                               store the start of linked list
-        LL_Node* new = malloc(sizeof(LL_Node));//                   create new node and set it
-        new->value.id=new_process->id;
-        ll->start= new;
-        new->next= temp;//                                          the start returned to carry the linked list
-        ll->start->value.start=1;
-        ll->start->value.end=new_process->memSize+1;//              set the start and end of the memory location
-        ll->size++;//                                               increase the linked list count 
-        new_process->mem_start=1;
-        new_process->mem_end=new_process->memSize+1;
+        temp.id=new_process->id;
+        temp.start=0;
+        temp.end=new_process->memSize-1;
+        insertAfterLL(ll,NULL,temp);
+        printf("I'm here");
+        new_process->mem_start=0;
+        new_process->mem_end=temp.end;
         return 1; //                                                successeful insertion
         }
     }
     // then let's iterate on linked list to find suitable place "it may be a hole"
     LL_Node* iterator= ll->start;
     while(iterator->next!= NULL)
+    // 1 2 3 4 5 - > null
+    // 1       
     {
         // check for hole
         if(iterator->value.end+1 != ((LL_Node*)iterator->next)->value.start )
@@ -611,37 +612,32 @@ bool FF_insert(LinkedList* ll, ProcessInfo *new_process)
             // 20 ->40 || 60 ->80
             // hole = 60 -40 = 20 
             // 41 to 59 = 19 
-            if(((LL_Node*)iterator->next)->value.start - iterator->value.end -1 >= new_process->memSize)
+            if(((LL_Node*)iterator->next)->value.start - iterator->value.end >= new_process->memSize)
             {
                 // valid position
-                LL_Node* new = malloc (sizeof(LL_Node)); // create a new node
-                new->next=iterator->next; //                                            make her a joint in the linked list -> it looks on the after of my iterator
-                iterator->next=new;//                                                   iterator looks on her == successful insertion now set the paramaters
-                new->value.id=new_process->id; //                                       set pid
-                new->value.start=iterator->value.end+1;// set start range = end of the previous one +1  
-                new->value.end=new->value.start+new_process->memSize -  1 ; //          end range = start + mem size if start =41 
-                //                                                                      and i want to allocate 19 -> 41 to 59 
-                //                                                                      then the equation = 41 + 19 - 1 == 19 location 
-                new_process->mem_start=new->value.start; 
-                new_process->mem_end=new->value.end; //                                 set process paramaters helps in the output
-                ll->size++;
+              temp.id=new_process->id;
+              temp.start= iterator->value.end+1; // the process introduced in the hole starts after the end +1 
+              temp.end=new_process->memSize+temp.start-1;
+               insertAfterLL(ll,iterator,temp);
+                new_process->mem_start=temp.start; 
+                new_process->mem_end=temp.end; //                                 set process paramaters helps in the output
                 return 1; //                                                             successfull insertion
             }
         }
-            iterator=iterator->next; // no hole yet go to the next node
+             // no hole yet gi'm at the end
+             iterator=iterator->next; 
     }
     //i'm here , i wasn't successfull in insertion yet -> check if the tail is valid to insert after
-    if(1024 - iterator->value.end >=  new_process->memSize) //1024 -980 =  44  = 981 to 1024
+    if(1023 - iterator->value.end >=  new_process->memSize-1) //1024 -980 =  44  = 981 to 1024
     {
         // valid to enter 
-        LL_Node* new = malloc (sizeof(LL_Node));  //        create a new node and insert it after iterator
-        iterator->next=new;
-        new->value.id=new_process->id;
-        new->value.start=iterator->value.end+1;
-        new->value.end=new->value.start+new_process->memSize-1;
-        new_process->mem_start=new->value.start;
-        new_process->mem_end= new->value.end;
-        ll->size++;
+        printf("BYE\n");
+        temp.start=iterator->value.end+1;
+        temp.end=temp.start+new_process->memSize-1;
+        temp.id= new_process->id;
+        insertAfterLL(ll,iterator,temp);
+        new_process->mem_start=temp.start;
+        new_process->mem_end= temp.end;
         return 1;
     } 
     return 0; // i wasn't successfull after all let the scheduler block me
@@ -651,16 +647,75 @@ bool FF_insert(LinkedList* ll, ProcessInfo *new_process)
 bool mm_firstFitAlloc(ProcessInfo* info){
     if(FF_insert(memMap,info))
     {
+        fprintf(memPtr,"At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
+        info->mem_end - info->mem_start  , info->id , info->mem_start , info->mem_end);
         printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(),
-        info->mem_end - info->mem_start +1 , info->id , info->mem_start , info->mem_end);
+        info->mem_end - info->mem_start  , info->id , info->mem_start , info->mem_end);
         return 1;
     }
     return 0;
 }
 
 bool mm_nextFitAlloc(ProcessInfo* info){
-    //TODO: implement this
-    printf("At time %d added process %d to memory with size %d\n" , getClk() , info->id , info->memSize);
+    LL_Node* end = memMap->end;
+    int pos = -1;
+    if (memMap->end){
+        if (1023 - memMap->end->value.end >= info->memSize){
+            pos = memMap->end->value.end + 1;
+        }else{
+            end = memMap->start;
+            if (end->value.start >= info->memSize){
+                pos = 0;
+                end = NULL;
+            } else {
+                while (end && end->next){
+                    if (((LL_Node*) end->next)->value.start - end->value.end - 1 >= info->memSize){
+                        pos = end->value.end + 1;
+                        break;
+                    }
+                    end = end->next;
+                }
+            }
+        }
+    }else{
+        pos = 0;
+    }
+
+    if (pos == -1)
+        return false;
+
+    //printf("pos = %d\n"  , pos);
+
+    MemorySlot slot = {pos , pos + info->memSize - 1 , info->id};
+    info->mem_start = pos;
+    info->mem_end = pos + info->memSize - 1;
+    insertAfterLL(memMap , end , slot);
+
+    if (end != NULL){
+        LL_Node* self = end->next;
+        if (self->next){
+            LL_Node* ll_end = memMap->end;
+            LL_Node* ll_start = memMap->start;
+            
+            //link end with start
+            ll_end->next = ll_start;
+            ll_start->prev = ll_end;
+
+            //set the new start
+            memMap->start = self->next;
+
+            //unlink with next
+            ((LL_Node*) self->next)->prev = NULL;
+            self->next = NULL;
+
+            //set self as the new end of the LL
+            memMap->end = self;
+        }
+    }
+
+    fprintf(memPtr, "At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
+    printf("At time %d allocated %d bytes for process %d from %d to %d\n", getClk(), info->memSize , info->id , info->mem_start , info->mem_end);
+        
     return true;
 }
 
