@@ -112,7 +112,11 @@ int main(int argc, char* argv[])
     createLL(&memMap);
     createLL(&executionGraph);
 
+#ifdef INTERACTIVE
+    drawInteractive();
+#endif 
     sch_start_time = getClk();
+
 
     switch (t)
     {
@@ -183,7 +187,11 @@ int main(int argc, char* argv[])
     fclose(final);
     
     destroyClk(true);
+#ifdef INTERACTIVE
+    printf("Simulation Done lesgoo\n");
+#endif 
 }
+
 
 float calculateSD(float data[] , int s) {
     float sum = 0.0, mean, SD = 0.0;
